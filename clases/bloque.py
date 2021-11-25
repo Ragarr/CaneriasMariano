@@ -1,3 +1,6 @@
+import pyxel
+
+
 class bloque():
     def __init__(self,coord:list,sprite:list) -> None:
         """coord es una lista que contiene x e y en dicho orden. sprite es una lista de 5 elementos 
@@ -9,5 +12,4 @@ class bloque():
             -la pos y final del sprite
         """
         self.coord=coord # lista de la forma: (x_i,y_i) donde se inicia la posicion del sprite en pantalla
-        self.sprite=(sprite) # lista que contiene la info para localizar el sprite en memoria
-""""""
+        self.sprite=sprite # lista que contiene la info para localizar el sprite en memoria

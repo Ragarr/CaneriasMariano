@@ -8,7 +8,13 @@
 los bloques de monedas **SIEMPRE** dan una unica moneda
 los bloques rompibles dan 100 pt
  
-
+## notas que deberias tener en cuenta
+en el bloque de interrogacion que dropea un objeto al azar he clasificado el drop como numeros:
+la moneda tiene mas numeros para que sea mas probable
+    0-3: moneda
+    4: champiñon
+    5: flor de fuego
+    6: estrella
 
 
 ## info sobre el mario

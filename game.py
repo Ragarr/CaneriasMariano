@@ -1,6 +1,7 @@
 import pyxel
-import clases
+from clases import bloque
+from clases import player
 
-class game():
-    def __init__(self) -> None:
-        pass
+mario=player.mario()
+print(type(mario))
+

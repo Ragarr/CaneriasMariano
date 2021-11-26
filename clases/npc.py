@@ -26,7 +26,7 @@ class npc():
 class goompa(npc):
     def __init__ (self, coord: list) -> None:
         self.vivo = True
-        super().__init__ (coord +[0 , 48, 72, 8, 8, 0])#Esto hay que modificarlo cuando tengamos los sprites
+        super().__init__ (coord, [0 , 48, 72, 8, 8, 0])#Esto hay que modificarlo cuando tengamos los sprites
         self.coodenada = coord
         self.velocidad_x = -2 # La velocidad habrá que modificarla según probemos
         self.velocidad_y = 0 
@@ -39,7 +39,7 @@ class goompa(npc):
         self.velocidad_x = 0 - self.velocidad_x 
     def morir(self):
         self.vivo = False
-        self.sprite = [0 , 56, 72, 8, 8, 0]
+        self.sprite = [0 , 56, 72, 8, 8, 0]#cambiar del goompa normal al aplastado
 
 
         
@@ -48,15 +48,39 @@ class goompa(npc):
 class koopa_tropa(npc):
     def __init__ (self, coord: list) -> None:
         self.vivo = True
-        super().__init__ (coord +[0,48, 80, 8, 8, 0 ])#Esto hay que modificarlo cuando tengamos los sprites
+        super().__init__ (coord, [0,48, 80, 8, 8, 0 ])#Esto hay que modificarlo cuando tengamos los sprites
         self.coodenada = coord
         self.velocidad_x = -2 # La velocidad habrá que modificarla según probemos
         self.velocidad_y = 0 
         self.ancho = 8
         self.altura = 8
         self.es_caparazon = False
-    def actualizar_posicición(self):
-        if self.es_caparazon:
-            self.velocidad_x = 0
+    def actualizar_posicicion(self):
+        
+        self.coordenada[0] += self.velocidad_x
+        self.coordenada[1] += self.velocidad_y
+    def actualizar_posicion(self):
         self.coordenada[0] += self.velocidad_x
         self.coordenada[1] += self.velocidad_y 
+    def colisionar_bloque(self):
+        self.velocidad_x = 0 - self.velocidad_x 
+    def morir(self):
+        self.vivo = False
+    def colisionar_jugador(self):
+        if self.es_caparazon and self.velocidad_x == 0:
+            self.velocidad_x = 5
+        elif self.es_caparazon and self.velocidad != 0:
+            self.velocidad_x = 0
+        else:
+            self.es_caparazon = True
+            self.velocidad_x = 0
+            self.sprite = [0,56, 80, 8, 8, 0 ]
+    def resurgir(self):
+            self.es_caparazon = False
+            self.velocidad_x = 2
+            self.sprite = [0,48, 80, 8, 8, 0 ]
+
+
+        
+        
+     

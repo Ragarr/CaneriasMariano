@@ -5,7 +5,7 @@ class App():
     def __init__(self) -> None:
         self.jugador = player.mario([20, 20])
         self.bloques = [bloque.interrogacion([20, 20]), bloque.ladrillo_no_rompible(
-            [28, 20]), bloque.ladrillo_no_rompible([36, 20]), bloque.ladrillo_no_rompible([44, 20])]
+            [28, 20]), bloque.ladrillo_con_monedas([36, 20]), bloque.ladrillo_rompible([44, 20]),bloque.tuberia([52,20])]
 
         # esto tiene que ir al final del init
         pyxel.init(100, 100, caption="test")
@@ -20,6 +20,6 @@ class App():
         pyxel.cls(0)
         pyxel.blt(*self.jugador.dibujo)
         for i in range(len(self.bloques)):
-            pyxel.blt(*self.bloques[i].dibujo)
+            pyxel.blt(*self.bloques[i].coord,*self.bloques[i].sprite)
 
 App()

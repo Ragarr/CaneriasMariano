@@ -26,8 +26,10 @@ class App():
         pyxel.run(self.update(), self.draw())
 
     def update(self):
-        if pyxel.btnp(pyxel.KEY_E):
-            self.bloques[0].golpear()
+        self.npcs[1].actualizar_posicicion()
+        
+
+        
         
     
 
@@ -42,6 +44,8 @@ class App():
         for i in range(len(self.atrezzo)):
             pyxel.blt(*self.atrezzo[i].coord, *self.atrezzo[i].sprite)
         pyxel.blt(*self.jugador.coord,*self.jugador.sprite)
+        pyxel.text(10,10,str(pyxel.frame_count),2)
+
 
         
 App()

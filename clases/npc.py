@@ -27,14 +27,14 @@ class goompa(npc):
     def __init__ (self, coord: list) -> None:
         self.vivo = True
         super().__init__ (coord, [0 , 48, 72, 8, 8, 0])#Esto hay que modificarlo cuando tengamos los sprites
-        self.coodenada = coord
+        self.coord = coord
         self.velocidad_x = -2 # La velocidad habrá que modificarla según probemos
         self.velocidad_y = 0 
         self.ancho = 8
         self.altura = 8
     def actualizar_posición(self):
-        self.coordenada[0] += self.velocidad_x
-        self.coordenada[1] += self.velocidad_y 
+        self.coord[0] += self.velocidad_x
+        self.coord[1] += self.velocidad_y 
     def colisionar_bloque(self):
         self.velocidad_x = 0 - self.velocidad_x 
     def morir(self):
@@ -49,7 +49,7 @@ class koopa_tropa(npc):
     def __init__ (self, coord: list) -> None:
         self.vivo = True
         super().__init__ (coord, [0,48, 80, 8, 8, 0 ])#Esto hay que modificarlo cuando tengamos los sprites
-        self.coodenada = coord
+        self.coord = coord
         self.velocidad_x = -2 # La velocidad habrá que modificarla según probemos
         self.velocidad_y = 0 
         self.ancho = 8
@@ -57,11 +57,11 @@ class koopa_tropa(npc):
         self.es_caparazon = False
     def actualizar_posicicion(self):
         
-        self.coordenada[0] += self.velocidad_x
-        self.coordenada[1] += self.velocidad_y
+        self.coord[0] += self.velocidad_x
+        self.coord[1] += self.velocidad_y
     def actualizar_posicion(self):
-        self.coordenada[0] += self.velocidad_x
-        self.coordenada[1] += self.velocidad_y 
+        self.coord[0] += self.velocidad_x
+        self.coord[1] += self.velocidad_y 
     def colisionar_bloque(self):
         self.velocidad_x = 0 - self.velocidad_x 
     def morir(self):

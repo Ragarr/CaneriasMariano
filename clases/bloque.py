@@ -1,5 +1,5 @@
 import pyxel
-
+import random
 
 class bloque():
     def __init__(self,coord:list,sprite:list) -> None:
@@ -13,3 +13,18 @@ class bloque():
         """
         self.coord=coord # lista de la forma: (x_i,y_i) donde se inicia la posicion del sprite en pantalla
         self.sprite=sprite # lista que contiene la info para localizar el sprite en memoria
+
+        self.ancho = 0  # aqui hay que añadir el ancho (x) del ladrillo en pixeles para cuando tengamos el archivo con los sprites
+        self.largo = 0  # mas de lo mismo que arriba pero con el largo (y) en pixeles
+
+class ladrillo_no_rompible(bloque):
+    """un bloque con textura de ladrillo que no interactua con el jugador"""
+    def __init__(self, coord: list) -> None:
+        super().__init__(coord, ["""aqui va el sprite"""]) # una vez que el profesor nos pase el archivo con los sprites
+
+
+class ladrillo_rompible(bloque):
+    """un bloque con textura de ladrillo que cuando es golpeado por el jugador suelta le da una moneda"""
+    def __init__(self, coord: list) -> None:
+        super().__init__(coord, ["""aqui va el sprite"""])  # una vez que el profesor nos pase el archivo con los sprites
+        self.monedas=random.randint()

@@ -1,7 +1,7 @@
 if __name__ == "__main__":
     print("este archivo no es el principal y no esta pensado para ser ejecutado")
 class atrezzo():
-    def __init__(self,dibujo:list) -> None:
+    def __init__(self,coord:list, sprite:list) -> None:
         """dibujo es una lista de 8 elementos
         que contiene en este orden los siguienes valores n este orden:
             -x de inicio del dibujo
@@ -14,20 +14,18 @@ class atrezzo():
             -color de chroma
         """
         self.tiene_hitbox = False
-        self.dibujo=dibujo
+        self.coord=coord
+        self.sprite=sprite
 
 class montaña(atrezzo):
     def __init__(self, coord:list) -> None:
-        self.coord=coord
-        super().__init__(coord+[0,72,16,16,0])
+        super().__init__(coord, [0,72,16,16,0])
 
 class nube(atrezzo):
     def __init__(self, coord:list) -> None:
-        self.coord=coord
-        super().__init__(coord+[16,72,16,16,0])
+        super().__init__(coord, [0,16,72,16,16,0])
 
 
 class arbusto(atrezzo):
     def __init__(self, coord:list) -> None:
-        self.coord=coord
-        super().__init__(coord+[32,72,16,16,0])
+        super().__init__(coord, [0,32,72,16,16,0])

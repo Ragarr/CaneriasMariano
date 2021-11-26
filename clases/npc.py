@@ -26,7 +26,7 @@ class npc():
 class goompa(npc):
     def __init__ (self, coord: list) -> None:
         self.vivo = True
-        super().__init__ (coord +[0 , 48, 72, 8, 8, 0])#Esto hay que modificarlo cuando tengamos los sprites
+        super().__init__ (coord, [0 , 48, 72, 8, 8, 0])#Esto hay que modificarlo cuando tengamos los sprites
         self.coodenada = coord
         self.velocidad_x = -2 # La velocidad habrá que modificarla según probemos
         self.velocidad_y = 0 
@@ -48,7 +48,7 @@ class goompa(npc):
 class koopa_tropa(npc):
     def __init__ (self, coord: list) -> None:
         self.vivo = True
-        super().__init__ (coord +[0,48, 80, 8, 8, 0 ])#Esto hay que modificarlo cuando tengamos los sprites
+        super().__init__ (coord, [0,48, 80, 8, 8, 0 ])#Esto hay que modificarlo cuando tengamos los sprites
         self.coodenada = coord
         self.velocidad_x = -2 # La velocidad habrá que modificarla según probemos
         self.velocidad_y = 0 

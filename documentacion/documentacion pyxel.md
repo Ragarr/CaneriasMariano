@@ -49,3 +49,6 @@ lista=(1,2,3,4,5,6)
 funcion(*lista)# esto da a=1,b=2...
 
 .play(musica,canal) # reproduce una cancion
+
+los archivo se guardan en 
+C:\Users\user\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\pyxel\editor\assets

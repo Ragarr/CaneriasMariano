@@ -8,4 +8,4 @@ class mario():
         self.monedas = 0
         self.tamaño = 0  # 0peque, 1supermario, 2con flor
         self.coord = coord  # ubicacion de el sprite
-        self.dibujo = coord+[0, 48, 0, 8, 8, 0]
+        self.sprite = [0, 48, 0, 8, 8, 0]

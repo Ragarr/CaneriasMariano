@@ -28,15 +28,15 @@ class goompa(npc):
         self.vivo = True
         super().__init__ (coord, [0 , 48, 72, 8, 8, 0])#Esto hay que modificarlo cuando tengamos los sprites
         self.coord = coord
-        self.velocidad_x = -2 # La velocidad habrá que modificarla según probemos
+        self.velocidad_x = -1 # La velocidad habrá que modificarla según probemos
         self.velocidad_y = 0 
         self.ancho = 8
         self.altura = 8
-    def actualizar_posición(self):
+    def actualizar_posicion(self):
         self.coord[0] += self.velocidad_x
         self.coord[1] += self.velocidad_y 
     def colisionar_bloque(self):
-        self.velocidad_x = 0 - self.velocidad_x 
+        self.velocidad_x = ( - self.velocidad_x) 
     def morir(self):
         self.vivo = False
         self.sprite = [0 , 56, 72, 8, 8, 0]#cambiar del goompa normal al aplastado

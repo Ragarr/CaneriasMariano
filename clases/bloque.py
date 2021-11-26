@@ -71,8 +71,7 @@ class interrogacion(bloque):
 
     def golpear(self):
         """dara un objeto y se convertirta en un bloque plano"""
-        self.sprite = [
-            """aqui va el nuevo sprite"""]  # reemplazar el sprite de interrogacion por el liso
+        self.sprite = [0,32,88,8,8,-1]  # reemplazar el sprite de interrogacion por el liso
 
 
 class tuberia(bloque):

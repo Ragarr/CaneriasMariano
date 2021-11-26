@@ -27,8 +27,8 @@ class App():
 
     def update(self):
         if pyxel.btnp(pyxel.KEY_E):
-            self.bloques[0].
-        pass
+            self.bloques[0].golpear()
+        
     
 
     def draw(self):

@@ -18,11 +18,11 @@ class bloque():
             -color de chroma
         """
         self.dibujo = dibujo
-        self.esta_activo = True  # colisiones del bloque
+        self.tiene_hitbox = True  # colisiones del bloque
         # aqui hay que añadir el ancho (x) del ladrillo en pixeles para cuando tengamos el archivo con los sprites
-        self.ancho = 0
+        self.ancho = 8
         # mas de lo mismo que arriba pero con el largo (y) en pixeles
-        self.largo = 0
+        self.largo = 8
 
 
 class ladrillo_no_rompible(bloque):
@@ -45,7 +45,7 @@ class ladrillo_rompible(bloque):
         # remplazar el sprite por uno vacio
         self.dibujo[2], self.dibujo[3], self.dibujo[4], self.dibujo[5], self.dibujo[6], self.dibujo[7] = 0, 144, 16, 8, 8, 0  
         # deshabilitar las colisiones con el objeto
-        self.esta_activo = False  
+        self.tiene_hitbox = False  
         
 
 
@@ -65,7 +65,7 @@ class ladrillo_con_monedas(bloque):
 
     def romper(self):
         self.sprite = []  # remplazar el sprite por el cielo
-        self.esta_activo = False  # para deshabilitar las colisiones con el objeto
+        self.tiene_hitbox5 = False  # para deshabilitar las colisiones con el objeto
 
 
 class interrogacion(bloque):

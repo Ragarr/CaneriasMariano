@@ -1,3 +1,7 @@
+if __name__ == "__main__":
+    print("este archivo no es el principal y no esta pensado para ser ejecutado")
+
+
 class mario():
     def __init__(self) -> None:
         self.score=0

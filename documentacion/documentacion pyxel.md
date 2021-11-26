@@ -9,7 +9,7 @@ el fichero 5 tiene info de los colores
 
 pyxel.init(alto,ancho,caption=titulo de la ventana)
 pyxel.image(0).load(0,0,"assets/pyxel_logo_38_16")
-#carga una imagen en el banco de imagenes 0 de (cada banco tiene 256x256 pixeles), hay 3 bancos 
+carga una imagen en el banco de imagenes 0 de (cada banco tiene 256x256 pixeles), hay 3 bancos 
 .load(pos x donde se carga el sprite, pos y donde se carga el sprite)
 pyxel.btnp(pyxel.KEY_Q)
 true si se presiona la Q

@@ -46,6 +46,7 @@ class ladrillo_rompible(bloque):
         self.dibujo[2], self.dibujo[3], self.dibujo[4], self.dibujo[5], self.dibujo[6], self.dibujo[7] = 0, 144, 16, 8, 8, 0  
         # deshabilitar las colisiones con el objeto
         self.esta_activo = False  
+        
 
 
 class ladrillo_con_monedas(bloque):

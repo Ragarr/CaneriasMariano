@@ -16,24 +16,35 @@ class App():
             [28, 20]), bloque.ladrillo_con_monedas([36, 20]), bloque.ladrillo_rompible([44, 20]),bloque.tuberia([52,20])]
         self.objetos = [objeto.objeto([20, 28], 0), objeto.objeto(
             [28, 28], 3), objeto.objeto([36, 28], 4), objeto.objeto([44, 28], 5), objeto.objeto([52, 28], 6)]
-        self.npcs=[npc.goompa([20,36]),npc.koopa_tropa([28,36])]
+        self.npcs=[npc.goompa([20,36]),npc.koopa_troopa([29,36])]
         self.atrezzo=[atrezzo.arbusto([20,44]),atrezzo.montaña([28,44]),atrezzo.nube([36,44])]
-
+        self.npcs[1].colisionar_bloque()
 
 
         # esto tiene que ir al final del init
 
         pyxel.run(self.update, self.draw)
-
+    
     def update(self):
-        if self.npcs[0].coord[0]<=0:
-            self.npcs[0].colisionar_bloque()
-            self.npcs[0].actualizar_posicion()
-        elif self.npcs[0].coord[0] >= 100-self.npcs[0].ancho:
-            self.npcs[0].colisionar_bloque()
-            self.npcs[0].actualizar_posicion()
-        else:
-            self.npcs[0].actualizar_posicion()
+        
+        for i in range(len(self.npcs)):
+            if self.npcs[i].coord[0]<=0:
+                self.npcs[i].colisionar_bloque()
+                self.npcs[i].actualizar_posicion()
+            elif self.npcs[i].coord[0] >= 100-self.npcs[i].ancho:
+                self.npcs[i].colisionar_bloque()
+                self.npcs[i].actualizar_posicion()
+            elif self.npcs[0].coord[0] + 8 >= self.npcs[1].coord[0] and self.npcs[0].coord[0] <= self.npcs[1].coord[0] + 8:
+                self.npcs[0].colisionar_bloque()
+                self.npcs[1].colisionar_bloque()
+                self.npcs[0].actualizar_posicion()
+                self.npcs[1].actualizar_posicion()
+                #He probado las colisiones entre el goompa y el koopa troopa(cambio de sentido linea 21)
+                # He movido las cooordenadas del koopa en 1 ya que si están justo a la distancia se embuclan entre si 
+                
+            else:
+                self.npcs[i].actualizar_posicion()
+            
         
 
         

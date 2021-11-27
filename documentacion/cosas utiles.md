@@ -30,3 +30,5 @@ https://drive.google.com/file/d/1GfgQoTCGE_Xmc-JpK6Gd6W29JtJgwsaf/view?usp=shari
 una pagina web donde se puede jugar
 https://www.minijuegos.com/juego/super-mario-bros
 
+repositorio de juego dinosaurio
+https://github.com/dannyso16/pynasour/tree/master/pynasour

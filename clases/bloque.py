@@ -15,7 +15,7 @@ class bloque():
         # aqui hay que añadir el ancho (x) del ladrillo en pixeles para cuando tengamos el archivo con los sprites
         self.ancho = 8
         # mas de lo mismo que arriba pero con el largo (y) en pixeles
-        self.largo = 8
+        self.alto = 8
 
 
 class ladrillo_no_rompible(bloque):

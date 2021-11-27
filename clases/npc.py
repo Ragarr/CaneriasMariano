@@ -54,7 +54,7 @@ class koopa_troopa(npc):
         self.vivo = True
         super().__init__ (coord, [0,48, 80, 8, 8, 0 ])#Esto hay que modificarlo cuando tengamos los sprites
         self.coord = coord
-        self.velocidad_x = -1 # La velocidad habrá que modificarla según probemos
+        self.velocidad_x = 2 # La velocidad habrá que modificarla según probemos
         self.velocidad_y = 0 
         self.ancho = 8
         self.altura = 8

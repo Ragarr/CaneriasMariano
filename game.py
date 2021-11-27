@@ -7,7 +7,7 @@ from clases import atrezzo
 class App():
     def __init__(self) -> None:
         
-        pyxel.init(200, 200, caption="test",fps=60)
+        pyxel.init(200, 100, caption="test",fps=60)
         pyxel.load("assets/test_resource.pyxres")
         
 
@@ -31,7 +31,7 @@ class App():
             if self.npcs[i].coord[0]<=0:
                 self.npcs[i].colisionar_bloque()
                 self.npcs[i].actualizar_posicion()
-            elif self.npcs[i].coord[0] >= 100-self.npcs[i].ancho:
+            elif self.npcs[i].coord[0] >= pyxel.width-self.npcs[i].ancho:
                 self.npcs[i].colisionar_bloque()
                 self.npcs[i].actualizar_posicion()
             elif self.npcs[0].coord[0] + 8 >= self.npcs[1].coord[0] and self.npcs[0].coord[0] <= self.npcs[1].coord[0] + 8:
@@ -41,6 +41,8 @@ class App():
                 self.npcs[1].actualizar_posicion()
                 #He probado las colisiones entre el goompa y el koopa troopa(cambio de sentido linea 21)
                 # He movido las cooordenadas del koopa en 1 ya que si están justo a la distancia se embuclan entre si 
+                # he descubierto que cuando colisionan entre si por detras cambian de direccion y no deberian
+                # aunque no se si es una situacion que se dara en el juego ya que creo que todos se mueven a la misma velocidad
                 
             else:
                 self.npcs[i].actualizar_posicion()

@@ -43,6 +43,7 @@ class App():
                 # He movido las cooordenadas del koopa en 1 ya que si están justo a la distancia se embuclan entre si 
                 # he descubierto que cuando colisionan entre si por detras cambian de direccion y no deberian
                 # aunque no se si es una situacion que se dara en el juego ya que creo que todos se mueven a la misma velocidad
+
                 
             else:
                 self.npcs[i].actualizar_posicion()

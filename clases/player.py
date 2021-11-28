@@ -14,7 +14,7 @@ class mario():
         self.sprite = [0, 48, 0, 8, 8, 0]
         self.ancho=8
         self.alto=8
-    def actualizar_posicion(self):
+    def actualizar_posicion(self): # cambia la posicion del personaje
         self.coord[0]+=self.velocidad_x
         self.coord[1]+=self.velocidad_y
     

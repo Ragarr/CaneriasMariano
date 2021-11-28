@@ -7,7 +7,7 @@ class npc():
     def __init__(self, coord: list, sprite: list  ) -> None:
         self.sprite = sprite
         self.coord = coord
-        self.vivo = True # El npc está vivo 
+        self.esta_vivo = True # El npc está vivo 
         """
         Cooord es una lista de 2 elementos que contiene la posicón de donde se pinta el sprite
         Sprite es una lista de 6 elementos 
@@ -19,6 +19,11 @@ class npc():
         -la pos y final del sprite
         -color de chroma
         """
+
+    def morir(self):
+        self.esta_vivo = False
+        self.sprite = [0, 120, 120, 0, 0, 0]
+
         
         
 
@@ -39,11 +44,7 @@ class goompa(npc):
     def colisionar_bloque(self):
         '''Se define para cuando el goompa colisiona y queremos que cambia su moviento al sentido contrario'''
         self.velocidad_x = ( - self.velocidad_x) 
-    def morir(self, aplastado = False):
-        self.vivo = False
-        if aplastado:
-            self.sprite = [0 , 56, 72, 8, 8, 0]#cambiar del goompa normal al aplastado, exlcusivamente cuando el Mario salte encima del goompa
-        
+
 
 
         
@@ -66,15 +67,10 @@ class koopa_troopa(npc):
     def colisionar_bloque(self):
         '''Se define para cuando el koopa toopa colisiona y queremos que cambia su moviento al sentido contrario'''
         self.velocidad_x = 0 - self.velocidad_x 
-    def morir(self):
-        self.vivo = False
-    def colisionar_jugador(self, sentido =  None ):
+    def colisionar_jugador(self):
         if self.es_caparazon and self.velocidad_x == 0:
-            '''Si el caparazón está parado y el jugador choca con él lo pondrá en movimiento y seguirá un sentido dependiendo desde donde lo golpee el jugador'''
-            if sentido == 'izquierda':
-                self.velocidad_x = 5
-            elif sentido == 'derecha':
-                self.velocidad_x = -5
+            '''Si el caparazón está parado y el jugador choca con él lo pondrá en movimiento'''
+            self.velocidad_x = -5
         elif self.es_caparazon and self.velocidad != 0:
             '''Emplearemos este método exclusivamente cuando el jugador salte encima del caparazón en movimiento'''
             self.velocidad_x = 0
@@ -84,7 +80,7 @@ class koopa_troopa(npc):
             self.velocidad_x = 0
             self.sprite = [0,56, 80, 8, 8, 0 ]
     def resurgir(self):
-        '''El koopa troopa volverá a su estado original pasado un tiempo para ello ejecutaremos este método'''
+        '''El koopa troopa volverá a su estado original pasado un tiempo '''
         self.es_caparazon = False
         self.velocidad_x = 2
         self.sprite = [0,48, 80, 8, 8, 0 ]

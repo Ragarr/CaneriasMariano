@@ -9,15 +9,15 @@ class App():
         
         pyxel.init(256, 150, caption="test",fps=40)
         pyxel.load("assets/test_resource.pyxres")
-        
+        self.contador = 0
 
         self.jugador = player.mario([20, 12]) 
-        self.bloques = [bloque.interrogacion([20, 28]), bloque.ladrillo_no_rompible(
-            [28, 28]), bloque.ladrillo_con_monedas([36, 28]), bloque.ladrillo_rompible([44, 28]),bloque.tuberia([52,28])]
-        self.objetos = [objeto.objeto([20, 20], 0), objeto.objeto(
-            [28, 20], 3), objeto.objeto([36, 20], 4), objeto.objeto([44, 20], 5), objeto.objeto([52, 20], 6)]
-        self.npcs=[npc.goompa([20,36]),npc.koopa_troopa([29,36])]
-        self.atrezzo=[atrezzo.arbusto([20,44]),atrezzo.montaña([28,44]),atrezzo.nube([36,44])]
+        self.bloques = [bloque.interrogacion([20, 80]), bloque.ladrillo_no_rompible(
+            [28, 80]), bloque.ladrillo_con_monedas([36, 80]), bloque.ladrillo_rompible([44, 80]),bloque.tuberia([52,80])]
+        self.objetos = [objeto.objeto([20, 72], 0), objeto.objeto(
+            [28, 72], 3), objeto.objeto([36, 72], 4), objeto.objeto([44, 72], 5), objeto.objeto([52, 72], 6)]
+        self.npcs=[npc.goompa([20,92]),npc.koopa_troopa([90,92])]
+        self.atrezzo=[atrezzo.arbusto([20,92]),atrezzo.montaña([28,92]),atrezzo.nube([36,92])]
 
 
         # esto tiene que ir al final del init
@@ -29,7 +29,10 @@ class App():
 
         self.actualizar_npcs()
         self.actualizar_jugador()
+        self.contador = 400-int(pyxel.frame_count/60)
+        
 
+        
 
     def draw(self):
         pyxel.cls(12)
@@ -42,12 +45,24 @@ class App():
         for i in range(len(self.atrezzo)):
             pyxel.blt(*self.atrezzo[i].coord, *self.atrezzo[i].sprite)
         pyxel.blt(*self.jugador.coord,*self.jugador.sprite)
-        pyxel.text(10,10,str(pyxel.frame_count),2)
+        pyxel.text(pyxel.width-20,10,str(self.contador),0)
+        pyxel.text(70, 10, "COINS: {}".format(self.jugador.monedas), 0)
+        pyxel.text(30,10,"MARIO",0)
+        pyxel.text(30, 20, "{:06d}".format(self.jugador.score), 0)
+        if self.jugador.vivo:
+            pyxel.text(30, 30, "VIVO", 0)
+        else:
+            pyxel.text(30, 30, "MUERTO", 0)
+
+
     
 
     def actualizar_jugador(self):
 
-
+        # actualizar hitbox (para cuando es golpeado)
+        if abs(self.jugador.frame_golpe -pyxel.frame_count) == 90:
+            self.jugador.tiene_hitbox=True
+            print("si hitbox")
 
         # movimiento jugador eje x
         """para que el jugador frene igual que en mario original es necesario que cambie su velocidad lentamente, como si tuviera inercia
@@ -72,11 +87,12 @@ class App():
             self.jugador.velocidad_x = 0.5
         elif self.jugador.coord[0] > pyxel.width-self.jugador.ancho:
             self.jugador.velocidad_x = -0.5
+        
 
 
         #mov jugador eje y
         #contacto con el suelo y gravedad
-        if (self.jugador.coord[1] < pyxel.height*(1/3)):
+        if (self.jugador.coord[1] < 92):
             self.jugador.velocidad_y += 0.25
         elif pyxel.btn(pyxel.KEY_SPACE):
             self.jugador.velocidad_y = -4
@@ -94,10 +110,34 @@ class App():
                     if pyxel.btn(pyxel.KEY_SPACE): # permite que se pueda saltar encima de los bloques, si se pone la velocidad
                         self.jugador.coord[1] = bloque.coord[1] - self.jugador.alto # en 0 directamente no podrias saltar
                         self.jugador.velocidad_y = -4 
-                        self.jugador.velocidad_x =  0.2*self.jugador.velocidad_x # da la sensacion de que rebotas un pelin al golpear el bloque
+                        self.jugador.velocidad_x =  0.1*self.jugador.velocidad_x # da la sensacion de que rebotas un pelin al golpear el bloque
                     else: # te pega al bloque 
                         self.jugador.velocidad_y = 0
                         self.jugador.coord[1] = bloque.coord[1] - self.jugador.alto # hace que te pongas en el pixel correcto y no atravieses el bloque
+
+        # --------------------------------contacto con npcs en progreso------------------
+        for npc in self.npcs:
+            if (abs(npc.coord[0]-self.jugador.coord[0]) < self.jugador.ancho
+                    and abs(npc.coord[1]-self.jugador.coord[1]) < self.jugador.alto):  # comprueba si hay colision
+                if ((npc.coord[0]-self.jugador.coord[0]+self.jugador.ancho)<2
+                    and self.jugador.tiene_hitbox
+                    and npc.esta_vivo):
+                    print("colision en x ")
+                    print("no hitbox ")
+                    self.jugador.recibir_daño()
+
+
+
+                elif ((npc.coord[1]-(self.jugador.coord[1]+self.jugador.alto)) < 2 
+                    and not abs(npc.coord[0]-self.jugador.coord[0]) < 2
+                    and self.jugador.tiene_hitbox
+                    and npc.esta_vivo):
+                    print("colision en y ")
+                    npc.morir() 
+                    print("npc muerto")
+                    self.jugador.velocidad_y = -2
+                    self.jugador.score+=1000
+    
         self.jugador.actualizar_posicion()
 
 
@@ -116,7 +156,7 @@ class App():
                 self.npcs[1].colisionar_bloque()
                 self.npcs[0].actualizar_posicion()
                 self.npcs[1].actualizar_posicion()
-                #  si el spawn están justo a la distancia se embuclan entre si
+                #  si el spawn está justo a la distancia se embuclan entre si
 
             self.npcs[i].actualizar_posicion()
 

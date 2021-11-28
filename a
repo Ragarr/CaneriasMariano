@@ -1,9 +1,0 @@
-
-                if (bloque.coord[1]-self.jugador.coord[1]) < self.jugador.alto/2+1: # compreueba si la colision es desde abajo
-                    self.jugador.velocidad_y = 1
-                if bloque.coord[1]-self.jugador.coord[1] > self.jugador.alto/2+1: # compreueba si la colision es desde arriba 
-
-                    if pyxel.btnp(pyxel.KEY_SPACE):
-                        self.jugador.velocidad_y = -4
-                    else: 
-                        self.jugador.velocidad_y = 0

@@ -13,7 +13,7 @@ class bloque():
         self.sprite = sprite
         self.tiene_hitbox = True  # colisiones del bloque
         # aqui hay que añadir el ancho (x) del ladrillo en pixeles para cuando tengamos el archivo con los sprites
-        self.ancho = 8
+        self.ancho = 10
         # mas de lo mismo que arriba pero con el largo (y) en pixeles
         self.alto = 8
 

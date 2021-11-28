@@ -11,7 +11,7 @@ class App():
         pyxel.load("assets/test_resource.pyxres")
         
 
-        self.jugador = player.mario([20, 12]) ##
+        self.jugador = player.mario([20, 12]) 
         self.bloques = [bloque.interrogacion([20, 28]), bloque.ladrillo_no_rompible(
             [28, 28]), bloque.ladrillo_con_monedas([36, 28]), bloque.ladrillo_rompible([44, 28]),bloque.tuberia([52,28])]
         self.objetos = [objeto.objeto([20, 20], 0), objeto.objeto(

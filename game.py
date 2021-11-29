@@ -126,8 +126,6 @@ class App():
                     print("no hitbox ")
                     self.jugador.recibir_daño()
 
-
-
                 elif ((npc.coord[1]-(self.jugador.coord[1]+self.jugador.alto)) < 2 
                     and not abs(npc.coord[0]-self.jugador.coord[0]) < 2
                     and self.jugador.tiene_hitbox

@@ -103,17 +103,13 @@ class App():
         for bloque in self.bloques:
             if (abs(bloque.coord[0]-self.jugador.coord[0]) < self.jugador.ancho
                     and abs(bloque.coord[1]-self.jugador.coord[1]) < self.jugador.alto): # comprueba si hay colision
-                if ((bloque.coord[1]+bloque.alto/1.2)-self.jugador.coord[1]) <2:    #comprueba si la colision es por debajo
-                    self.jugador.coord[1] = bloque.coord[1] + bloque.alto + 1       # hay 2 pixeles de marjen
-                    self.jugador.velocidad_y = 0.7 # rebota con una velociadad de 0.7
-                if bloque.coord[1]-(self.jugador.coord[1]-self.jugador.alto/2) > 2: #comprueba si la colision es por encima
-                    if pyxel.btn(pyxel.KEY_SPACE): # permite que se pueda saltar encima de los bloques, si se pone la velocidad
-                        self.jugador.coord[1] = bloque.coord[1] - self.jugador.alto # en 0 directamente no podrias saltar
-                        self.jugador.velocidad_y = -4 
-                        self.jugador.velocidad_x =  0.1*self.jugador.velocidad_x # da la sensacion de que rebotas un pelin al golpear el bloque
-                    else: # te pega al bloque 
-                        self.jugador.velocidad_y = 0
-                        self.jugador.coord[1] = bloque.coord[1] - self.jugador.alto # hace que te pongas en el pixel correcto y no atravieses el bloque
+                print()
+
+
+
+
+
+
 
         # --------------------------------contacto con npcs en progreso------------------
         for npc in self.npcs:

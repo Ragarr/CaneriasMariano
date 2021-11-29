@@ -19,6 +19,7 @@ class mario():
         self.es_grande=False
         self.es_flor=False
         self.vivo=True
+        self.area=[]
     def actualizar_posicion(self): # cambia la posicion del personaje
         self.coord[0]+=self.velocidad_x
         self.coord[1]+=self.velocidad_y

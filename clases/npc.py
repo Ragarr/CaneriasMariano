@@ -31,12 +31,12 @@ class npc():
         for bloque in bloques:
             if (abs(bloque.coord[0]-self.coord[0]) < self.ancho
                     and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
-                self.v_x = -self.v_x
+                self.colisionar_bloque()
                 print("npc colisionando")
 
         for npc in npcs:
             if (abs(npc.coord[0]-self.coord[0]) < self.ancho and abs(npc.coord[1]-self.coord[1]) < self.alto):
-                self.v_x =-self.v_x
+                self.colisionar_bloque()
                 print("npc colisionando")
 
             

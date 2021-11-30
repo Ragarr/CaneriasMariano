@@ -8,31 +8,27 @@ import constants as c
 class App():
     def __init__(self) -> None:
         
-        pyxel.init(c.ancho_pantalla, c.largo_pantalla, caption="test", fps=c.fps)
+        pyxel.init(c.ancho_pantalla, c.alto_pantalla, caption="test", fps=c.fps)
         pyxel.load(c.assets_path)
         self.contador = 0
 
-        self.jugador = player.mario([20, 12]) 
+        self.jugador = player.mario([20, 12])
 
-        self.bloques = [bloque.interrogacion([20, 80]), bloque.ladrillo_no_rompible([28, 80]), 
-                        bloque.ladrillo_con_monedas([36, 80]), bloque.ladrillo_rompible([44, 80]), 
-                        bloque.tuberia([52, 80]), bloque.ladrillo_no_rompible([120, 96]), 
-                        bloque.ladrillo_no_rompible([0, 96]), bloque.ladrillo_no_rompible([pyxel.width-8, 96]),
-                        bloque.ladrillo_no_rompible([0, 88]), bloque.ladrillo_no_rompible([pyxel.width-8, 88])]
+        self.bloques = [bloque.ladrillo_no_rompible([100,110]),bloque.ladrillo_no_rompible([115,125]),
+                        bloque.ladrillo_no_rompible([0, c.altura_suelo-c.alto_ladrillo]),
+                        bloque.ladrillo_no_rompible([c.ancho_pantalla-c.ancho_ladrillo, c.altura_suelo-c.alto_ladrillo])]
         # creacion del suelo
-        """x=0
+        x=0
         while x < pyxel.width:
-            self.bloques.append(bloque.ladrillo_no_rompible([x, 96]))
-            x+=8"""
+            self.bloques.append(bloque.suelo([x, c.altura_suelo]))
+            x+=c.ancho_suelo
 
+        self.objetos = [objeto.champi([130, c.altura_suelo-15]), objeto.estrella([145, c.altura_suelo-15]),
+                        objeto.flor([160,c.altura_suelo-15])]
 
-            
-        self.objetos = [objeto.objeto([20, 72], 0), objeto.objeto([28, 72], 3), objeto.objeto([36, 72], 4), 
-                        objeto.objeto([44, 72], 5), objeto.objeto([52, 72], 6)]
-        
-        self.npcs = [npc.goompa([50, 72]), npc.koopa_troopa([90, 92])]
+        self.npcs = []
 
-        self.atrezzo=[atrezzo.arbusto([20,92]),atrezzo.montaña([28,92]),atrezzo.nube([36,92])]
+        self.atrezzo=[]
 
 
         # esto tiene que ir al final del init

@@ -7,7 +7,7 @@ import constants as c
 class mario():
     def __init__(self, coord: list) -> None:
     
-        self.sprite = [0, 48, 0, 8, 8, 0]
+        self.sprite = c.sprite_mario_quieto
         self.ancho = c.ancho_mario
         self.alto = c.alto_mario
         self.iniciar_temporizadores()
@@ -71,23 +71,23 @@ class mario():
         
         #mov jugador eje y
         #contacto con el suelo y gravedad
-        if (self.coord[1] < 92):
+        if (self.coord[1] < pyxel.width):
             self.v_y += c.v_gravedad
         elif pyxel.btn(pyxel.KEY_SPACE):
             self.v_y = -c.v_salto
         else: 
-            self.v_y = 0
+            self.muerto=True
 
         # contacto con bloques
         for bloque in bloques:
                 if (abs(bloque.coord[0]-self.coord[0]) < self.ancho
                     and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
                     # comprueba si la colision es por debajo
-                    if ((bloque.coord[1]+bloque.alto/1.2)-self.coord[1]) < 2:
+                    if ((bloque.coord[1]+bloque.alto)-self.coord[1]) < bloque.alto:
                             # hay 2 pixeles de marjen
                             self.coord[1] = bloque.coord[1] + bloque.alto + 1
-                            self.v_y = 0.7  # rebota con una velociadad de 0.7
-                    if bloque.coord[1]-(self.coord[1]-self.alto/2) > 2: # comprueba si la colision es por encima
+                            self.v_y += c.v_gravedad  # rebota con una velociadad de 0.7
+                    if bloque.coord[1]-(self.coord[1]-self.alto) >= -0.1: # comprueba si la colision es por encima
                         # permite que se pueda saltar encima de los bloques, si se pone la velocidad
                         if pyxel.btn(pyxel.KEY_SPACE):
                             # en 0 directamente no podrias saltar
@@ -99,6 +99,7 @@ class mario():
                             self.v_y = 0
                             # hace que te pongas en el pixel correcto y no atravieses el bloque
                             self.coord[1] = bloque.coord[1] - self.alto
+
 
 
         for npc in npcs:
@@ -121,6 +122,11 @@ class mario():
                         self.v_y = c.v_rebote
                         self.score += 1000
 
-                self.actualizar_posicion()
+        self.actualizar_posicion()
+    
+    def convertir_en_supermario(self):
+        self.sprite=c.sprite_smario_quieto
+        self.alto=c.alto_smario
+        self.ancho=c.ancho_mario
 
     

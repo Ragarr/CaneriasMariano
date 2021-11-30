@@ -44,14 +44,16 @@ ancho_mario = 15
 alto_mario=15
 ancho_smario = 15
 alto_smario = 31
-ancho_goompa=8
-ancho_koopa_troopa=8
-alto_goompa=8
-alto_koopa_troopa=8
+ancho_goompa=16
+ancho_koopa_troopa=16
+alto_goompa=16
+alto_koopa_troopa=16
 ancho_ladrillo=15
 alto_ladrillo=15
 altura_suelo = alto_pantalla-alto_pantalla/6
 ancho_suelo=15
+alto_concha=9
+
 
 #-----------------sprites en general-----------------------------
 sprite_moneda=[0,2,29,9,13,azul]
@@ -81,8 +83,10 @@ def tuberia(alto:int=48):
 sprite_suelo=[0,0,227,ancho_suelo,22,azul] # el suelo puede medir hasta 250 de ancho
 sprite_ladrillo=[0,160,208,15,15,azul]
 sprite_transparente=[0,0,0,0,0,azul]
-sprite_goompa=[]
-sprite_koopa_troopa=[]
+sprite_goompa=[0,16,0,16,16,azul]
+sprite_goompa_aplastado=[0,32,0,16,16,azul]
+sprite_koopa_troopa=[0,16,16,16,16,azul]
+sprite_concha=[0,32,22,16,9,azul]
 
 
 

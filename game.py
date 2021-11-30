@@ -26,7 +26,7 @@ class App():
         self.objetos = [objeto.champi([130, c.altura_suelo-15]), objeto.estrella([145, c.altura_suelo-15]),
                         objeto.flor([160,c.altura_suelo-15])]
 
-        self.npcs = []
+        self.npcs = [npc.goompa([145, c.altura_suelo-16]),npc.koopa_troopa([120, c.altura_suelo-16])]
 
         self.atrezzo=[]
 

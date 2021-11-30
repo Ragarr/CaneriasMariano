@@ -48,17 +48,20 @@ class npc():
 
     def morir(self):
         self.esta_vivo = False
-        self.sprite = [0, 120, 120, 0, 0, 0]
+        self.sprite = [0, 0, 0, 0, 0, c.azul]
 
 class goompa(npc):
     def __init__ (self, coord: list) -> None:
-        super().__init__ (coord, [0 , 48, 72, 8, 8, 0])#Esto hay que modificarlo cuando tengamos los sprites
+        super().__init__ (coord, c.sprite_goompa)#Esto hay que modificarlo cuando tengamos los sprites
         self.ancho = c.ancho_goompa
         self.alto = c.alto_goompa
+    def aplastar(self):
+        self.sprite=c.sprite_goompa_aplastado
+        self.morir()
 
 class koopa_troopa(npc):
     def __init__ (self, coord: list) -> None:
-        super().__init__ (coord, [0,48, 80, 8, 8, 0 ])#Esto hay que modificarlo cuando tengamos los sprites
+        super().__init__ (coord, c.sprite_koopa_troopa)#Esto hay que modificarlo cuando tengamos los sprites
         self.ancho = c.ancho_koopa_troopa
         self.alto = c.alto_koopa_troopa
         self.es_caparazon = False
@@ -74,9 +77,9 @@ class koopa_troopa(npc):
             '''Este último parámetro se refiere a cuando choca con el jugador de manera frontal, ya que este sigue su moviento'''
             self.es_caparazon = True
             self.v_x = 0
-            self.sprite = [0,56, 80, 8, 8, 0 ]
+            self.sprite = c.sprite_concha
     def resurgir(self):
         '''El koopa troopa volverá a su estado original pasado un tiempo '''
         self.es_caparazon = False
         self.v_x = 2
-        self.sprite = [0,48, 80, 8, 8, 0 ]
+        self.sprite = c.sprite_koopa_troopa

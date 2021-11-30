@@ -69,12 +69,12 @@ class mario():
         
         #mov jugador eje y
         #contacto con el suelo y gravedad
-        """if (self.coord[1] < 92):
+        if (self.coord[1] < 92):
             self.v_y += 0.25
         elif pyxel.btn(pyxel.KEY_SPACE):
             self.v_y = -4
         else: 
-            self.v_y = 0"""
+            self.v_y = 0
 
         # contacto con bloques
         for bloque in bloques:

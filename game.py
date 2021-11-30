@@ -20,10 +20,10 @@ class App():
                         bloque.ladrillo_no_rompible([0, 96]), bloque.ladrillo_no_rompible([pyxel.width-8, 96]),
                         bloque.ladrillo_no_rompible([0, 88]), bloque.ladrillo_no_rompible([pyxel.width-8, 88])]
         # creacion del suelo
-        x=0
+        """x=0
         while x < pyxel.width:
             self.bloques.append(bloque.ladrillo_no_rompible([x, 96]))
-            x+=8
+            x+=8"""
 
 
             

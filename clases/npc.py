@@ -27,11 +27,11 @@ class npc():
         self.v_x = -self.v_x
     
     def actualizar_estado(self,bloques:list,npcs:list):
-        """# gravedad
+        # gravedad
         if (self.coord[1] < 92):
             self.v_y += 0.25
         else:
-            self.v_y =0"""
+            self.v_y =0
 
         for bloque in bloques:
             if (abs(bloque.coord[0]-self.coord[0]) < self.ancho

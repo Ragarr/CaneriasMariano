@@ -80,17 +80,19 @@ class mario():
         for bloque in bloques:
             if (abs(bloque.coord[0]-self.coord[0]) < self.ancho
                     and abs(bloque.coord[1]-self.coord[1]) < self.alto): # comprueba si hay colision
+                print("colision")
                 if ((bloque.coord[1]+bloque.alto)-self.coord[1]) <2:    #comprueba si la colision es por debajo
-                    self.coord[1] = bloque.coord[1] + bloque.alto + 1       # hay 2 pixeles de marjen
-                    self.v_y = 0.7 # rebota con una velociadad de 0.7
+                    self.coord[1] = bloque.coord[1] + bloque.alto - 2       # hay 2 pixeles de marjen
+                    self.v_y = 0
+                    self.coord[1] = self.coord[1]+2
                 if bloque.coord[1]-(self.coord[1]-self.alto) > 2: #comprueba si la colision es por encima
                     if pyxel.btn(pyxel.KEY_SPACE): # permite que se pueda saltar encima de los bloques, si se pone la velocidad
                         self.coord[1] = bloque.coord[1] - self.alto # en 0 directamente no podrias saltar
-                        self.v_y = -10 
+                        self.v_y -= c.v_salto 
                         self.v_x =  0.1*self.v_x # da la sensacion de que rebotas un pelin al golpear el bloque
                     else: # te pega al bloque 
                         self.v_y = 0
-                        self.coord[1] = bloque.coord[1] - self.alto # hace que te pongas en el pixel correcto y no atravieses el bloque
+                        self.coord[1] = bloque.coord[1] - self.alto -1 # hace que te pongas en el pixel correcto y no atravieses el bloque
             else:
                 self.v_y += c.v_gravedad
 

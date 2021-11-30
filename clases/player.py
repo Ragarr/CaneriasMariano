@@ -42,66 +42,57 @@ class mario():
         self.perdiendo_invencibilidad = False # para la estrella
     
     def iniciar_fuerzas(self):
-        self.velocidad_x = 0
-        self.velocidad_y = 0
+        self.v_x = 0
+        self.v_y = 0
 
     def actualizar_posicion(self):  # cambia la posicion del personaje
-        self.coord[0] += self.velocidad_x
-        self.coord[1] += self.velocidad_y
-
-    def recibir_daño(self):
-        self.en_transicion=True
-        if self.es_flor:
-            self.es_flor=False
-            self.es_grande=True
-        elif self.es_grande:
-            self.es_grande=False
-        else:
-            self.vivo=False
-        self.frame_golpe=pyxel.frame_count
-    def mover(self,bloques,npcs):
+        self.coord[0] += self.v_x
+        self.coord[1] += self.v_y
+    
+    def actualizar_estado(self,bloques,npcs):
+        """actualiza las velocidades, el tamaño y en general todos los atributos del jugador"""
         if pyxel.btn(pyxel.KEY_D):  # acelera si pulsas la D
-            self.velocidad_x = min(self.velocidad_x+0.2, 2)
+            self.v_x = min(self.v_x+c.v_avance, c.v_player_max_x)
         elif not pyxel.btn(pyxel.KEY_A) and self.mirando_derecha: # Deceleras si avancas hacia adelante y no pulsas la D ni la A
-            self.velocidad_x = max(self.velocidad_x-0.1, 0)
+            self.v_x = max(self.v_x-c.v_rozamiento, 0)
 
         if pyxel.btn(pyxel.KEY_A):  # decelera si pulsas la D
-            self.velocidad_x = max(self.velocidad_x-0.2, -2)
+            self.v_x = max(self.v_x-c.v_avance, -c.v_player_max_x)
         elif not pyxel.btn(pyxel.KEY_D) and not self.mirando_derecha: # Deceleras si avancas hacia detras y no pulsas la A ni la D
-            self.velocidad_x = min(self.velocidad_x+0.1, 0)
+            self.v_x = min(self.v_x+c.v_rozamiento, 0)
 
         # evitar que el jugador salga de la pantalla
         if self.coord[0] < 0:
-            self.velocidad_x = 0.5
+            self.v_x = 0.5
         elif self.coord[0] > pyxel.width-self.ancho:
-            self.velocidad_x = -0.5
+            self.v_x = -0.5
         
-
-
         #mov jugador eje y
         #contacto con el suelo y gravedad
-        if (self.coord[1] < 92):
-            self.velocidad_y += 0.25
+        """if (self.coord[1] < 92):
+            self.v_y += 0.25
         elif pyxel.btn(pyxel.KEY_SPACE):
-            self.velocidad_y = -4
+            self.v_y = -4
         else: 
-            self.velocidad_y = 0
+            self.v_y = 0"""
 
         # contacto con bloques
         for bloque in bloques:
             if (abs(bloque.coord[0]-self.coord[0]) < self.ancho
                     and abs(bloque.coord[1]-self.coord[1]) < self.alto): # comprueba si hay colision
-                if ((bloque.coord[1]+bloque.alto/1.2)-self.coord[1]) <2:    #comprueba si la colision es por debajo
+                if ((bloque.coord[1]+bloque.alto)-self.coord[1]) <2:    #comprueba si la colision es por debajo
                     self.coord[1] = bloque.coord[1] + bloque.alto + 1       # hay 2 pixeles de marjen
-                    self.velocidad_y = 0.7 # rebota con una velociadad de 0.7
-                if bloque.coord[1]-(self.coord[1]-self.alto/2) > 2: #comprueba si la colision es por encima
+                    self.v_y = 0.7 # rebota con una velociadad de 0.7
+                if bloque.coord[1]-(self.coord[1]-self.alto) > 2: #comprueba si la colision es por encima
                     if pyxel.btn(pyxel.KEY_SPACE): # permite que se pueda saltar encima de los bloques, si se pone la velocidad
                         self.coord[1] = bloque.coord[1] - self.alto # en 0 directamente no podrias saltar
-                        self.velocidad_y = -4 
-                        self.velocidad_x =  0.1*self.velocidad_x # da la sensacion de que rebotas un pelin al golpear el bloque
+                        self.v_y = -10 
+                        self.v_x =  0.1*self.v_x # da la sensacion de que rebotas un pelin al golpear el bloque
                     else: # te pega al bloque 
-                        self.velocidad_y = 0
+                        self.v_y = 0
                         self.coord[1] = bloque.coord[1] - self.alto # hace que te pongas en el pixel correcto y no atravieses el bloque
+            else:
+                self.v_y += c.v_gravedad
 
 
         for npc in npcs:
@@ -112,7 +103,6 @@ class mario():
                     and npc.esta_vivo):
                     print("colision en x ")
                     print("no hitbox ")
-                    self.rec  # recibir_daño()
                 elif ((npc.coord[1]-(self.coord[1]+self.alto)) < 2
                     and not abs(npc.coord[0]-self.coord[0]) < 2
                     and not self.en_transicion
@@ -120,7 +110,7 @@ class mario():
                     print("colision en y ")
                     npc.morir()
                     print("npc muerto")
-                    self.velocidad_y = -2
+                    self.v_y = -2
                     self.score += 1000
 
         self.actualizar_posicion()

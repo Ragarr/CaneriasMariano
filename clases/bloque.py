@@ -1,8 +1,9 @@
-import pyxel
-import random
 if __name__ == "__main__":
     print("este archivo no es el principal y no esta pensado para ser ejecutado")
-
+    quit()
+import random
+import pyxel
+import constants as c
 
 class bloque():
     def __init__(self, coord: list, sprite: list) -> None:
@@ -13,9 +14,9 @@ class bloque():
         self.sprite = sprite
         self.tiene_hitbox = True  # colisiones del bloque
         # aqui hay que añadir el ancho (x) del ladrillo en pixeles para cuando tengamos el archivo con los sprites
-        self.ancho = 10
+        self.ancho = c.ancho_ladrillo
         # mas de lo mismo que arriba pero con el largo (y) en pixeles
-        self.alto = 8
+        self.alto = c.alto_ladrillo
 
 
 class ladrillo_no_rompible(bloque):
@@ -78,3 +79,9 @@ class tuberia(bloque):
     def __init__(self, coord: list) -> None:
         super().__init__(coord, [0, 24, 96, 8, 8, 0]) # una vez que el profesor nos pase el archivo con los sprites
 
+class suelo(bloque):
+    def __init__(self, coord: list) -> None:
+        # una vez que el profesor nos pase el archivo con los sprites
+        super().__init__(coord, [0, 180, 180, 80, 80])
+        self.alto= pyxel.height/3
+        self.ancho = pyxel.width

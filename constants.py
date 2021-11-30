@@ -4,7 +4,7 @@
 ancho_pantalla = 256
 largo_pantalla = 150
 fps = 40
-path_recursos = "assets/test_resource.pyxres"
+assets_path = "assets/editor/assets/mario_assets.pyxres"
 
 
 # ----------------------------colores-----------------------------

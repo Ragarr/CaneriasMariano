@@ -9,7 +9,7 @@ class App():
     def __init__(self) -> None:
         
         pyxel.init(c.ancho_pantalla, c.largo_pantalla, caption="test", fps=c.fps)
-        pyxel.load("assets/test_resource.pyxres")
+        pyxel.load(c.assets_path)
         self.contador = 0
 
         self.jugador = player.mario([20, 12]) 

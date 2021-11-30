@@ -27,11 +27,12 @@ carne = 15
 
 # ---------------------------fisicas------------------------------
 v_gravedad = 0.1
-v_salto = 9
+v_salto = 1.5
 v_rozamiento = 0.1
-v_avance = 0.2
-v_player_max_x=2
+v_avance = 0.1
+v_player_max_x=1
 v_player_max_y= 0
+v_rebote= 0.5
 v_npc= 1
 v_goompa, v_koopa_troopa = v_npc, v_npc
 

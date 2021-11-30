@@ -27,30 +27,17 @@ class npc():
         self.v_x = -self.v_x
     
     def actualizar_estado(self,bloques:list,npcs:list):
-        # gravedad
-        if (self.coord[1] < 92):
-            self.v_y += 0.25
-        else:
-            self.v_y =0
 
         for bloque in bloques:
             if (abs(bloque.coord[0]-self.coord[0]) < self.ancho
                     and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
-                print("colision")
-                # comprueba si la colision es por debajo
-                if ((bloque.coord[1]+bloque.alto)-self.coord[1]) < 2:
-                    self.coord[1] = bloque.coord[1] + bloque.alto -2       # hay 2 pixeles de marjen
-                    self.v_y = 0
-                    self.coord[1] = self.coord[1]+2
-                # comprueba si la colision es por encima
-                if bloque.coord[1]-(self.coord[1]-self.alto) > 1:
-                    self.v_y = 0
-                     # self.coord[1] = bloque.coord[1] - self.alto -1
-            else:
-                self.v_y += c.v_gravedad
+                self.v_x = -self.v_x
+                print("npc colisionando")
+
         for npc in npcs:
             if (abs(npc.coord[0]-self.coord[0]) < self.ancho and abs(npc.coord[1]-self.coord[1]) < self.alto):
-                    self.v_x=-self.v_x
+                self.v_x =-self.v_x
+                print("npc colisionando")
 
             
         self.actualizar_posicion()

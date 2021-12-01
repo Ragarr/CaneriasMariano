@@ -13,7 +13,7 @@ class mario():
         self.__iniciar_booleanos()
         self.__iniciar_fuerzas()
         self.__score = 0
-        self.__monedas = 0
+        self.__dinero = 0
         self.__coord = coord  # ubicacion de el sprite
     @property
     def sprite(self):
@@ -54,16 +54,16 @@ class mario():
             raise ValueError('La puntación debe ser mayor que 0')
         self.__score = new_score
     @property
-    def monedas(self):
-        return self.__monedas
+    def dinero(self):
+        return self.__dinero
     
-    @monedas.setter
-    def score(self, new_monedas):
-        if not isinstance (new_monedas, int):
-            raise ValueError('Las monedas deben ser un número entero')
-        if not new_monedas >= 0:
-            raise ValueError('Las monedas deben ser mayor que 0')
-        self.__monedas = new_monedas
+    @dinero.setter
+    def dinero(self, new_dinero):
+        if not isinstance (new_dinero, int):
+            raise ValueError('Las dinero deben ser un número entero')
+        if not new_dinero >= 0:
+            raise ValueError('Las dinero deben ser mayor que 0')
+        self.__dinero = new_dinero
     @property
     def coord(self):
         return self.__coord
@@ -105,7 +105,7 @@ class mario():
         self.coord[0] += self.v_x
         self.coord[1] += self.v_y
     
-    def actualizar_estado(self,bloques:list,npcs:list,objetos:list):        
+    def actualizar_estado(self,bloques:list,npcs:list,objetos:list,jugador):        
         """actualiza las velocidades, el tamaño y en general todos los atributos del jugador"""
         if pyxel.btn(pyxel.KEY_D):  # acelera si pulsas la D
             self.v_x = min(self.v_x+c.v_avance, c.v_player_max_x)
@@ -143,7 +143,7 @@ class mario():
                 and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
                 if ((bloque.coord[1]+bloque.alto)-self.coord[1]) <= self.alto and not colision_superior:
                     #print("colision inferior con {}".format(type(bloque)))
-                    bloque.golpear(objetos)
+                    bloque.golpear(objetos,jugador)
                     self.v_y = 2*c.v_gravedad
                     colision_inferior = True
                 if ((abs(bloque.coord[1]-(self.coord[1]+self.alto)))  <= self.alto and not colision_inferior):  # comprueba si la colision es por encima

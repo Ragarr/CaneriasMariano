@@ -21,6 +21,15 @@ class bloque():
         # mas de lo mismo que arriba pero con el largo (y) en pixeles
         self.__alto = alto
         self.__v_y=0
+        self.__existe=True
+    @property
+    def existe(self):
+        return self.__existe
+    @existe.setter
+    def existe(self,new_existe):
+        if not isinstance(new_existe,bool):
+            raise ValueError("el valor debe ser booleano")
+        self.__existe=new_existe
 
     @property # getter
     def coord(self):
@@ -91,6 +100,8 @@ class bloque():
 
 
 
+
+
 class ladrillo_no_rompible(bloque):
     def __init__(self, coord: list,) -> None:
         """un bloque con textura de ladrillo que no interactua con el jugador"""
@@ -98,7 +109,7 @@ class ladrillo_no_rompible(bloque):
         super().__init__(coord, c.sprite_ladrillo, c.ancho_ladrillo,c.alto_ladrillo)
 
 
-    def golpear(self,bloques=None):
+    def golpear(self,bloques=None,player=None):
         self.v_y-=0.2
 
 
@@ -107,7 +118,7 @@ class ladrillo_rompible(bloque):
         """un bloque con textura de ladrillo que cuando es golpeado por el jugador suelta le da una moneda"""
         super().__init__(coord, c.sprite_ladrillo, c.ancho_ladrillo, c.alto_ladrillo)
 
-    def golpear(self,bloques=None):
+    def golpear(self,bloques=None,player=None):
         """rompe el bloque"""
         # remplazar el sprite por uno vacio
         self.dibujo[2], self.dibujo[3], self.dibujo[4], self.dibujo[5], self.dibujo[6], self.dibujo[7] = c.sprite_transparente  
@@ -120,18 +131,23 @@ class ladrillo_con_monedas(bloque):
         """visualmente es igual que los demas ladrillos pero contiene una cantidad aleatorea de monedas"""
         super().__init__(coord, c.sprite_ladrillo, c.ancho_ladrillo, c.alto_ladrillo)
         # numero de monedas que contiene el bloque
-        self.monedas = random.randint(1, 6)
+        self.monedas = random.randint(1,6)
         # controla si el objeto tiene colisiones
 
-    def golpear(self, objetos:list):
+    def golpear(self, objetos:list,player=None):
         """dara monedas hasta que no haya, entonces se rompera"""
         if self.monedas <= 1:
             self.romper()
-        self.monedas -= 1  # resta una moneda al contenido del bloque
-        objetos.append(objeto.moneda([self.coord_iniciales[0],self.coord_iniciales[1]-15]))
+        if pyxel.frame_count % 8 == 0:
+            self.monedas =(self.monedas- 1) # resta una moneda al contenido del bloque
+            objetos.append(objeto.moneda([self.coord_iniciales[0],self.coord_iniciales[1]-15]))
+            player.dinero += 1
+
+        
+        
     def romper(self):
-        self.sprite = c.sprite_transparente  # remplazar el sprite por el cielo
-        self.tiene_hitbox = False  # para deshabilitar las colisiones con el objeto
+        self.existe=False
+ # para deshabilitar las colisiones con el objeto
 
 
 class interrogacion(bloque):
@@ -142,7 +158,7 @@ class interrogacion(bloque):
         # 0-3moneda, 4champi, 5flor, 6estrella
         self.contenido = random.randint(0, 6)
 
-    def golpear(self,bloques=None):
+    def golpear(self,bloques=None,player=None):
         """dara un objeto y se convertirta en un bloque plano"""
         self.__sprite = c.sprite_interrogacion_golpeado  # reemplazar el sprite de interrogacion por el liso
 

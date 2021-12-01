@@ -162,6 +162,4 @@ class koopa_troopa(npc):
         self.coord[1]-=5
         self.sprite = c.sprite_koopa_troopa
 
-a=koopa_troopa([1,1])
-print(a.coord)
-print(a.sprite)
+

@@ -49,8 +49,8 @@ class mario():
         self.coord[0] += self.v_x
         self.coord[1] += self.v_y
     
-    def actualizar_estado(self,bloques,npcs):        """actualiza las velocidades, el tamaño y en general todos los atributos del jugador"""
-
+    def actualizar_estado(self,bloques,npcs):        
+        """actualiza las velocidades, el tamaño y en general todos los atributos del jugador"""
         if pyxel.btn(pyxel.KEY_D):  # acelera si pulsas la D
             self.v_x = min(self.v_x+c.v_avance, c.v_player_max_x)
             self.mirando_derecha=True

@@ -61,7 +61,7 @@ class npc():
         return self.__v_y
     @v_y.setter
     def v_y(self,v_y):
-        if  not isinstance(v_x, int) or not isinstance(v_x, float):
+        if  not isinstance(v_y, int) or not isinstance(v_y, float):
             raise ValueError('El valor de la velocidad es int o float')
         self.__v_y=v_y
     

@@ -44,6 +44,11 @@ class goompa(npc):
     def colisionar_jugador(self):
         self.sprite=c.sprite_goompa_aplastado
         self.morir()
+    def colisionar_npc(self,npc):
+        if npc.es_caparazon:
+            self.morir()
+        else:
+            self.colisionar_bloque()
 
     def actualizar_estado(self, bloques: list, npcs: list):
 
@@ -56,7 +61,8 @@ class goompa(npc):
         for npc in npcs:
             if (abs(npc.coord[0]-self.coord[0]) < self.ancho and abs(npc.coord[1]-self.coord[1]) < self.alto
                     and npc.esta_vivo):
-                self.colisionar_bloque()
+
+                self.colisionar_npc(npc)
 
 
         self.actualizar_posicion()

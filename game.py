@@ -26,7 +26,7 @@ class App():
         self.objetos = [objeto.champi([130, c.altura_suelo-15]), objeto.estrella([145, c.altura_suelo-15]),
                         objeto.flor([160,c.altura_suelo-15])]
 
-        self.npcs = [npc.goompa([145, c.altura_suelo-16]),npc.koopa_troopa([120, c.altura_suelo-16])]
+        self.npcs = [npc.goompa([130, c.altura_suelo-16]),npc.koopa_troopa([160, c.altura_suelo-16])]
 
         self.atrezzo=[]
 
@@ -39,6 +39,8 @@ class App():
         self.jugador.actualizar_estado(self.bloques,self.npcs)
         for npc in self.npcs:
             npc.actualizar_estado(self.bloques , (other_npc for other_npc in self.npcs if other_npc != npc) ) # paso la lista de npcs exluyendo el npc a evaluar
+        for bloque in self.bloques:
+            bloque.reposicionar()
         self.contador = 400-int(pyxel.frame_count/c.fps)
         
 

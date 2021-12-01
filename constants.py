@@ -27,8 +27,8 @@ salmon = 14
 carne = 15
 
 # ---------------------------fisicas------------------------------
-v_gravedad = 0.25
-v_salto = 4
+v_gravedad = 0.1
+v_salto = 5
 v_rozamiento = 0.1
 v_avance = 0.8
 v_player_max_x=2
@@ -51,12 +51,13 @@ ancho_goompa=16
 ancho_koopa_troopa=16
 alto_goompa=16
 alto_koopa_troopa=16
-ancho_ladrillo=15
-alto_ladrillo=15
+ancho_interrogacion = ancho_ladrillo = 15
+alto_interrogacion = alto_ladrillo = 15
 altura_suelo = alto_pantalla-alto_pantalla/6
+ancho_tuberia=31
 ancho_suelo=15
 alto_concha=8
-
+tolerancia_colisiones=2
 
 #-----------------sprites en general-----------------------------
 sprite_moneda=[0,2,29,9,13,azul]

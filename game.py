@@ -42,7 +42,7 @@ class App():
         for bloque in self.bloques:
             bloque.reposicionar()
         for objeto in self.objetos:
-            self.monedas+=objeto.actualizar(player.mario)
+            objeto.actualizar(player.mario)
         self.contador = 400-int(pyxel.frame_count/c.fps)
         
 

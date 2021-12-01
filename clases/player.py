@@ -6,15 +6,15 @@ import pyxel
 import constants as c
 class mario():
     def __init__(self, coord: list) -> None:
-        self.sprite = c.sprite_mario_quieto
-        self.ancho = c.ancho_mario
-        self.alto = c.alto_mario
-        self.iniciar_temporizadores()
-        self.iniciar_booleanos()
-        self.iniciar_fuerzas()
-        self.score = 0
-        self.monedas = 0
-        self.coord = coord  # ubicacion de el sprite
+        self.__sprite = c.sprite_mario_quieto
+        self.__ancho = c.ancho_mario
+        self.__alto = c.alto_mario
+        self.__iniciar_temporizadores()
+        self.__iniciar_booleanos()
+        self.__iniciar_fuerzas()
+        self.__score = 0
+        self.__monedas = 0
+        self.__coord = coord  # ubicacion de el sprite
     @property
     def sprite(self):
         return self.__sprite
@@ -26,10 +26,55 @@ class mario():
         if len(new_sprite) != 6:
             raise ValueError("la lista sprite debe tener exactamente 6 elementos")
         self.__sprite = new_sprite
+    @property
+    def ancho(self):
+        return self.__ancho
     
+    @ancho.setter
+    def ancho(self, new_ancho):
+        self.__ancho = new_ancho
+    
+    @property
+    def alto(self):
+        return self.__alto
+    
+    @alto.setter
+    def alto(self, new_alto):
+        self.__ancho = new_alto
+
+    @property
+    def score(self):
+        return self.__score
+    
+    @score.setter
+    def score(self, new_score):
+        if not isinstance (new_score, int):
+            raise ValueError('La puntación debe ser un número entero')
+        if not new_score >= 0:
+            raise ValueError('La puntación debe ser mayor que 0')
+        self.__score = new_score
+    @property
+    def monedas(self):
+        return self.__monedas
+    
+    @monedas.setter
+    def score(self, new_monedas):
+        if not isinstance (new_monedas, int):
+            raise ValueError('Las monedas deben ser un número entero')
+        if not new_monedas >= 0:
+            raise ValueError('Las monedas deben ser mayor que 0')
+        self.__monedas = new_monedas
+    @property
+    def coord(self):
+        return self.__coord
+    @coord.setter
+    def coord(self, coord):
+        if len(coord) != 2:
+            raise ValueError('La lista coord tiene que tener exactamente 2 elementos')
+        self.__coord = coord
 
 
-    def iniciar_temporizadores(self):
+    def __iniciar_temporizadores(self):
 
         """timers en frames para las animaciones """
         self.timer_andar = 0
@@ -41,7 +86,7 @@ class mario():
         self.timer_fireball = 0 # animacion de la fireball
         self.timer_bandera = 0 # animacion de la mandera
     
-    def iniciar_booleanos(self):
+    def __iniciar_booleanos(self):
         """boleanos para el comportamiento de mario"""
         self.mirando_derecha = True
         self.permitir_salto = True 
@@ -53,7 +98,7 @@ class mario():
         self.en_transicion = False # para cuando cambia de estado
         self.perdiendo_invencibilidad = False # para la estrella
     
-    def iniciar_fuerzas(self):
+    def __iniciar_fuerzas(self):
         self.v_x = 0
         self.v_y = 0
     def actualizar_posicion(self):  # cambia la posicion del personaje

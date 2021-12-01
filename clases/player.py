@@ -84,7 +84,7 @@ class mario():
                     and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
                     # comprueba si la colision es por debajo
                     if ((bloque.coord[1]+bloque.alto)-self.coord[1]) < bloque.alto:
-                            # hay 2 pixeles de marjen
+                            # hay 2 pixeles de margen
                             self.coord[1] = bloque.coord[1] + bloque.alto + 1
                             self.v_y += c.v_gravedad  # rebota con una velociadad de 0.7
                     if bloque.coord[1]-(self.coord[1]-self.alto) >= -0.1: # comprueba si la colision es por encima

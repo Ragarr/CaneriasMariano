@@ -37,24 +37,32 @@ class npc():
         return self.__coord
     @coord.setter
     def coord(self, coord):
+        if len(coord)!= 2:
+            raise ValueError('La lista coord tiene que tener exactamente 2 elementos')
         self.__coord = coord
     @property
     def esta_vivo(self):
-        return self.__esta_vivo
+       return self.__esta_vivo
     @esta_vivo.setter
     def esta_vivo(self, esta_vivo:bool):
+        if not (esta_vivo, bool):
+            raise ValueError('El valor de estar vivo debe ser un booleano')
         self.__esta_vivo=esta_vivo
     @property
     def v_x(self):
         return self.__v_x
     @v_x.setter
     def v_x(self,v_x):
+        if  not isinstance(v_x, int) or not isinstance(v_x, float):
+            raise ValueError('El valor de la velocidad es int o float')
         self.__v_x=v_x
     @property
     def v_y(self):
         return self.__v_y
     @v_y.setter
     def v_y(self,v_y):
+        if  not isinstance(v_x, int) or not isinstance(v_x, float):
+            raise ValueError('El valor de la velocidad es int o float')
         self.__v_y=v_y
     
     def colisionar_bloque(self):

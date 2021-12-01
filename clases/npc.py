@@ -5,11 +5,11 @@ import pyxel
 import constants as c
 class npc():
     def __init__(self, coord: list, sprite: list  ) -> None:
-        self.sprite = sprite
-        self.coord = coord
-        self.esta_vivo = True # El npc está vivo 
-        self.v_x = c.v_npc  # La v_x habrá que modificarla según probemos
-        self.v_y = 0
+        self.__sprite = sprite
+        self.__coord = coord
+        self.__esta_vivo = True # El npc está vivo 
+        self.__v_x = c.v_npc  # La v_x habrá que modificarla según probemos
+        self.__v_y = 0
         """
         Cooord es una lista de 2 elementos que contiene la posicón de donde se pinta el sprite
         Sprite es una lista de 6 elementos 
@@ -21,7 +21,42 @@ class npc():
         -la pos y final del sprite
         -color de chroma
         """
+    @property
+    def sprite(self):
+        return self.__sprite
 
+    @sprite.setter
+    def sprite(self, new_sprite: list):
+        if not isinstance(new_sprite, list):
+            raise ValueError("el sprite deben ser una lista")
+        if len(new_sprite) != 6:
+            raise ValueError(
+                "la lista sprite debe tener exactamente 6 elementos")
+        self.__sprite = new_sprite
+    @property
+    def coord(self):
+        return self.__coord
+    @coord.setter
+    def sprite(self, coord):
+        self.__coord = coord
+    @property
+    def esta_vivo(self):
+        return self.__esta_vivo
+    @esta_vivo.setter
+    def esta_vivo(self, esta_vivo:bool):
+        self.__esta_vivo=esta_vivo
+    @property
+    def v_x(self):
+        return self.__v_x
+    @v_x.setter
+    def v_x(self,v_x):
+        self.__v_x=v_x
+    @property
+    def v_y(self):
+        return self.__v_y
+    @v_y.setter
+    def v_y(self,v_y):
+        self.__v_y=v_y
     def colisionar_bloque(self):
         '''Se llama  cuando el npc colisiona y queremos que cambia su moviento al sentido contrario'''
         self.v_x = -self.v_x

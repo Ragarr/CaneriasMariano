@@ -19,27 +19,33 @@ class objeto():
     def coord(self):
         return self.__coord
     @coord.setter
-    def coord(self, coord):
-        if len(coord) != 2:
+    def coord(self, new_coord):
+        if len(new_coord) != 2:
             raise ValueError('La lista coord tiene que tener exactamente 2 elementos')
-        self.__coord = coord
+        self.__coord = new_coord
     @property
     def v_x(self):
         return self.__v_x
     @v_x.setter
-    def v_x(self,v_x):
-        self.__v_x=v_x
+    def v_x(self,new_v_x):
+        if not isinstance(new_v_x,(float,int)):
+            raise ValueError('La velocidad debe ser un entero o float')
+        self.__v_x=new_v_x
     @property
     def v_y(self):
         return self.__v_y
     @v_y.setter
-    def v_y(self,v_y):
-        self.__v_y=v_y
+    def v_y(self,new_v_y):
+        if not isinstance(new_v_y, (float, int)):
+            raise ValueError('La velocidad debe ser un entero o float')
+        self.__v_y = new_v_y
     @property
     def esta_activo(self):
         return self.__esta_activo
     @esta_activo.setter
     def esta_activo(self,esta_activo:bool):
+        if not isinstance(esta_activo, bool):
+            raise ValueError('el estado de activo debe ser un valor booleano')
         self.__esta_activo=esta_activo
 
 

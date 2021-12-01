@@ -45,7 +45,7 @@ class npc():
        return self.__esta_vivo
     @esta_vivo.setter
     def esta_vivo(self, new_esta_vivo:bool):
-        if not (new_esta_vivo, bool):
+        if not isinstance(new_esta_vivo, bool):
             raise ValueError('El valor de estar vivo debe ser un booleano')
         self.__esta_vivo= new_esta_vivo
     @property

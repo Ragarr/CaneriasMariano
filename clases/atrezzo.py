@@ -31,7 +31,7 @@ class atrezzo():
             raise ValueError("las coordenadas deben ser una lista")
         if len(coord) !=2:
             raise ValueError("la lista de coordenadas debe tener exactamente dos elementos")
-        if not isinstance(coord[0], (int,float)) or not isinstance(coord[0], (int,float)):
+        if not isinstance(coord[0], (int,float)) or not isinstance(coord[1], (int,float)):
             raise ValueError("las coordenadas deben ser enteros o floats")
         self.__coord=coord
 

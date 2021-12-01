@@ -1,6 +1,6 @@
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     print("este archivo no es el principal y no esta pensado para ser ejecutado")
-    quit()
+    quit()"""
 import pyxel
 import constants as c
 class npc():
@@ -30,8 +30,7 @@ class npc():
         if not isinstance(new_sprite, list):
             raise ValueError("el sprite deben ser una lista")
         if len(new_sprite) != 6:
-            raise ValueError(
-                "la lista sprite debe tener exactamente 6 elementos")
+            raise ValueError("la lista sprite debe tener exactamente 6 elementos")
         self.__sprite = new_sprite
     @property
     def coord(self):
@@ -57,6 +56,7 @@ class npc():
     @v_y.setter
     def v_y(self,v_y):
         self.__v_y=v_y
+    
     def colisionar_bloque(self):
         '''Se llama  cuando el npc colisiona y queremos que cambia su moviento al sentido contrario'''
         self.v_x = -self.v_x
@@ -73,7 +73,8 @@ class npc():
 
 class goompa(npc):
     def __init__ (self, coord: list) -> None:
-        super().__init__ (coord, c.sprite_goompa)#Esto hay que modificarlo cuando tengamos los sprites
+        # Esto hay que modificarlo cuando tengamos los sprites
+        super().__init__(coord=coord, sprite=c.sprite_goompa)
         self.ancho = c.ancho_goompa
         self.alto = c.alto_goompa
     def colisionar_jugador(self):
@@ -105,7 +106,7 @@ class goompa(npc):
 
 class koopa_troopa(npc):
     def __init__ (self, coord: list) -> None:
-        super().__init__ (coord, c.sprite_koopa_troopa)#Esto hay que modificarlo cuando tengamos los sprites
+        super().__init__ (coord=coord, sprite=c.sprite_koopa_troopa)#Esto hay que modificarlo cuando tengamos los sprites
         self.ancho = c.ancho_koopa_troopa
         self.alto = c.alto_koopa_troopa
         self.es_caparazon = False
@@ -152,3 +153,7 @@ class koopa_troopa(npc):
         self.es_caparazon = False
         self.coord[1]-=5
         self.sprite = c.sprite_koopa_troopa
+
+a=koopa_troopa([1,1])
+print(a.coord)
+print(a.sprite)

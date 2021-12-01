@@ -36,34 +36,34 @@ class npc():
     def coord(self):
         return self.__coord
     @coord.setter
-    def coord(self, coord):
-        if len(coord)!= 2:
+    def coord(self, new_coord):
+        if len(new_coord)!= 2:
             raise ValueError('La lista coord tiene que tener exactamente 2 elementos')
-        self.__coord = coord
+        self.__coord = new_coord
     @property
     def esta_vivo(self):
        return self.__esta_vivo
     @esta_vivo.setter
-    def esta_vivo(self, esta_vivo:bool):
-        if not (esta_vivo, bool):
+    def esta_vivo(self, new_esta_vivo:bool):
+        if not (new_esta_vivo, bool):
             raise ValueError('El valor de estar vivo debe ser un booleano')
-        self.__esta_vivo=esta_vivo
+        self.__esta_vivo= new_esta_vivo
     @property
     def v_x(self):
         return self.__v_x
     @v_x.setter
-    def v_x(self,v_x):
-        if  not isinstance(v_x, (int, float)):
+    def v_x(self,new_v_x):
+        if  not isinstance(new_v_x, (int, float)):
             raise ValueError('El valor de la velocidad es int o float')
-        self.__v_x=v_x
+        self.__v_x= new_v_x
     @property
     def v_y(self):
         return self.__v_y
     @v_y.setter
-    def v_y(self,v_y):
-        if  not isinstance(v_y, (int, float)):
+    def v_y(self,new_v_y):
+        if  not isinstance(new_v_y, (int, float)):
             raise ValueError('El valor de la velocidad es int o float')
-        self.__v_y=v_y
+        self.__v_y=new_v_y
     
     def colisionar_bloque(self):
         '''Se llama  cuando el npc colisiona y queremos que cambia su moviento al sentido contrario'''

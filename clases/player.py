@@ -15,6 +15,19 @@ class mario():
         self.score = 0
         self.monedas = 0
         self.coord = coord  # ubicacion de el sprite
+    @property
+    def sprite(self):
+        return self.__sprite
+
+    @sprite.setter
+    def sprite(self, new_sprite: list):
+        if not isinstance(new_sprite, list):
+            raise ValueError("el sprite deben ser una lista")
+        if len(new_sprite) != 6:
+            raise ValueError("la lista sprite debe tener exactamente 6 elementos")
+        self.__sprite = new_sprite
+    
+
 
     def iniciar_temporizadores(self):
 

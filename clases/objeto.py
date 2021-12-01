@@ -19,8 +19,10 @@ class objeto():
     def coord(self):
         return self.__coord
     @coord.setter
-    def coord(self,coord):
-        self.__coord=coord
+    def coord(self, coord):
+        if len(coord) != 2:
+            raise ValueError('La lista coord tiene que tener exactamente 2 elementos')
+        self.__coord = coord
     @property
     def v_x(self):
         return self.__v_x

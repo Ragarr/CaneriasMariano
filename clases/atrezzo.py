@@ -26,7 +26,7 @@ class atrezzo():
 
     @coord.setter # el setter
     def coord(self,coord:list):
-        # modificando las coordenadas
+        # print("modificando las coordenadas")
         if not isinstance(coord,list):
             raise ValueError("las coordenadas deben ser una lista")
         if len(coord) !=2:
@@ -49,5 +49,4 @@ class arbusto(atrezzo):
     def __init__(self, coord:list) -> None:
         super().__init__(coord, [0,32,72,16,16,0])
 
-a=montaña([1,2])
-print(a.coord)
+

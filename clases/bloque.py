@@ -12,16 +12,66 @@ class bloque():
         """coord es una lista de 2 elementos 
         que contiene en este orden los siguienes valores x e y  del origen
         """
-        self.coord = coord
-        self.coord_iniciales = coord.copy()
-        self.sprite = sprite
-        self.tiene_hitbox = True  # colisiones del bloque
+        self.__coord = coord
+        self.__coord_iniciales = self.__coord.copy()
+        self.__sprite = sprite
+        self.__tiene_hitbox = True  # colisiones del bloque
         # aqui hay que añadir el ancho (x) del ladrillo en pixeles para cuando tengamos el archivo con los sprites
-        self.ancho = ancho
+        self.__ancho = ancho
         # mas de lo mismo que arriba pero con el largo (y) en pixeles
-        self.alto = alto
+        self.__alto = alto
         self.v_y=0
 
+    @property # getter
+    def coord(self):
+        return self.__coord
+
+    @coord.setter # el setter
+    def coord(self,coord:list):
+        # modificando las coordenadas
+        if not isinstance(coord,list):
+            raise ValueError("las coordenadas deben ser una lista")
+        if len(coord) !=2:
+            raise ValueError("la lista de coordenadas debe tener exactamente dos elementos")
+        if not isinstance(coord[0], (int,float)) or not isinstance(coord[0], (int,float)):
+            raise ValueError("las coordenadas deben ser enteros o floats")
+        self.__coord=coord
+
+    @property # permite consultar la hitbox
+    def tiene_hitbox(self):
+        return self.__tiene_hitbox
+
+    @property
+    def ancho(self):
+        return self.__ancho
+    @property
+    def alto(self):
+        return self.__alto
+    @property
+    def sprite(self):
+        return self.__sprite
+    @sprite.setter
+    def sprite(self,new_sprite:list):
+        if not isinstance(new_sprite, list):
+            raise ValueError("el sprite deben ser una lista")
+        if len(new_sprite) !=6:
+            raise ValueError("la lista sprite debe tener exactamente 6 elementos")
+        self.__sprite=new_sprite
+    @property
+    def tiene_hitbox(self):
+        return self.__tiene_hitbox
+    @tiene_hitbox.setter
+    def tiene_hitbox(self, hitbox:bool):
+        self.__tiene_hitbox=hitbox
+
+    @property
+    def coord_iniciales(self):
+        return self.__coord_iniciales
+
+    @coord_iniciales.setter
+    def coord_iniciales(self):
+        self.__coord=self.__coord.copy()
+    
     def reposicionar(self):
         # print(int(self.coord[1]), int(self.coord_iniciales[1]))
         self.coord[1] = min(self.coord[1]+self.v_y,self.coord_iniciales[1]+2)
@@ -85,13 +135,13 @@ class interrogacion(bloque):
 
     def golpear(self,bloques=None):
         """dara un objeto y se convertirta en un bloque plano"""
-        self.sprite = c.sprite_interrogacion_golpeado  # reemplazar el sprite de interrogacion por el liso
+        self.__sprite = c.sprite_interrogacion_golpeado  # reemplazar el sprite de interrogacion por el liso
 
 class tuberia(bloque):
     def __init__(self, coord: list,alto:int) -> None:
         super().__init__(coord, c.tuberia(alto)) # una vez que el profesor nos pase el archivo con los sprites
-        self.alto=alto
-        self.ancho=c.ancho_tuberia
+        self.__alto=alto
+        self.__ancho=c.ancho_tuberia
 
 class suelo(bloque):
     def __init__(self, coord: list) -> None:

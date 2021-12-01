@@ -11,7 +11,7 @@ class App():
         pyxel.init(c.ancho_pantalla, c.alto_pantalla, caption="test", fps=c.fps)
         pyxel.load(c.assets_path)
         self.contador = 0
-
+        self.monedas=0
         self.jugador = player.mario([20, 12])
 
         self.bloques = [bloque.ladrillo_con_monedas([100,110]),bloque.ladrillo_no_rompible([115,125]),
@@ -42,7 +42,7 @@ class App():
         for bloque in self.bloques:
             bloque.reposicionar()
         for objeto in self.objetos:
-            objeto.actualizar(player.mario)
+            self.monedas+=objeto.actualizar(player.mario)
         self.contador = 400-int(pyxel.frame_count/c.fps)
         
 
@@ -60,7 +60,7 @@ class App():
             pyxel.blt(*self.atrezzo[i].coord, *self.atrezzo[i].sprite)
         pyxel.blt(*self.jugador.coord,*self.jugador.sprite)
         pyxel.text(pyxel.width-20,10,str(self.contador),0)
-        pyxel.text(70, 10, "COINS: {}".format(self.jugador.monedas), 0)
+        pyxel.text(70, 10, "COINS: {}".format(self.monedas), 0)
         pyxel.text(30,10,"MARIO",0)
         pyxel.text(30, 20, "{:06d}".format(self.jugador.score), 0)
         if self.jugador.muerto:

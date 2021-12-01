@@ -6,7 +6,6 @@ import pyxel
 import constants as c
 class mario():
     def __init__(self, coord: list) -> None:
-    
         self.sprite = c.sprite_mario_quieto
         self.ancho = c.ancho_mario
         self.alto = c.alto_mario
@@ -44,7 +43,6 @@ class mario():
     def iniciar_fuerzas(self):
         self.v_x = 0
         self.v_y = 0
-
     def actualizar_posicion(self):  # cambia la posicion del personaje
         self.coord[0] += self.v_x
         self.coord[1] += self.v_y

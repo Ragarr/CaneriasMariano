@@ -29,7 +29,7 @@ class flor(objeto):
         self.sprite = c.sprite_flor
 
     def actualizar(self,player):
-        pass
+        return 0
 
 
 class estrella(objeto):
@@ -38,7 +38,7 @@ class estrella(objeto):
         self.sprite = c.sprite_estrella
 
     def actualizar(self,player):
-        pass
+        return 0
 
 
 class champi(objeto):
@@ -47,7 +47,7 @@ class champi(objeto):
         self.sprite = c.sprite_champi
 
     def actualizar(self, player):
-        pass
+        return 0
 
 
 class moneda(objeto):
@@ -57,16 +57,14 @@ class moneda(objeto):
         self.duracion_frames = pyxel.frame_count+c.fps
         self.consumida = False
 
-    def actualizar(self, player):
+    def actualizar(self,player):
         if self.duracion_frames > pyxel.frame_count and pyxel.frame_count % (c.fps/3) == 0:
             self.girar()
         elif self.duracion_frames > pyxel.frame_count:
             pass
         else:
             self.sprite = c.sprite_transparente
-        if not self.consumida:
-            player.monedas += 1
-            self.consumida = True
+ 
 
     def girar(self):
         if self.sprite == c.sprite_moneda_girada:

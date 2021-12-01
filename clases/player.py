@@ -90,15 +90,15 @@ class mario():
                     bloque.golpear()
                     self.v_y = 2*c.v_gravedad
                     colision_inferior = True
-                if (bloque.coord[1]-(self.coord[1])  <= bloque.alto and not colision_inferior): # comprueba si la colision es por encima
+                if ((abs(bloque.coord[1]-(self.coord[1]+self.alto)))  <= self.alto and not colision_inferior):  # comprueba si la colision es por encima
                     #print("colision superior con {}".format(type(bloque)))
                     colision_superior=True
                     # permite que se pueda saltar encima de los bloques, si se pone la velocidad
-                    if pyxel.btn(pyxel.KEY_SPACE):
+                    if (pyxel.btn(pyxel.KEY_SPACE)):
                         self.v_y =-c.v_salto
                     else:  # te pega al bloque
                         self.v_y = 0
-                if ((bloque.coord[0]+bloque.ancho)-self.coord[0<=self.ancho]
+                if ((bloque.coord[0]+bloque.ancho)-self.coord[0]<=self.ancho
                     and not colision_superior):
                     self.v_x= - self.v_x
                     #print("colision izquierda con {}".format(type(bloque)))
@@ -107,7 +107,7 @@ class mario():
         for npc in npcs:
             if (abs(npc.coord[0]-self.coord[0]) < self.ancho
                 and abs(npc.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
-                if ((npc.coord[0]-self.coord[0]+self.ancho) < 2
+                if ((npc.coord[0]-self.coord[0]+self.ancho) < c.tolerancia_colisiones
                         and not self.en_transicion
                             and npc.esta_vivo):
                         self.recibir_daño()

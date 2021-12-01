@@ -27,7 +27,7 @@ salmon = 14
 carne = 15
 
 # ---------------------------fisicas------------------------------
-v_gravedad = 0.25
+v_gravedad = 0.1
 v_salto = 5
 v_rozamiento = 0.1
 v_avance = 0.8

@@ -20,7 +20,7 @@ class bloque():
         self.__ancho = ancho
         # mas de lo mismo que arriba pero con el largo (y) en pixeles
         self.__alto = alto
-        self.v_y=0
+        self.__v_y=0
 
     @property # getter
     def coord(self):
@@ -36,6 +36,15 @@ class bloque():
         if not isinstance(coord[0], (int,float)) or not isinstance(coord[0], (int,float)):
             raise ValueError("las coordenadas deben ser enteros o floats")
         self.__coord=coord
+    @property
+    def v_y(self):
+        return self.__v_y
+    @v_y.setter
+    def v_y(self,v_y:float):
+        if not isinstance(v_y, (float,int)):
+            raise ValueError("la velocidad debe ser un int o float")
+        self.__v_y=v_y
+
 
     @property # permite consultar la hitbox
     def tiene_hitbox(self):

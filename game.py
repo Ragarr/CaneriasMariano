@@ -16,7 +16,7 @@ class App():
 
         self.bloques = [bloque.ladrillo_con_monedas([100,110]),bloque.ladrillo_no_rompible([115,125]),
                         bloque.ladrillo_no_rompible([0, c.altura_suelo-c.alto_ladrillo]),
-                        bloque.ladrillo_no_rompible([c.ancho_pantalla-c.ancho_ladrillo, c.altura_suelo-c.alto_ladrillo])]
+                        bloque.ladrillo_no_rompible([c.ancho_pantalla-c.ancho_ladrillo, c.altura_suelo-c.alto_ladrillo+1])]
         # creacion del suelo
         x=0
         while x < pyxel.width:

@@ -70,7 +70,7 @@ class mario():
             self.v_x = -0.5
         
         #mov jugador eje y
-        #contacto con el suelo y gravedad
+        #gravedad
         if (self.coord[1] < pyxel.width):
             self.v_y += c.v_gravedad
         elif pyxel.btn(pyxel.KEY_SPACE):
@@ -79,44 +79,46 @@ class mario():
             self.muerto=True
 
         # contacto con bloques
-        for bloque in bloques:
-                if (abs(bloque.coord[0]-self.coord[0]) < self.ancho
-                    and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
-                    # comprueba si la colision es por debajo
-                    if ((bloque.coord[1]+bloque.alto)-self.coord[1]) < bloque.alto:
-                            # hay 2 pixeles de margen
-                            self.coord[1] = bloque.coord[1] + bloque.alto + 1
-                            self.v_y += c.v_gravedad  # rebota con una velociadad de 0.7
-                    if bloque.coord[1]-(self.coord[1]-self.alto) >= -0.1: # comprueba si la colision es por encima
-                        # permite que se pueda saltar encima de los bloques, si se pone la velocidad
-                        if pyxel.btn(pyxel.KEY_SPACE):
-                            # en 0 directamente no podrias saltar
-                            self.coord[1] = bloque.coord[1] - self.alto
-                            self.v_y =-c.v_salto
-                            # da la sensacion de que rebotas un pelin al golpear el bloque
-                            self.v_x = 0.1*self.v_x
-                        else:  # te pega al bloque
-                            self.v_y = 0
-                            # hace que te pongas en el pixel correcto y no atravieses el bloque
-                            self.coord[1] = bloque.coord[1] - self.alto
 
+        for bloque in bloques:
+            colision_superior=False
+            colision_inferior=False
+            if (abs(bloque.coord[0]-self.coord[0]) < self.ancho
+                and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
+                if ((bloque.coord[1]+bloque.alto)-self.coord[1]) <= self.alto and not colision_superior:
+                    #print("colision inferior con {}".format(type(bloque)))
+                    bloque.golpear()
+                    self.v_y = 2*c.v_gravedad
+                    colision_inferior = True
+                if (bloque.coord[1]-(self.coord[1])  <= bloque.alto and not colision_inferior): # comprueba si la colision es por encima
+                    #print("colision superior con {}".format(type(bloque)))
+                    colision_superior=True
+                    # permite que se pueda saltar encima de los bloques, si se pone la velocidad
+                    if pyxel.btn(pyxel.KEY_SPACE):
+                        self.v_y =-c.v_salto
+                    else:  # te pega al bloque
+                        self.v_y = 0
+                if ((bloque.coord[0]+bloque.ancho)-self.coord[0<=self.ancho]
+                    and not colision_superior):
+                    self.v_x= - self.v_x
+                    #print("colision izquierda con {}".format(type(bloque)))
 
 
         for npc in npcs:
-                if (abs(npc.coord[0]-self.coord[0]) < self.ancho
-                    and abs(npc.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
-                    if ((npc.coord[0]-self.coord[0]+self.ancho) < 2
-                            and not self.en_transicion
-                                and npc.esta_vivo):
-                            self.recibir_daño()
-
-                    elif ((npc.coord[1]-(self.coord[1]+self.alto)) < self.alto
-                        and not abs(npc.coord[0]-self.coord[0]) < 2
+            if (abs(npc.coord[0]-self.coord[0]) < self.ancho
+                and abs(npc.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
+                if ((npc.coord[0]-self.coord[0]+self.ancho) < 2
                         and not self.en_transicion
-                        and npc.esta_vivo):
-                        npc.colisionar_jugador()
-                        self.v_y = -c.v_rebote
-                        self.score += 1000
+                            and npc.esta_vivo):
+                        self.recibir_daño()
+
+                elif ((npc.coord[1]-(self.coord[1]+self.alto)) < self.alto
+                    and not abs(npc.coord[0]-self.coord[0]) < 2
+                    and not self.en_transicion
+                    and npc.esta_vivo):
+                    npc.colisionar_jugador()
+                    self.v_y = -c.v_rebote
+                    self.score += 1000
 
         self.actualizar_posicion()
     

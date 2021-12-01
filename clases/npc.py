@@ -8,7 +8,7 @@ class npc():
         self.sprite = sprite
         self.coord = coord
         self.esta_vivo = True # El npc está vivo 
-        self.v_x = c.v_npc  # La velocidad habrá que modificarla según probemos
+        self.v_x = c.v_npc  # La v_x habrá que modificarla según probemos
         self.v_y = 0
         """
         Cooord es una lista de 2 elementos que contiene la posicón de donde se pinta el sprite
@@ -26,21 +26,7 @@ class npc():
         '''Se llama  cuando el npc colisiona y queremos que cambia su moviento al sentido contrario'''
         self.v_x = -self.v_x
     
-    def actualizar_estado(self,bloques:list,npcs:list):
 
-        for bloque in bloques:
-            if (abs(bloque.coord[0]-self.coord[0]) < self.ancho
-                    and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
-                self.colisionar_bloque()
-                print("npc colisionando")
-
-        for npc in npcs:
-            if (abs(npc.coord[0]-self.coord[0]) < self.ancho and abs(npc.coord[1]-self.coord[1]) < self.alto):
-                self.colisionar_bloque()
-                print("npc colisionando")
-
-            
-        self.actualizar_posicion()
 
     def actualizar_posicion(self):
        self.coord[0]+=self.v_x
@@ -55,9 +41,26 @@ class goompa(npc):
         super().__init__ (coord, c.sprite_goompa)#Esto hay que modificarlo cuando tengamos los sprites
         self.ancho = c.ancho_goompa
         self.alto = c.alto_goompa
-    def aplastar(self):
+    def colisionar_jugador(self):
         self.sprite=c.sprite_goompa_aplastado
         self.morir()
+
+    def actualizar_estado(self, bloques: list, npcs: list):
+
+        for bloque in bloques:
+            if (abs(bloque.coord[0]-self.coord[0]) < self.ancho
+                    and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
+                self.colisionar_bloque()
+
+
+        for npc in npcs:
+            if (abs(npc.coord[0]-self.coord[0]) < self.ancho and abs(npc.coord[1]-self.coord[1]) < self.alto
+                    and npc.esta_vivo):
+                self.colisionar_bloque()
+
+
+        self.actualizar_posicion()
+
 
 class koopa_troopa(npc):
     def __init__ (self, coord: list) -> None:
@@ -65,21 +68,46 @@ class koopa_troopa(npc):
         self.ancho = c.ancho_koopa_troopa
         self.alto = c.alto_koopa_troopa
         self.es_caparazon = False
+        self.frame_concha= 400*c.fps
 
     def colisionar_jugador(self):
         if self.es_caparazon and self.v_x == 0:
             '''Si el caparazón está parado y el jugador choca con él lo pondrá en movimiento'''
-            self.v_x = -5
-        elif self.es_caparazon and self.velocidad != 0:
+            self.v_x = c.v_caparazon
+        elif self.es_caparazon and self.v_x != 0:
             '''Emplearemos este método exclusivamente cuando el jugador salte encima del caparazón en movimiento'''
             self.v_x = 0
         else:
             '''Este último parámetro se refiere a cuando choca con el jugador de manera frontal, ya que este sigue su moviento'''
             self.es_caparazon = True
+            self.frame_concha=pyxel.frame_count
             self.v_x = 0
             self.sprite = c.sprite_concha
+            self.coord[1]+=5
+
+    def actualizar_estado(self, bloques: list, npcs: list):
+        if pyxel.frame_count-self.frame_concha >= c.frames_duracion_concha:
+            self.frame_concha = 400*c.fps
+            self.resurgir()
+
+        for bloque in bloques:
+            if (abs(bloque.coord[0]-self.coord[0]) < self.ancho
+                    and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
+                self.colisionar_bloque()
+
+        for npc in npcs:
+            if (abs(npc.coord[0]-self.coord[0]) < self.ancho and abs(npc.coord[1]-self.coord[1]) < self.alto
+                    and npc.esta_vivo):
+                self.colisionar_bloque()
+
+        self.actualizar_posicion()
+
     def resurgir(self):
         '''El koopa troopa volverá a su estado original pasado un tiempo '''
+        if self.v_x<0:
+            self.v_x = -c.v_koopa_troopa
+        else:
+            self.v_x = c.v_koopa_troopa
         self.es_caparazon = False
-        self.v_x = 2
+        self.coord[1]-=5
         self.sprite = c.sprite_koopa_troopa

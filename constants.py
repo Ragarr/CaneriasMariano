@@ -30,13 +30,16 @@ carne = 15
 v_gravedad = 0.25
 v_salto = 4
 v_rozamiento = 0.1
-v_avance = 1
-v_player_max_x=3
+v_avance = 0.8
+v_player_max_x=2
 v_player_max_y= 2
-v_rebote= 0.5
+v_rebote= 4
 v_npc= 1
 v_goompa, v_koopa_troopa = v_npc, v_npc
+v_caparazon=3
 
+#----------------------animaciones-------------------------------
+frames_duracion_concha= 10*fps
 
 
 #-----------------coeficientes para las hitboxes-------------------
@@ -52,7 +55,7 @@ ancho_ladrillo=15
 alto_ladrillo=15
 altura_suelo = alto_pantalla-alto_pantalla/6
 ancho_suelo=15
-alto_concha=9
+alto_concha=8
 
 
 #-----------------sprites en general-----------------------------
@@ -86,8 +89,6 @@ sprite_transparente=[0,0,0,0,0,azul]
 sprite_goompa=[0,16,0,16,16,azul]
 sprite_goompa_aplastado=[0,32,0,16,16,azul]
 sprite_koopa_troopa=[0,16,16,16,16,azul]
-sprite_concha=[0,32,22,16,9,azul]
-
-
+sprite_concha=[0,32,22,16,10,azul]
 
 

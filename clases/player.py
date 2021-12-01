@@ -92,7 +92,7 @@ class mario():
                         if pyxel.btn(pyxel.KEY_SPACE):
                             # en 0 directamente no podrias saltar
                             self.coord[1] = bloque.coord[1] - self.alto
-                            self.v_y = -c.v_salto
+                            self.v_y =-c.v_salto
                             # da la sensacion de que rebotas un pelin al golpear el bloque
                             self.v_x = 0.1*self.v_x
                         else:  # te pega al bloque
@@ -108,18 +108,14 @@ class mario():
                     if ((npc.coord[0]-self.coord[0]+self.ancho) < 2
                             and not self.en_transicion
                                 and npc.esta_vivo):
-                            print("colision en x ")
-                            print("no hitbox ")
                             self.recibir_daño()
 
-                    elif ((npc.coord[1]-(self.coord[1]+self.alto)) < 2
+                    elif ((npc.coord[1]-(self.coord[1]+self.alto)) < self.alto
                         and not abs(npc.coord[0]-self.coord[0]) < 2
                         and not self.en_transicion
                         and npc.esta_vivo):
-                        print("colision en y ")
-                        npc.morir()
-                        print("npc muerto")
-                        self.v_y = c.v_rebote
+                        npc.colisionar_jugador()
+                        self.v_y = -c.v_rebote
                         self.score += 1000
 
         self.actualizar_posicion()
@@ -128,5 +124,14 @@ class mario():
         self.sprite=c.sprite_smario_quieto
         self.alto=c.alto_smario
         self.ancho=c.ancho_mario
+    def recibir_daño(self):
+        if self.fuego:
+            self.fuego=False
+            self.grande=True
+        elif self.grande:
+            self.grande=False
+        else:
+            self.morir()
+    def morir(self):
+        pass
 
-    

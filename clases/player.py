@@ -6,17 +6,75 @@ import pyxel
 import constants as c
 class mario():
     def __init__(self, coord: list) -> None:
-        self.sprite = c.sprite_mario_quieto
-        self.ancho = c.ancho_mario
-        self.alto = c.alto_mario
-        self.iniciar_temporizadores()
-        self.iniciar_booleanos()
-        self.iniciar_fuerzas()
-        self.score = 0
-        self.monedas = 0
-        self.coord = coord  # ubicacion de el sprite
+        self.__sprite = c.sprite_mario_quieto
+        self.__ancho = c.ancho_mario
+        self.__alto = c.alto_mario
+        self.__iniciar_temporizadores()
+        self.__iniciar_booleanos()
+        self.__iniciar_fuerzas()
+        self.__score = 0
+        self.__dinero = 0
+        self.__coord = coord  # ubicacion de el sprite
+    @property
+    def sprite(self):
+        return self.__sprite
 
-    def iniciar_temporizadores(self):
+    @sprite.setter
+    def sprite(self, new_sprite: list):
+        if not isinstance(new_sprite, list):
+            raise ValueError("el sprite deben ser una lista")
+        if len(new_sprite) != 6:
+            raise ValueError("la lista sprite debe tener exactamente 6 elementos")
+        self.__sprite = new_sprite
+    @property
+    def ancho(self):
+        return self.__ancho
+    
+    @ancho.setter
+    def ancho(self, new_ancho):
+        self.__ancho = new_ancho
+    
+    @property
+    def alto(self):
+        return self.__alto
+    
+    @alto.setter
+    def alto(self, new_alto):
+        self.__ancho = new_alto
+
+    @property
+    def score(self):
+        return self.__score
+    
+    @score.setter
+    def score(self, new_score):
+        if not isinstance (new_score, int):
+            raise ValueError('La puntación debe ser un número entero')
+        if not new_score >= 0:
+            raise ValueError('La puntación debe ser mayor que 0')
+        self.__score = new_score
+    @property
+    def dinero(self):
+        return self.__dinero
+    
+    @dinero.setter
+    def dinero(self, new_dinero):
+        if not isinstance (new_dinero, int):
+            raise ValueError('Las dinero deben ser un número entero')
+        if not new_dinero >= 0:
+            raise ValueError('Las dinero deben ser mayor que 0')
+        self.__dinero = new_dinero
+    @property
+    def coord(self):
+        return self.__coord
+    @coord.setter
+    def coord(self, coord):
+        if len(coord) != 2:
+            raise ValueError('La lista coord tiene que tener exactamente 2 elementos')
+        self.__coord = coord
+
+
+    def __iniciar_temporizadores(self):
 
         """timers en frames para las animaciones """
         self.timer_andar = 0
@@ -28,7 +86,7 @@ class mario():
         self.timer_fireball = 0 # animacion de la fireball
         self.timer_bandera = 0 # animacion de la mandera
     
-    def iniciar_booleanos(self):
+    def __iniciar_booleanos(self):
         """boleanos para el comportamiento de mario"""
         self.mirando_derecha = True
         self.permitir_salto = True 
@@ -40,14 +98,14 @@ class mario():
         self.en_transicion = False # para cuando cambia de estado
         self.perdiendo_invencibilidad = False # para la estrella
     
-    def iniciar_fuerzas(self):
+    def __iniciar_fuerzas(self):
         self.v_x = 0
         self.v_y = 0
     def actualizar_posicion(self):  # cambia la posicion del personaje
         self.coord[0] += self.v_x
         self.coord[1] += self.v_y
     
-    def actualizar_estado(self,bloques:list,npcs:list,objetos:list):        
+    def actualizar_estado(self,bloques:list,npcs:list,objetos:list,jugador):        
         """actualiza las velocidades, el tamaño y en general todos los atributos del jugador"""
         if pyxel.btn(pyxel.KEY_D):  # acelera si pulsas la D
             self.v_x = min(self.v_x+c.v_avance, c.v_player_max_x)
@@ -85,7 +143,7 @@ class mario():
                 and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
                 if ((bloque.coord[1]+bloque.alto)-self.coord[1]) <= self.alto and not colision_superior:
                     #print("colision inferior con {}".format(type(bloque)))
-                    bloque.golpear(objetos)
+                    bloque.golpear(objetos,jugador)
                     self.v_y = 2*c.v_gravedad
                     colision_inferior = True
                 if ((abs(bloque.coord[1]-(self.coord[1]+self.alto)))  <= self.alto and not colision_inferior):  # comprueba si la colision es por encima

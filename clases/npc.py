@@ -1,15 +1,15 @@
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     print("este archivo no es el principal y no esta pensado para ser ejecutado")
-    quit()
+    quit()"""
 import pyxel
 import constants as c
 class npc():
     def __init__(self, coord: list, sprite: list  ) -> None:
-        self.sprite = sprite
-        self.coord = coord
-        self.esta_vivo = True # El npc está vivo 
-        self.v_x = c.v_npc  # La v_x habrá que modificarla según probemos
-        self.v_y = 0
+        self.__sprite = sprite
+        self.__coord = coord
+        self.__esta_vivo = True # El npc está vivo 
+        self.__v_x = c.v_npc  # La v_x habrá que modificarla según probemos
+        self.__v_y = 0
         """
         Cooord es una lista de 2 elementos que contiene la posicón de donde se pinta el sprite
         Sprite es una lista de 6 elementos 
@@ -21,7 +21,50 @@ class npc():
         -la pos y final del sprite
         -color de chroma
         """
+    @property
+    def sprite(self):
+        return self.__sprite
 
+    @sprite.setter
+    def sprite(self, new_sprite: list):
+        if not isinstance(new_sprite, list):
+            raise ValueError("el sprite deben ser una lista")
+        if len(new_sprite) != 6:
+            raise ValueError("la lista sprite debe tener exactamente 6 elementos")
+        self.__sprite = new_sprite
+    @property
+    def coord(self):
+        return self.__coord
+    @coord.setter
+    def coord(self, new_coord):
+        if len(new_coord)!= 2:
+            raise ValueError('La lista coord tiene que tener exactamente 2 elementos')
+        self.__coord = new_coord
+    @property
+    def esta_vivo(self):
+       return self.__esta_vivo
+    @esta_vivo.setter
+    def esta_vivo(self, new_esta_vivo:bool):
+        if not isinstance(new_esta_vivo, bool):
+            raise ValueError('El valor de estar vivo debe ser un booleano')
+        self.__esta_vivo= new_esta_vivo
+    @property
+    def v_x(self):
+        return self.__v_x
+    @v_x.setter
+    def v_x(self,new_v_x):
+        if  not isinstance(new_v_x, (int, float)):
+            raise ValueError('El valor de la velocidad es int o float')
+        self.__v_x= new_v_x
+    @property
+    def v_y(self):
+        return self.__v_y
+    @v_y.setter
+    def v_y(self,new_v_y):
+        if  not isinstance(new_v_y, (int, float)):
+            raise ValueError('El valor de la velocidad es int o float')
+        self.__v_y=new_v_y
+    
     def colisionar_bloque(self):
         '''Se llama  cuando el npc colisiona y queremos que cambia su moviento al sentido contrario'''
         self.v_x = -self.v_x
@@ -38,7 +81,8 @@ class npc():
 
 class goompa(npc):
     def __init__ (self, coord: list) -> None:
-        super().__init__ (coord, c.sprite_goompa)#Esto hay que modificarlo cuando tengamos los sprites
+        # Esto hay que modificarlo cuando tengamos los sprites
+        super().__init__(coord=coord, sprite=c.sprite_goompa)
         self.ancho = c.ancho_goompa
         self.alto = c.alto_goompa
     def colisionar_jugador(self):
@@ -70,7 +114,7 @@ class goompa(npc):
 
 class koopa_troopa(npc):
     def __init__ (self, coord: list) -> None:
-        super().__init__ (coord, c.sprite_koopa_troopa)#Esto hay que modificarlo cuando tengamos los sprites
+        super().__init__ (coord=coord, sprite=c.sprite_koopa_troopa)#Esto hay que modificarlo cuando tengamos los sprites
         self.ancho = c.ancho_koopa_troopa
         self.alto = c.alto_koopa_troopa
         self.es_caparazon = False
@@ -117,3 +161,5 @@ class koopa_troopa(npc):
         self.es_caparazon = False
         self.coord[1]-=5
         self.sprite = c.sprite_koopa_troopa
+
+

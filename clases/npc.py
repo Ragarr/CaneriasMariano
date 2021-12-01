@@ -36,7 +36,7 @@ class npc():
     def coord(self):
         return self.__coord
     @coord.setter
-    def sprite(self, coord):
+    def coord(self, coord):
         self.__coord = coord
     @property
     def esta_vivo(self):

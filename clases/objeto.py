@@ -10,17 +10,45 @@ import pyxel
 class objeto():
     def __init__(self, coord: list) -> None:
 
-        self.coord = coord
-        self.velocidad_x = 0
-        self.velocidad_y = 4
-        self.activo = True
+        self.__coord = coord
+        self.__v_x = 0
+        self.__v_y = 4
+        self.__esta_activo = True
+
+    @property
+    def coord(self):
+        return self.__coord
+    @coord.setter
+    def coord(self, coord):
+        if len(coord) != 2:
+            raise ValueError('La lista coord tiene que tener exactamente 2 elementos')
+        self.__coord = coord
+    @property
+    def v_x(self):
+        return self.__v_x
+    @v_x.setter
+    def v_x(self,v_x):
+        self.__v_x=v_x
+    @property
+    def v_y(self):
+        return self.__v_y
+    @v_y.setter
+    def v_y(self,v_y):
+        self.__v_y=v_y
+    @property
+    def esta_activo(self):
+        return self.__esta_activo
+    @esta_activo.setter
+    def esta_activo(self,esta_activo:bool):
+        self.__esta_activo=esta_activo
+
 
     def actualizar_posicion(self):
-        self.coordenada[0] += self.velocidad_x
-        self.coordenada[1] += self.velocidad_y
+        self.coordenada[0] += self.v_x
+        self.coordenada[1] += self.v_y
 
     def colisionar_bloque(self):
-        self.velocidad_x = 0 - self.velocidad_x
+        self.v_x = 0 - self.v_x
 
 
 class flor(objeto):

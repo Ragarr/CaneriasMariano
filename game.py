@@ -14,7 +14,7 @@ class App():
 
         self.jugador = player.mario([20, 12])
 
-        self.bloques = [bloque.ladrillo_no_rompible([100,110]),bloque.ladrillo_no_rompible([115,125]),
+        self.bloques = [bloque.ladrillo_con_monedas([100,110]),bloque.ladrillo_no_rompible([115,125]),
                         bloque.ladrillo_no_rompible([0, c.altura_suelo-c.alto_ladrillo]),
                         bloque.ladrillo_no_rompible([c.ancho_pantalla-c.ancho_ladrillo, c.altura_suelo-c.alto_ladrillo])]
         # creacion del suelo
@@ -36,11 +36,13 @@ class App():
         pyxel.run(self.update, self.draw)
 
     def update(self):
-        self.jugador.actualizar_estado(self.bloques,self.npcs)
+        self.jugador.actualizar_estado(self.bloques,self.npcs,self.objetos)
         for npc in self.npcs:
             npc.actualizar_estado(self.bloques , (other_npc for other_npc in self.npcs if other_npc != npc) ) # paso la lista de npcs exluyendo el npc a evaluar
         for bloque in self.bloques:
             bloque.reposicionar()
+        for objeto in self.objetos:
+            objeto.actualizar(player.mario)
         self.contador = 400-int(pyxel.frame_count/c.fps)
         
 

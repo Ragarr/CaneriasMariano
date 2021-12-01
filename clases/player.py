@@ -49,7 +49,7 @@ class mario():
         self.coord[0] += self.v_x
         self.coord[1] += self.v_y
     
-    def actualizar_estado(self,bloques,npcs):        
+    def actualizar_estado(self,bloques:list,npcs:list,objetos:list):        
         """actualiza las velocidades, el tamaño y en general todos los atributos del jugador"""
         if pyxel.btn(pyxel.KEY_D):  # acelera si pulsas la D
             self.v_x = min(self.v_x+c.v_avance, c.v_player_max_x)
@@ -83,16 +83,17 @@ class mario():
         for bloque in bloques:
             colision_superior=False
             colision_inferior=False
-            if (abs(bloque.coord[0]-self.coord[0]) < self.ancho
+            if (bloque.tiene_hitbox and abs(bloque.coord[0]-self.coord[0]) < self.ancho
                 and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
                 if ((bloque.coord[1]+bloque.alto)-self.coord[1]) <= self.alto and not colision_superior:
                     #print("colision inferior con {}".format(type(bloque)))
-                    bloque.golpear()
+                    bloque.golpear(objetos)
                     self.v_y = 2*c.v_gravedad
                     colision_inferior = True
                 if ((abs(bloque.coord[1]-(self.coord[1]+self.alto)))  <= self.alto and not colision_inferior):  # comprueba si la colision es por encima
                     #print("colision superior con {}".format(type(bloque)))
                     colision_superior=True
+                    self.coord[1]=bloque.coord[1]-self.alto
                     # permite que se pueda saltar encima de los bloques, si se pone la velocidad
                     if (pyxel.btn(pyxel.KEY_SPACE)):
                         self.v_y =-c.v_salto

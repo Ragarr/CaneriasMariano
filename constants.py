@@ -51,8 +51,8 @@ ancho_goompa=16
 ancho_koopa_troopa=16
 alto_goompa=16
 alto_koopa_troopa=16
-ancho_interrogacion = ancho_ladrillo = 15
-alto_interrogacion = alto_ladrillo = 15
+ancho_interrogacion = ancho_bloque_inamovible = ancho_ladrillo = 15
+alto_interrogacion = alto_ladrillo = alto_bloque_inamovible= 15
 altura_suelo = alto_pantalla-alto_pantalla/6
 ancho_tuberia=31
 ancho_suelo=15
@@ -66,8 +66,8 @@ sprite_champi=[0,0,45,14,15,azul]
 sprite_estrella=[0,17,42,15,15,azul]
 sprite_flor=[0,55,47,14,14,azul]
 sprite_nube=[0,39,48,153,13,azul]
-sprite_interrogacion_golpeado=[0,145,27,15,15,azul]
-sprite_interrogacion=[0,177,27,15,15,azul]
+sprite_interrogacion_golpeado=[0,145,27,16,16,azul]
+sprite_interrogacion=[0,177,27,16,16,azul]
 sprite_mario_quieto=[0,3,98,15,15,azul]
 sprite_mario_saltando=[0,1,79,15,15,azul]
 sprite_mario_andando=[0,18,99,15,15,azul]
@@ -91,5 +91,5 @@ sprite_goompa=[0,16,0,16,16,azul]
 sprite_goompa_aplastado=[0,32,0,16,16,azul]
 sprite_koopa_troopa=[0,16,16,16,16,azul]
 sprite_concha=[0,32,22,16,10,azul]
-
+sprite_bloque_inamovible= [0,1,114,16,16]
 

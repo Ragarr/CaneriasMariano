@@ -175,6 +175,9 @@ class mario():
                 if ((bloque.coord[0]+bloque.ancho)-self.coord[0]<=self.ancho
                     and not colision_superior):
                     self.v_x= - self.v_x
+                elif ((bloque.coord[0]+bloque.ancho)-self.coord[0] >= self.ancho
+                            and not colision_superior):
+                    self.v_x = - self.v_x
                     #print("colision izquierda con {}".format(type(bloque)))
 
 

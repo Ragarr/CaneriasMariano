@@ -74,11 +74,11 @@ class App():
             self.bloques.append(bloque.suelo([x, c.altura_suelo]))
             x += c.ancho_suelo
     def generar_bloques(self):
-        self.bloques = [bloque.ladrillo_con_monedas([100,110]),bloque.ladrillo_no_rompible([115,125]),
-                        bloque.ladrillo_no_rompible([0, c.altura_suelo-c.alto_ladrillo+1]),
-                        bloque.bloque_no_movible([0, c.altura_suelo-2*c.alto_ladrillo+1]),
-                        bloque.bloque_no_movible([0, c.altura_suelo-3*c.alto_ladrillo+1]),
-                        bloque.bloque_no_movible([c.ancho_pantalla-c.ancho_ladrillo, c.altura_suelo-c.alto_ladrillo+1]),
+        self.bloques = [bloque.ladrillo_con_monedas([100,110]),bloque.bloque_no_movible([115,125]),
+                        bloque.bloque_no_movible([0, c.altura_suelo-c.alto_ladrillo]),
+                        bloque.bloque_no_movible([0, c.altura_suelo-2*c.alto_ladrillo]),
+                        bloque.bloque_no_movible([0, c.altura_suelo-3*c.alto_ladrillo]),
+                        bloque.bloque_no_movible([c.ancho_pantalla-c.ancho_ladrillo, c.altura_suelo-c.alto_ladrillo]),
                         bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_con_monedas([70, 110])]
         
 App()

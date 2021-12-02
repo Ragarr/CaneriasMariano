@@ -55,10 +55,7 @@ class App():
         pyxel.text(70, 10, "COINS: {}".format(self.jugador.dinero), 0)
         pyxel.text(30,10,"MARIO",0)
         pyxel.text(30, 20, "{:06d}".format(self.jugador.score), 0)
-        if self.jugador.muerto:
-            pyxel.text(30, 30, "MUERTO", 0)
-        else:
-            pyxel.text(30, 30, "VIVO", 0)
+      
     def borrar_entidades(self,bloques:list,npcs:list,objetos:list):
         i=0
         while i < len(bloques):

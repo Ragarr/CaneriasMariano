@@ -88,29 +88,31 @@ class mario():
     
     def __iniciar_booleanos(self):
         """boleanos para el comportamiento de mario"""
-        self.andando=False
-        self.girando=False
-        self.mirando_derecha = True
-        self.permitir_salto = True 
-        self.muerto = False
-        self.invencible = False  # modo estrella
-        self.grande = False  # su estado de ser mario, super mario o con fuego
-        self.fuego = False # su estado de ser mario, super mario o con fuego
-        self.permitir_fireball = True
-        self.en_transicion = False # para cuando cambia de estado
-        self.perdiendo_invencibilidad = False # para la estrella
+        self.__andando=False
+        self.__girando=False
+        self.__mirando_derecha = True
+        self.__permitir_salto = True 
+        self.__muerto = False
+        self.__invencible = False  # modo estrella
+        self.__grande = False  # su estado de ser mario, super mario o con fuego
+        self.__fuego = False # su estado de ser mario, super mario o con fuego
+        self.__permitir_fireball = True
+        self.__en_transicion = False # para cuando cambia de estado
+        self.__perdiendo_invencibilidad = False # para la estrella
+    
     
     def __iniciar_fuerzas(self):
-        self.v_x = 0
-        self.v_y = 0
+        self.__v_x = 0
+        self.__v_y = 0
+
     def actualizar_posicion(self):  # cambia la posicion del personaje
-        self.coord[0] += self.v_x
-        self.coord[1] += self.v_y
+        self.coord[0] += self.__v_x
+        self.coord[1] += self.__v_y
     
     def actualizar_estado(self,bloques:list,npcs:list,objetos:list,jugador):        
         """actualiza las velocidades, el tamaño y en general todos los atributos del jugador"""
         
-        if self.andando:
+        if self.__andando:
             if self.sprite==c.sprite_mario_quieto and pyxel.frame_count%(c.fps/6)==0:
                 self.sprite=c.sprite_mario_andando
             elif pyxel.frame_count % (c.fps/2) == 0:
@@ -121,33 +123,33 @@ class mario():
         
         
         if pyxel.btn(pyxel.KEY_D):  # acelera si pulsas la D
-            self.v_x = min(self.v_x+c.v_avance, c.v_player_max_x)
-            self.mirando_derecha=True
-            self.andando=True
-        elif not pyxel.btn(pyxel.KEY_A) and self.mirando_derecha: # Deceleras si avancas hacia adelante y no pulsas la D ni la A
-            self.v_x = max(self.v_x-c.v_rozamiento, 0)
-            self.andando=False
+            self.__v_x = min(self.__v_x+c.v_avance, c.v_player_max_x)
+            self.__mirando_derecha=True
+            self.__andando=True
+        elif not pyxel.btn(pyxel.KEY_A) and self.__mirando_derecha: # Deceleras si avancas hacia adelante y no pulsas la D ni la A
+            self.__v_x = max(self.__v_x-c.v_rozamiento, 0)
+            self.__andando=False
 
         if pyxel.btn(pyxel.KEY_A):  # decelera si pulsas la D
-            self.v_x = max(self.v_x-c.v_avance, -c.v_player_max_x)
-            self.mirando_derecha=False
-            self.andando=True
-        elif not pyxel.btn(pyxel.KEY_D) and not self.mirando_derecha: # Deceleras si avancas hacia detras y no pulsas la A ni la D
-            self.v_x = min(self.v_x+c.v_rozamiento, 0)
-            self.andando=False
+            self.__v_x = max(self.__v_x-c.v_avance, -c.v_player_max_x)
+            self.__mirando_derecha=False
+            self.__andando=True
+        elif not pyxel.btn(pyxel.KEY_D) and not self.__mirando_derecha: # Deceleras si avancas hacia detras y no pulsas la A ni la D
+            self.__v_x = min(self.__v_x+c.v_rozamiento, 0)
+            self.__andando=False
 
         # evitar que el jugador salga de la pantalla
         if self.coord[0] < 0:
-            self.v_x = 0.5
+            self.__v_x = 0.5
         elif self.coord[0] > pyxel.width-self.ancho:
-            self.v_x = -0.5
+            self.__v_x = -0.5
         
         #mov jugador eje y
         #gravedad
         if (self.coord[1] < pyxel.width):
-            self.v_y += c.v_gravedad
+            self.__v_y += c.v_gravedad
         elif pyxel.btn(pyxel.KEY_SPACE):
-            self.v_y = -c.v_salto
+            self.__v_y = -c.v_salto
         else: 
             self.muerto=True
 
@@ -161,7 +163,7 @@ class mario():
                 if ((bloque.coord[1]+bloque.alto)-self.coord[1]) <= self.alto and not colision_superior:
                     #print("colision inferior con {}".format(type(bloque)))
                     bloque.golpear(objetos,jugador)
-                    self.v_y = 2*c.v_gravedad
+                    self.__v_y = 2*c.v_gravedad
                     colision_inferior = True
                 if ((abs(bloque.coord[1]-(self.coord[1]+self.alto)))  <= self.alto and not colision_inferior):  # comprueba si la colision es por encima
                     #print("colision superior con {}".format(type(bloque)))
@@ -169,15 +171,15 @@ class mario():
                     self.coord[1]=bloque.coord[1]-self.alto
                     # permite que se pueda saltar encima de los bloques, si se pone la velocidad
                     if (pyxel.btn(pyxel.KEY_SPACE)):
-                        self.v_y =-c.v_salto
+                        self.__v_y =-c.v_salto
                     else:  # te pega al bloque
-                        self.v_y = 0
+                        self.__v_y = 0
                 if ((bloque.coord[0]+bloque.ancho)-self.coord[0]<=self.ancho
                     and not colision_superior):
-                    self.v_x= - self.v_x
+                    self.__v_x= - self.__v_x
                 elif ((bloque.coord[0]+bloque.ancho)-self.coord[0] >= self.ancho
                             and not colision_superior):
-                    self.v_x = - self.v_x
+                    self.__v_x = - self.__v_x
                     #print("colision izquierda con {}".format(type(bloque)))
 
 
@@ -185,16 +187,16 @@ class mario():
             if (abs(npc.coord[0]-self.coord[0]) < self.ancho
                 and abs(npc.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
                 if ((npc.coord[0]-self.coord[0]+self.ancho) < c.tolerancia_colisiones
-                        and not self.en_transicion
+                        and not self.__en_transicion
                             and npc.esta_vivo):
                         self.recibir_daño()
 
                 elif ((npc.coord[1]-(self.coord[1]+self.alto)) < self.alto
                     and not abs(npc.coord[0]-self.coord[0]) < 2
-                    and not self.en_transicion
+                    and not self.__en_transicion
                     and npc.esta_vivo):
                     npc.colisionar_jugador()
-                    self.v_y = -c.v_rebote
+                    self.__v_y = -c.v_rebote
                     self.score += 1000
 
         self.actualizar_posicion()
@@ -204,11 +206,11 @@ class mario():
         self.alto=c.alto_smario
         self.ancho=c.ancho_mario
     def recibir_daño(self):
-        if self.fuego:
-            self.fuego=False
-            self.grande=True
-        elif self.grande:
-            self.grande=False
+        if self.__fuego:
+            self.__fuego=False
+            self.__grande=True
+        elif self.__grande:
+            self.__grande=False
         else:
             self.morir()
     def morir(self):

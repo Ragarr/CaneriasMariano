@@ -138,7 +138,7 @@ class ladrillo_con_monedas(bloque):
         """dara monedas hasta que no haya, entonces se rompera"""
         if self.monedas <= 1:
             self.romper()
-        if pyxel.frame_count % 8 == 0:
+        if pyxel.frame_count % 10 == 0:
             self.monedas =(self.monedas- 1) # resta una moneda al contenido del bloque
             objetos.append(objeto.moneda([self.coord_iniciales[0],self.coord_iniciales[1]-15]))
             player.dinero += 1

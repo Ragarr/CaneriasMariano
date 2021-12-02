@@ -136,7 +136,7 @@ class ladrillo_con_monedas(bloque):
 
     def golpear(self, objetos:list,player=None):
         """dara monedas hasta que no haya, entonces se rompera"""
-        if self.monedas <= 1:
+        if self.monedas < 1:
             self.romper()
         if pyxel.frame_count % 5 == 0:
             self.v_y-=0.5

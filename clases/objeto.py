@@ -12,7 +12,7 @@ class objeto():
 
         self.__coord = coord
         self.__v_x = 0
-        self.__v_y = 4
+        self.__v_y = 0
         self.__esta_activo = True
 
     @property
@@ -50,8 +50,8 @@ class objeto():
 
 
     def actualizar_posicion(self):
-        self.coordenada[0] += self.v_x
-        self.coordenada[1] += self.v_y
+        self.coord[0] += self.v_x
+        self.coord[1] += self.v_y
 
     def colisionar_bloque(self):
         self.v_x = 0 - self.v_x
@@ -63,7 +63,7 @@ class flor(objeto):
         self.sprite = c.sprite_flor
 
     def actualizar(self,player):
-        return 0
+        self.actualizar_posicion()
 
 
 class estrella(objeto):
@@ -72,7 +72,7 @@ class estrella(objeto):
         self.sprite = c.sprite_estrella
 
     def actualizar(self,player):
-        return 0
+        self.actualizar_posicion()
 
 
 class champi(objeto):
@@ -88,16 +88,18 @@ class moneda(objeto):
     def __init__(self, coord: list) -> None:
         super().__init__(coord)
         self.sprite = c.sprite_moneda_girada
-        self.duracion_frames = pyxel.frame_count+c.fps
+        self.duracion_frames = pyxel.frame_count+c.fps/3 # durara en pantalla 0.2secs
         self.consumida = False
+        self.v_y=-1.5 # asi la moneda subira al aparecer
 
     def actualizar(self,player):
-        if self.duracion_frames > pyxel.frame_count and pyxel.frame_count % (c.fps/3) == 0:
+        if self.duracion_frames > pyxel.frame_count and pyxel.frame_count % (c.fps/15) == 0:
             self.girar()
         elif self.duracion_frames > pyxel.frame_count:
             pass
         else:
             self.sprite = c.sprite_transparente
+        self.actualizar_posicion()
  
 
     def girar(self):

@@ -37,6 +37,7 @@ class App():
 
     def update(self):
         self.jugador.actualizar_estado(self.bloques,self.npcs,self.objetos,self.jugador)
+        self.borrar_entidades(self.bloques, self.npcs, self.objetos)
         for npc in self.npcs:
             npc.actualizar_estado(self.bloques , (other_npc for other_npc in self.npcs if other_npc != npc) ) # paso la lista de npcs exluyendo el npc a evaluar
         for bloque in self.bloques:
@@ -44,7 +45,7 @@ class App():
         for objeto in self.objetos:
             objeto.actualizar(player.mario)
         self.contador = 400-int(pyxel.frame_count/c.fps)
-        self.borrar_entidades(self.bloques, self.npcs, self.objetos)
+
 
 
     def draw(self):

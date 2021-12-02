@@ -51,8 +51,8 @@ ancho_goompa=16
 ancho_koopa_troopa=16
 alto_goompa=16
 alto_koopa_troopa=16
-ancho_interrogacion = ancho_ladrillo = 15
-alto_interrogacion = alto_ladrillo = 15
+ancho_interrogacion = ancho_bloque_inamovible = ancho_ladrillo = 15
+alto_interrogacion = ancho_bloque_inamovible = alto_ladrillo = 15
 altura_suelo = alto_pantalla-alto_pantalla/6
 ancho_tuberia=31
 ancho_suelo=15
@@ -91,5 +91,4 @@ sprite_goompa=[0,16,0,16,16,azul]
 sprite_goompa_aplastado=[0,32,0,16,16,azul]
 sprite_koopa_troopa=[0,16,16,16,16,azul]
 sprite_concha=[0,32,22,16,10,azul]
-
-
+sprite_bloque_inamovible= [0, 0, 62, 15, 15, azul]

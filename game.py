@@ -12,18 +12,8 @@ class App():
         pyxel.load(c.assets_path)
         self.contador = 0
         self.jugador = player.mario([20, 12])
-
-        self.bloques = [bloque.ladrillo_con_monedas([100,110]),bloque.ladrillo_no_rompible([115,125]),
-                        bloque.ladrillo_no_rompible([0, c.altura_suelo-c.alto_ladrillo+1]),
-                        bloque.ladrillo_no_rompible([0, c.altura_suelo-2*c.alto_ladrillo+1]),
-                        bloque.ladrillo_no_rompible([0, c.altura_suelo-3*c.alto_ladrillo+1]),
-                        bloque.ladrillo_no_rompible([c.ancho_pantalla-c.ancho_ladrillo, c.altura_suelo-c.alto_ladrillo+1]),
-                        bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_con_monedas([70, 110])]
-        # creacion del suelo
-        x=0
-        while x < pyxel.width:
-            self.bloques.append(bloque.suelo([x, c.altura_suelo]))
-            x+=c.ancho_suelo
+        self.generar_bloques()
+        self.generar_suelo()
 
         self.objetos = [objeto.champi([130, c.altura_suelo-15]), objeto.estrella([145, c.altura_suelo-15]),
                         objeto.flor([160,c.altura_suelo-15])]
@@ -77,8 +67,18 @@ class App():
                 del(bloques[i])
             else:   
                 i+=1
-
-
-
+    def generar_suelo(self):
+        # creacion del suelo
+        x = 0
+        while x < pyxel.width:
+            self.bloques.append(bloque.suelo([x, c.altura_suelo]))
+            x += c.ancho_suelo
+    def generar_bloques(self):
+        self.bloques = [bloque.ladrillo_con_monedas([100,110]),bloque.ladrillo_no_rompible([115,125]),
+                        bloque.ladrillo_no_rompible([0, c.altura_suelo-c.alto_ladrillo+1]),
+                        bloque.bloque_no_movible([0, c.altura_suelo-2*c.alto_ladrillo+1]),
+                        bloque.bloque_no_movible([0, c.altura_suelo-3*c.alto_ladrillo+1]),
+                        bloque.bloque_no_movible([c.ancho_pantalla-c.ancho_ladrillo, c.altura_suelo-c.alto_ladrillo+1]),
+                        bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_con_monedas([70, 110])]
         
 App()

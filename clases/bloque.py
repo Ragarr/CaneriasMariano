@@ -175,3 +175,9 @@ class suelo(bloque):
         # una vez que el profesor nos pase el archivo con los sprites
         super().__init__(coord, c.sprite_suelo, pyxel.width, pyxel.height/3)
 
+class bloque_no_movible(bloque):
+    def __init__(self, coord: list) -> None:
+        super().__init__(coord,c.sprite_bloque_inamovible, c.ancho_bloque_inamovible, c.alto_bloque_inamovible)
+
+    def golpear(lf, bloques=None, player=None):
+        pass

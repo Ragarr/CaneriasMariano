@@ -88,6 +88,8 @@ class mario():
     
     def __iniciar_booleanos(self):
         """boleanos para el comportamiento de mario"""
+        self.andando=False
+        self.girando=False
         self.mirando_derecha = True
         self.permitir_salto = True 
         self.muerto = False
@@ -107,17 +109,30 @@ class mario():
     
     def actualizar_estado(self,bloques:list,npcs:list,objetos:list,jugador):        
         """actualiza las velocidades, el tamaño y en general todos los atributos del jugador"""
+        
+        if self.andando:
+            if self.sprite==c.sprite_mario_quieto and pyxel.frame_count%(c.fps/6)==0:
+                self.sprite=c.sprite_mario_andando
+            elif pyxel.frame_count % (c.fps/2) == 0:
+                self.sprite=c.sprite_mario_quieto
+        
+        
+        
         if pyxel.btn(pyxel.KEY_D):  # acelera si pulsas la D
             self.v_x = min(self.v_x+c.v_avance, c.v_player_max_x)
             self.mirando_derecha=True
+            self.andando=True
         elif not pyxel.btn(pyxel.KEY_A) and self.mirando_derecha: # Deceleras si avancas hacia adelante y no pulsas la D ni la A
             self.v_x = max(self.v_x-c.v_rozamiento, 0)
+            self.andando=False
 
         if pyxel.btn(pyxel.KEY_A):  # decelera si pulsas la D
             self.v_x = max(self.v_x-c.v_avance, -c.v_player_max_x)
             self.mirando_derecha=False
+            self.andando=True
         elif not pyxel.btn(pyxel.KEY_D) and not self.mirando_derecha: # Deceleras si avancas hacia detras y no pulsas la A ni la D
             self.v_x = min(self.v_x+c.v_rozamiento, 0)
+            self.andando=False
 
         # evitar que el jugador salga de la pantalla
         if self.coord[0] < 0:

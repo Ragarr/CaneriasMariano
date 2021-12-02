@@ -94,7 +94,7 @@ class bloque():
         # print(int(self.coord[1]), int(self.coord_iniciales[1]))
         self.coord[1] = min(self.coord[1]+self.v_y,self.coord_iniciales[1]+2)
         if self.coord[1] < self.coord_iniciales[1]:
-            self.v_y+=0.2
+            self.v_y+=0.1
         else:
             self.v_y=0
 
@@ -110,7 +110,7 @@ class ladrillo_no_rompible(bloque):
 
 
     def golpear(self,bloques=None,player=None):
-        self.v_y-=0.2
+        self.v_y=-0.5
 
 
 class ladrillo_rompible(bloque):
@@ -120,10 +120,10 @@ class ladrillo_rompible(bloque):
 
     def golpear(self,bloques=None,player=None):
         """rompe el bloque"""
-        # remplazar el sprite por uno vacio
-        self.dibujo[2], self.dibujo[3], self.dibujo[4], self.dibujo[5], self.dibujo[6], self.dibujo[7] = c.sprite_transparente  
-        # deshabilitar las colisiones con el objeto
-        self.tiene_hitbox = False  
+        self.romper()
+
+    def romper(self):
+        self.existe=False
 
 
 class ladrillo_con_monedas(bloque):
@@ -138,7 +138,8 @@ class ladrillo_con_monedas(bloque):
         """dara monedas hasta que no haya, entonces se rompera"""
         if self.monedas <= 1:
             self.romper()
-        if pyxel.frame_count % 10 == 0:
+        if pyxel.frame_count % 5 == 0:
+            self.v_y-=0.5
             self.monedas =(self.monedas- 1) # resta una moneda al contenido del bloque
             objetos.append(objeto.moneda([self.coord_iniciales[0],self.coord_iniciales[1]-15]))
             player.dinero += 1
@@ -160,6 +161,7 @@ class interrogacion(bloque):
 
     def golpear(self,bloques=None,player=None):
         """dara un objeto y se convertirta en un bloque plano"""
+        self.v_y=-0.2
         self.__sprite = c.sprite_interrogacion_golpeado  # reemplazar el sprite de interrogacion por el liso
 
 class tuberia(bloque):

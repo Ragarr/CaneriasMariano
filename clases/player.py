@@ -77,14 +77,14 @@ class mario():
     def __iniciar_temporizadores(self):
 
         """timers en frames para las animaciones """
-        self.timer_andar = 0
-        self.timer_invencible_animation = 0
-        self.timer_inicio_invencibilidad = 0
-        self.timer_transicion_fuego = 0
-        self.timer_muerte = 0
-        self.timer_transicion = 0 # animacion de transicion y frames de invulnerabilidad
-        self.timer_fireball = 0 # animacion de la fireball
-        self.timer_bandera = 0 # animacion de la mandera
+        self.__timer_andar = 0
+        self.__timer_invencible_animation = 0
+        self.__timer_inicio_invencibilidad = 0
+        self.__timer_transicion_fuego = 0
+        self.__timer_muerte = 0
+        self.__timer_transicion = 0 # animacion de transicion y frames de invulnerabilidad
+        self.__timer_fireball = 0 # animacion de la fireball
+        self.__timer_bandera = 0 # animacion de la mandera
     
     def __iniciar_booleanos(self):
         """boleanos para el comportamiento de mario"""

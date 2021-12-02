@@ -115,6 +115,8 @@ class mario():
                 self.sprite=c.sprite_mario_andando
             elif pyxel.frame_count % (c.fps/2) == 0:
                 self.sprite=c.sprite_mario_quieto
+        else:
+            self.sprite=c.sprite_mario_quieto
         
         
         

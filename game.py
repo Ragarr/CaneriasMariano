@@ -72,7 +72,8 @@ class App():
             bloque=bloques[i]
             if not bloque.existe:
                 del(bloques[i])
-            i+=1
+            else:   
+                i+=1
 
 
 

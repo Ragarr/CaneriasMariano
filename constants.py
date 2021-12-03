@@ -29,9 +29,9 @@ carne = 15
 # ---------------------------fisicas------------------------------
 v_gravedad = 0.25
 v_salto = 5
-v_rozamiento =1
-v_avance = 1
-v_player_max_x=2
+v_rozamiento =0.1
+v_avance = 0.5
+v_player_max_x=1.5
 v_player_max_y= 2
 v_objeto_x=2
 v_rebote= 4
@@ -54,7 +54,7 @@ alto_goompa=16
 alto_koopa_troopa=16
 ancho_interrogacion = ancho_bloque_inamovible = ancho_ladrillo = 15
 alto_interrogacion = alto_ladrillo = alto_bloque_inamovible= 15
-altura_suelo = alto_pantalla-alto_pantalla/6
+altura_suelo = alto_pantalla-alto_pantalla/8 +2
 ancho_tuberia=31
 ancho_suelo=15
 alto_concha=12

@@ -188,6 +188,7 @@ class suelo(bloque):
         super().__init__(coord, c.sprite_suelo, pyxel.width, pyxel.height/3)
 
 class bloque_no_movible(bloque):
+    """este bloque SOLO puede usarse para hacer escaleras o a nivel de suelo"""
     def __init__(self, coord: list) -> None:
         super().__init__(coord,c.sprite_bloque_inamovible, c.ancho_bloque_inamovible, c.alto_bloque_inamovible)
 

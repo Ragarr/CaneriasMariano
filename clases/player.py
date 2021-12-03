@@ -99,7 +99,7 @@ class mario():
         self.__permitir_salto = True 
         self.__muerto = False
         self.__invencible = False  # modo estrella
-        self.__grande = True  # su estado de ser mario, super mario o con fuego
+        self.__grande = False  # su estado de ser mario, super mario o con fuego
         self.__fuego = False # su estado de ser mario, super mario o con fuego
         self.__permitir_fireball = True
         self.__en_transicion = False # para cuando cambia de estado
@@ -139,6 +139,13 @@ class mario():
     def __morir(self):
         pass
 
+    def __colisonar_bloques(self, bloques: list, objetos: list, jugador):
+        if self.__grande or self.__fuego:
+            self.__colisonar_bloques_grande(bloques , objetos , jugador)
+        else:
+            self.__colisonar_bloques_pequeño(bloques, objetos, jugador)
+
+
     def __colisionando(self, entity):
         if (entity.tiene_hitbox and abs(entity.coord[0]-self.coord[0]) < self.ancho
                 and abs(entity.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
@@ -146,16 +153,17 @@ class mario():
         else:
             return False
 
-    def __colisonar_bloques(self,bloques:list,objetos:list,jugador):
+    def __colisonar_bloques_pequeño(self,bloques:list,objetos:list,jugador):
         self.__bloque_a_derecha=False
         self.__bloque_a_izquierda=False
         for bloque in bloques:
             colision_superior = False
             colision_inferior = False
             if self.__colisionando(bloque):  # comprueba si hay colision
-                if abs(bloque.coord[1]+bloque.alto-self.coord[1]) <= c.tolerancia_colisiones and not colision_superior:
+                if abs(bloque.coord[1]+bloque.alto-self.coord[1]) <= self.alto and not colision_superior:
                     bloque.golpear(objetos, jugador)
                     self.__v_y = 2*c.v_gravedad
+                    self.coord[1]= bloque.coord_iniciales[1]+bloque.alto
                     colision_inferior = True
                 # comprueba si la colision es por encima
                 elif ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto and not colision_inferior):
@@ -167,14 +175,46 @@ class mario():
                         self.__v_y = -c.v_salto
                     else:  # te pega al bloque
                         self.__v_y = 0
-                """if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
-                        and not colision_superior): # jugador a la derecha del bloque
-                    self.coord[0]+=2
+                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
+                        and not colision_superior and not (self.__grande or self.__fuego)): # jugador a la derecha del bloque
+                    self.__v_x=-self.__v_x
 
                     
                 elif (abs((bloque.coord[0])-self.coord[0]+self.ancho) >= self.ancho
-                      and not colision_superior):  # jugador a la izquierda del bloque
-                    self.coord[0] -= 2"""
+                      and not colision_superior) and not (self.__grande or self.__fuego):  # jugador a la izquierda del bloque
+                    self.__v_x = -self.__v_x
+
+                    #print("colision izquierda con {}".format(type(bloque)))
+
+    def __colisonar_bloques_grande(self, bloques: list, objetos: list, jugador):
+        self.__bloque_a_derecha = False
+        self.__bloque_a_izquierda = False
+        for bloque in bloques:
+            colision_superior = False
+            colision_inferior = False
+            if self.__colisionando(bloque):  # comprueba si hay colision
+                if abs(bloque.coord[1]+bloque.alto-self.coord[1]) <= c.tolerancia_colisiones and not colision_superior:
+                    bloque.golpear(objetos, jugador)
+                    self.__v_y = 2*c.v_gravedad
+                    self.coord[1] = bloque.coord_iniciales[1]+bloque.alto
+                    colision_inferior = True
+                # comprueba si la colision es por encima
+                elif ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto and not colision_inferior):
+                    #print("colision superior con {}".format(type(bloque)))
+                    colision_superior = True
+                    self.coord[1] = bloque.coord[1]-self.alto
+                    # permite que se pueda saltar encima de los bloques, si se pone la velocidad
+                    if (pyxel.btn(pyxel.KEY_SPACE)):
+                        self.__v_y = -c.v_salto
+                    else:  # te pega al bloque
+                        self.__v_y = 0
+                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
+                        and not colision_superior and not (self.__grande or self.__fuego)):  # jugador a la derecha del bloque
+                    self.__v_x = -self.__v_x
+
+                elif (abs((bloque.coord[0])-self.coord[0]+self.ancho) >= self.ancho
+                      and not colision_superior) and not (self.__grande or self.__fuego):  # jugador a la izquierda del bloque
+                    self.__v_x = -self.__v_x
 
                     #print("colision izquierda con {}".format(type(bloque)))
 

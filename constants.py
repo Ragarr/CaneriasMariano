@@ -58,7 +58,7 @@ altura_suelo = alto_pantalla-alto_pantalla/8  +3
 ancho_tuberia=31
 ancho_suelo=15
 alto_concha=12
-tolerancia_colisiones=3
+tolerancia_colisiones=2
 
 #-----------------sprites en general-----------------------------
 sprite_moneda=[0,2,29,9,13,azul]

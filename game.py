@@ -82,15 +82,15 @@ class App():
             x += c.ancho_suelo
     
     def __generar_bloques(self):
-        self.__bloques = [bloque.ladrillo_con_monedas([100,110]),bloque.bloque_no_movible([115,125]),
-                        bloque.bloque_no_movible([0, c.altura_suelo-c.alto_ladrillo]),
-                        bloque.bloque_no_movible([0, c.altura_suelo-2*c.alto_ladrillo]),
-                        bloque.bloque_no_movible([0, c.altura_suelo-3*c.alto_ladrillo]),
-                        bloque.bloque_no_movible([500, c.altura_suelo-3*c.alto_ladrillo]),
-                        bloque.bloque_no_movible([200, c.altura_suelo-c.alto_ladrillo]),
-                        bloque.bloque_no_movible([200, c.altura_suelo-2*c.alto_ladrillo]),
-                        bloque.bloque_no_movible([200, c.altura_suelo-3*c.alto_ladrillo]),
-                        bloque.bloque_no_movible([500, c.altura_suelo-3*c.alto_ladrillo]),
+        self.__bloques = [bloque.ladrillo_con_monedas([100,110]),bloque.ladrillo_no_rompible([115,125]),
+                        bloque.ladrillo_no_rompible([0, c.altura_suelo-c.alto_ladrillo]),
+                        bloque.ladrillo_no_rompible([0, c.altura_suelo-2*c.alto_ladrillo]),
+                        bloque.ladrillo_no_rompible([0, c.altura_suelo-3*c.alto_ladrillo]),
+                        bloque.ladrillo_no_rompible([500, c.altura_suelo-3*c.alto_ladrillo]),
+                        bloque.ladrillo_no_rompible([200, c.altura_suelo-c.alto_ladrillo]),
+                        bloque.ladrillo_no_rompible([200, c.altura_suelo-2*c.alto_ladrillo]),
+                        bloque.ladrillo_no_rompible([200, c.altura_suelo-3*c.alto_ladrillo]),
+                        bloque.ladrillo_no_rompible([500, c.altura_suelo-3*c.alto_ladrillo]),
                         bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_con_monedas([70, 110])]
     
     def __generar_npcs(self):

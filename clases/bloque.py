@@ -21,6 +21,7 @@ class bloque():
         # mas de lo mismo que arriba pero con el largo (y) en pixeles
         self.__alto = alto
         self.__v_y=0
+        self.__v_x=0
         self.__existe=True
     @property
     def existe(self):
@@ -54,6 +55,15 @@ class bloque():
             raise ValueError("la velocidad debe ser un int o float")
         self.__v_y=v_y
 
+    @property
+    def v_x(self):
+        return self.__v_x
+
+    @v_x.setter
+    def v_x(self, v_x: float):
+        if not isinstance(v_x, (float, int)):
+            raise ValueError("la velocidad debe ser un int o float")
+        self.__v_x = v_x
 
     @property # permite consultar la hitbox
     def tiene_hitbox(self):

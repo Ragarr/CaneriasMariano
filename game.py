@@ -44,7 +44,7 @@ class App():
     def draw(self):
         pyxel.cls(12)
         for i in range(len(self.__bloques)):
-            pyxel.blt(*self.__bloques[i].coord,*self.__bloques[i].sprite)
+            pyxel.blt(self.redondear(self.__bloques[i].coord[0]),self.redondear(self.__bloques[i].coord[1]),*self.__bloques[i].sprite)
         for i in range(len(self.objetos)):
             pyxel.blt(*self.objetos[i].coord, *self.objetos[i].sprite)
         for i in range(len(self.npcs)):
@@ -93,13 +93,7 @@ class App():
         if self.jugador.coord[0] > pyxel.width/2 and self.jugador.mirando_derecha:
             self.jugador.coord[0] = pyxel.width/2
             self.desplazar_nivel()
-        """else:
-            for bloque in self.__bloques:
-                bloque.v_x = 0
-            for objeto in self.objetos:
-                objeto.v_x = 0
-            for npc in self.npcs:
-                npc. = 0"""
+
         
     def desplazar_nivel(self):
         for bloque in self.__bloques:
@@ -108,5 +102,7 @@ class App():
             objeto.coord[0] -= self.jugador.v_x
         for npc in self.npcs:
             npc.coord[0] -= self.jugador.v_x
-        
+
+    def redondear(self,n:float)->int:
+        return round(n-0.000001)
 App()

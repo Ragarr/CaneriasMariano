@@ -30,6 +30,7 @@ class App():
     def update(self):
         self.jugador.actualizar_estado(self.__bloques,self.npcs,self.objetos,self.jugador)
         self.__borrar_entidades(self.__bloques, self.npcs, self.objetos)
+        self.mantener_jugador_en_pantalla()
         for npc in self.npcs:
             npc.actualizar_estado(self.__bloques , (other_npc for other_npc in self.npcs if other_npc != npc) ) # paso la lista de npcs exluyendo el npc a evaluar
         for bloque in self.__bloques:
@@ -64,6 +65,13 @@ class App():
                 del(bloques[i])
             else:   
                 i+=1
+        i = 0
+        while i < len(npcs):
+            npc = npcs[i]
+            if not npc.esta_vivo:
+                del(npcs[i])
+            else:
+                i += 1
     def __generar_suelo(self):
         # creacion del suelo
         x = 0
@@ -78,11 +86,25 @@ class App():
                         bloque.bloque_no_movible([c.ancho_pantalla-c.ancho_ladrillo, c.altura_suelo-c.alto_ladrillo]),
                         bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_con_monedas([70, 110])]
     def __generar_npcs(self):
-        self.npcs = [npc.goompa([50, c.altura_suelo-c.alto_koopa_troopa-1])]
+        self.npcs = [npc.koopa_troopa([90, 110-c.alto_goompa]),npc.goompa([70, 110-c.alto_goompa])]
 
+    def mantener_jugador_en_pantalla(self):
+        if self.jugador.coord[0]<0:
+            self.jugador.coord[0] =0
+        if self.jugador.coord[0] > pyxel.width/2 and self.jugador.mirando_derecha:
+            self.desplazar_nivel()
+        else:
+            for bloque in self.__bloques:
+                bloque.v_x = 0
 
+        
     def desplazar_nivel(self):
         for bloque in self.__bloques:
-            bloque.v_x
+            bloque.v_x = max(bloque.v_x-self.jugador.v_x, -c.v_player_max_x)
+
+        for objeto in self.objetos:
+            objeto.v_x += -self.jugador.v_x
+        
+
         
 App()

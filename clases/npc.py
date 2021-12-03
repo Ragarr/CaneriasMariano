@@ -9,7 +9,7 @@ class npc():
         self.__sprite = sprite
         self.__coord = coord
         self.__esta_vivo = True # El npc está vivo 
-        self.__v_x = c.v_npc  # La v_x habrá que modificarla según probemos
+        self.__v_x = -c.v_npc  # La v_x habrá que modificarla según probemos
         self.__v_y = 0
         self.tiene_hitbox=True
         """
@@ -103,7 +103,7 @@ class npc():
                     self.__v_x = -self.__v_x
 
     def actualizar_posicion(self):
-       self.coord[0]+=self.v_x
+       self.coord[0] += self.v_x
        self.coord[1] += self.v_y
 
     def morir(self):
@@ -159,7 +159,8 @@ class koopa_troopa(npc):
             self.frame_concha=pyxel.frame_count
             self.v_x = 0
             self.sprite = c.sprite_concha
-            self.coord[1]+=5
+            self.alto = c.alto_concha
+            self.coord[1]-=15
 
     def actualizar_estado(self, bloques: list, npcs: list):
         self.sufrir_gravedad()

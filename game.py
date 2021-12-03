@@ -11,7 +11,7 @@ class App():
         pyxel.init(c.ancho_pantalla, c.alto_pantalla, caption="test", fps=c.fps)
         pyxel.load(c.assets_path)
         self.contador = 0
-        self.jugador = player.mario([20, 12])
+        self.jugador = player.mario([230, 50])
         self.__generar_bloques()
         self.__generar_suelo()
         self.__generar_npcs()
@@ -75,7 +75,7 @@ class App():
     def __generar_suelo(self):
         # creacion del suelo
         x = 0
-        while x < pyxel.width:
+        while x < 10*pyxel.width:
             self.__bloques.append(bloque.suelo([x, c.altura_suelo]))
             x += c.ancho_suelo
     def __generar_bloques(self):
@@ -83,28 +83,30 @@ class App():
                         bloque.bloque_no_movible([0, c.altura_suelo-c.alto_ladrillo]),
                         bloque.bloque_no_movible([0, c.altura_suelo-2*c.alto_ladrillo]),
                         bloque.bloque_no_movible([0, c.altura_suelo-3*c.alto_ladrillo]),
-                        bloque.bloque_no_movible([c.ancho_pantalla-c.ancho_ladrillo, c.altura_suelo-c.alto_ladrillo]),
                         bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_con_monedas([70, 110])]
     def __generar_npcs(self):
-        self.npcs = [npc.koopa_troopa([90, 110-c.alto_goompa]),npc.goompa([70, 110-c.alto_goompa])]
+        self.npcs = [npc.koopa_troopa([170, c.altura_suelo-c.alto_goompa]),npc.goompa([200, 110-c.alto_goompa])]
 
     def mantener_jugador_en_pantalla(self):
         if self.jugador.coord[0]<0:
             self.jugador.coord[0] =0
         if self.jugador.coord[0] > pyxel.width/2 and self.jugador.mirando_derecha:
+            self.jugador.coord[0] = pyxel.width/2
             self.desplazar_nivel()
-        else:
+        """else:
             for bloque in self.__bloques:
                 bloque.v_x = 0
-
+            for objeto in self.objetos:
+                objeto.v_x = 0
+            for npc in self.npcs:
+                npc. = 0"""
         
     def desplazar_nivel(self):
         for bloque in self.__bloques:
-            bloque.v_x = max(bloque.v_x-self.jugador.v_x, -c.v_player_max_x)
-
+            bloque.coord[0]-=self.jugador.v_x
         for objeto in self.objetos:
-            objeto.v_x += -self.jugador.v_x
-        
-
+            objeto.coord[0] -= self.jugador.v_x
+        for npc in self.npcs:
+            npc.coord[0] -= self.jugador.v_x
         
 App()

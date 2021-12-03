@@ -29,14 +29,15 @@ carne = 15
 # ---------------------------fisicas------------------------------
 v_gravedad = 0.25
 v_salto = 5
-v_rozamiento = 0.1
-v_avance = 0.5
-v_player_max_x=1.5
+v_rozamiento =1
+v_avance = 1
+v_player_max_x=2
 v_player_max_y= 2
+v_objeto_x=2
 v_rebote= 4
 v_npc= 1
 v_goompa, v_koopa_troopa = v_npc, v_npc
-v_caparazon=3
+v_caparazon=0
 
 #----------------------animaciones-------------------------------
 frames_duracion_concha= 10*fps
@@ -56,7 +57,7 @@ alto_interrogacion = alto_ladrillo = alto_bloque_inamovible= 15
 altura_suelo = alto_pantalla-alto_pantalla/6
 ancho_tuberia=31
 ancho_suelo=15
-alto_concha=8
+alto_concha=12
 tolerancia_colisiones=2
 
 #-----------------sprites en general-----------------------------

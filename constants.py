@@ -28,7 +28,7 @@ carne = 15
 
 # ---------------------------fisicas------------------------------
 v_gravedad = 0.25
-v_salto = 5
+v_salto =5
 v_rozamiento =0.1
 v_avance = 0.5
 v_player_max_x=1.5
@@ -37,7 +37,7 @@ v_objeto_x=2
 v_rebote= 4
 v_npc= 1
 v_goompa, v_koopa_troopa = v_npc, v_npc
-v_caparazon=0
+v_caparazon=3
 
 #----------------------animaciones-------------------------------
 frames_duracion_concha= 10*fps
@@ -58,7 +58,7 @@ altura_suelo = alto_pantalla-alto_pantalla/8  +3
 ancho_tuberia=31
 ancho_suelo=15
 alto_concha=12
-tolerancia_colisiones=2
+tolerancia_colisiones=3
 
 #-----------------sprites en general-----------------------------
 sprite_moneda=[0,2,29,9,13,azul]
@@ -86,11 +86,11 @@ sprite_fireball=[0,21,147,7,7,azul]
 def tuberia(alto:int=48):
     return [0,79,178,31,alto,azul]
 sprite_suelo=[0,0,227,ancho_suelo,22,azul] # el suelo puede medir hasta 250 de ancho
-sprite_ladrillo=[0,160,208,15,15,azul]
+sprite_ladrillo=[0,160,208,15,15,-1]
 sprite_transparente=[0,0,0,0,0,azul]
 sprite_goompa=[0,16,0,16,16,azul]
 sprite_goompa_aplastado=[0,32,0,16,16,azul]
 sprite_koopa_troopa=[0,16,16,16,16,azul]
 sprite_concha=[0,32,22,16,10,azul]
-sprite_bloque_inamovible= [0,1,114,16,16]
+sprite_bloque_inamovible= [0,1,114,16,16,azul]
 

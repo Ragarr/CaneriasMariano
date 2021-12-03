@@ -11,12 +11,11 @@ class App():
         pyxel.init(c.ancho_pantalla, c.alto_pantalla, caption="test", fps=c.fps)
         pyxel.load(c.assets_path)
         self.contador = 0
-        self.jugador = player.mario([230, 50])
+        self.jugador = player.mario([125, 147])
         self.__generar_bloques()
         self.__generar_suelo()
         self.__generar_npcs()
-        self.objetos = [objeto.champi([130, c.altura_suelo-15]), objeto.estrella([145, c.altura_suelo-15]),
-                        objeto.flor([160,c.altura_suelo-15])]
+        self.__generar_objetos()
 
         
 
@@ -30,7 +29,7 @@ class App():
     def update(self):
         self.jugador.actualizar_estado(self.__bloques,self.npcs,self.objetos,self.jugador)
         self.__borrar_entidades(self.__bloques, self.npcs, self.objetos)
-        self.mantener_jugador_en_pantalla()
+        self.__mantener_jugador_en_pantalla()
         for npc in self.npcs:
             npc.actualizar_estado(self.__bloques , (other_npc for other_npc in self.npcs if other_npc != npc) ) # paso la lista de npcs exluyendo el npc a evaluar
         for bloque in self.__bloques:
@@ -39,12 +38,10 @@ class App():
             objeto.actualizar(player.mario)
         self.contador = 400-int(pyxel.frame_count/c.fps)
 
-
-
     def draw(self):
-        pyxel.cls(12)
+        pyxel.cls(c.azul)
         for i in range(len(self.__bloques)):
-            pyxel.blt(self.redondear(self.__bloques[i].coord[0]),self.redondear(self.__bloques[i].coord[1]),*self.__bloques[i].sprite)
+            pyxel.blt(self.__redondear(self.__bloques[i].coord[0]),self.__redondear(self.__bloques[i].coord[1]),*self.__bloques[i].sprite)
         for i in range(len(self.objetos)):
             pyxel.blt(*self.objetos[i].coord, *self.objetos[i].sprite)
         for i in range(len(self.npcs)):
@@ -72,30 +69,41 @@ class App():
                 del(npcs[i])
             else:
                 i += 1
+    
+    def __generar_objetos(self):
+        self.objetos = [objeto.champi([130, c.altura_suelo-15]), objeto.estrella([145, c.altura_suelo-15]),
+                        objeto.flor([160, c.altura_suelo-15])]
+    
     def __generar_suelo(self):
         # creacion del suelo
         x = 0
         while x < 10*pyxel.width:
             self.__bloques.append(bloque.suelo([x, c.altura_suelo]))
             x += c.ancho_suelo
+    
     def __generar_bloques(self):
         self.__bloques = [bloque.ladrillo_con_monedas([100,110]),bloque.bloque_no_movible([115,125]),
                         bloque.bloque_no_movible([0, c.altura_suelo-c.alto_ladrillo]),
                         bloque.bloque_no_movible([0, c.altura_suelo-2*c.alto_ladrillo]),
                         bloque.bloque_no_movible([0, c.altura_suelo-3*c.alto_ladrillo]),
+                        bloque.bloque_no_movible([500, c.altura_suelo-3*c.alto_ladrillo]),
+                        bloque.bloque_no_movible([200, c.altura_suelo-c.alto_ladrillo]),
+                        bloque.bloque_no_movible([200, c.altura_suelo-2*c.alto_ladrillo]),
+                        bloque.bloque_no_movible([200, c.altura_suelo-3*c.alto_ladrillo]),
+                        bloque.bloque_no_movible([500, c.altura_suelo-3*c.alto_ladrillo]),
                         bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_con_monedas([70, 110])]
+    
     def __generar_npcs(self):
-        self.npcs = [npc.koopa_troopa([170, c.altura_suelo-c.alto_goompa]),npc.goompa([200, 110-c.alto_goompa])]
+        self.npcs = []
 
-    def mantener_jugador_en_pantalla(self):
+    def __mantener_jugador_en_pantalla(self):
         if self.jugador.coord[0]<0:
             self.jugador.coord[0] =0
         if self.jugador.coord[0] > pyxel.width/2 and self.jugador.mirando_derecha:
             self.jugador.coord[0] = pyxel.width/2
-            self.desplazar_nivel()
-
-        
-    def desplazar_nivel(self):
+            self.__desplazar_nivel()
+     
+    def __desplazar_nivel(self):
         for bloque in self.__bloques:
             bloque.coord[0]-=self.jugador.v_x
         for objeto in self.objetos:
@@ -103,6 +111,6 @@ class App():
         for npc in self.npcs:
             npc.coord[0] -= self.jugador.v_x
 
-    def redondear(self,n:float)->int:
+    def __redondear(self,n:float)->int:
         return round(n-0.000001)
 App()

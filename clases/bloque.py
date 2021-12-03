@@ -149,7 +149,6 @@ class ladrillo_con_monedas(bloque):
         """dara monedas hasta que no haya, entonces se rompera"""
         if self.monedas < 1:
             self.romper()
-        
         self.v_y-=0.5
         self.monedas =(self.monedas- 1) # resta una moneda al contenido del bloque
         objetos.append(objeto.moneda([self.coord[0],self.coord[1]-15]))
@@ -181,6 +180,8 @@ class tuberia(bloque):
         self.__alto=alto
         self.__ancho=c.ancho_tuberia
 
+    def golpear(self,bloques=None, player=None):
+        pass
 class suelo(bloque):
     def __init__(self, coord: list) -> None:
         # una vez que el profesor nos pase el archivo con los sprites
@@ -190,5 +191,5 @@ class bloque_no_movible(bloque):
     def __init__(self, coord: list) -> None:
         super().__init__(coord,c.sprite_bloque_inamovible, c.ancho_bloque_inamovible, c.alto_bloque_inamovible)
 
-    def golpear(lf, bloques=None, player=None):
+    def golpear(self, bloques=None, player=None):
         pass

@@ -11,7 +11,7 @@ class App():
         pyxel.init(c.ancho_pantalla, c.alto_pantalla, caption="test", fps=c.fps)
         pyxel.load(c.assets_path)
         self.contador = 0
-        self.jugador = player.mario([20, 12])
+        self.jugador = player.mario([230, 50])
         self.__generar_bloques()
         self.__generar_suelo()
         self.__generar_npcs()
@@ -30,6 +30,7 @@ class App():
     def update(self):
         self.jugador.actualizar_estado(self.__bloques,self.npcs,self.objetos,self.jugador)
         self.__borrar_entidades(self.__bloques, self.npcs, self.objetos)
+        self.mantener_jugador_en_pantalla()
         for npc in self.npcs:
             npc.actualizar_estado(self.__bloques , (other_npc for other_npc in self.npcs if other_npc != npc) ) # paso la lista de npcs exluyendo el npc a evaluar
         for bloque in self.__bloques:
@@ -43,7 +44,7 @@ class App():
     def draw(self):
         pyxel.cls(12)
         for i in range(len(self.__bloques)):
-            pyxel.blt(*self.__bloques[i].coord,*self.__bloques[i].sprite)
+            pyxel.blt(self.redondear(self.__bloques[i].coord[0]),self.redondear(self.__bloques[i].coord[1]),*self.__bloques[i].sprite)
         for i in range(len(self.objetos)):
             pyxel.blt(*self.objetos[i].coord, *self.objetos[i].sprite)
         for i in range(len(self.npcs)):
@@ -64,10 +65,17 @@ class App():
                 del(bloques[i])
             else:   
                 i+=1
+        i = 0
+        while i < len(npcs):
+            npc = npcs[i]
+            if not npc.esta_vivo:
+                del(npcs[i])
+            else:
+                i += 1
     def __generar_suelo(self):
         # creacion del suelo
         x = 0
-        while x < pyxel.width:
+        while x < 10*pyxel.width:
             self.__bloques.append(bloque.suelo([x, c.altura_suelo]))
             x += c.ancho_suelo
     def __generar_bloques(self):
@@ -75,14 +83,26 @@ class App():
                         bloque.bloque_no_movible([0, c.altura_suelo-c.alto_ladrillo]),
                         bloque.bloque_no_movible([0, c.altura_suelo-2*c.alto_ladrillo]),
                         bloque.bloque_no_movible([0, c.altura_suelo-3*c.alto_ladrillo]),
-                        bloque.bloque_no_movible([c.ancho_pantalla-c.ancho_ladrillo, c.altura_suelo-c.alto_ladrillo]),
                         bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_con_monedas([70, 110])]
     def __generar_npcs(self):
-        self.npcs = [npc.goompa([50, c.altura_suelo-c.alto_koopa_troopa-1])]
+        self.npcs = [npc.koopa_troopa([170, c.altura_suelo-c.alto_goompa]),npc.goompa([200, 110-c.alto_goompa])]
 
+    def mantener_jugador_en_pantalla(self):
+        if self.jugador.coord[0]<0:
+            self.jugador.coord[0] =0
+        if self.jugador.coord[0] > pyxel.width/2 and self.jugador.mirando_derecha:
+            self.jugador.coord[0] = pyxel.width/2
+            self.desplazar_nivel()
 
+        
     def desplazar_nivel(self):
         for bloque in self.__bloques:
-            bloque.v_x
-        
+            bloque.coord[0]-=self.jugador.v_x
+        for objeto in self.objetos:
+            objeto.coord[0] -= self.jugador.v_x
+        for npc in self.npcs:
+            npc.coord[0] -= self.jugador.v_x
+
+    def redondear(self,n:float)->int:
+        return round(n-0.000001)
 App()

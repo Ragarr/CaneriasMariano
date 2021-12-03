@@ -72,7 +72,12 @@ class mario():
         if len(coord) != 2:
             raise ValueError('La lista coord tiene que tener exactamente 2 elementos')
         self.__coord = coord
-
+    @property
+    def v_x(self):
+        return self.__v_x
+    @property
+    def mirando_derecha(self):
+        return self.__mirando_derecha
 
     def __iniciar_temporizadores(self):
 
@@ -122,14 +127,14 @@ class mario():
         self.sprite=c.sprite_smario_quieto
         self.alto=c.alto_smario
         self.ancho=c.ancho_mario
-    def __recibir_daño(self):
+    def recibir_daño(self):
         if self.__fuego:
             self.__fuego=False
             self.__grande=True
         elif self.__grande:
             self.__grande=False
         else:
-            self.morir()
+            self.__morir()
     def __morir(self):
         pass
 

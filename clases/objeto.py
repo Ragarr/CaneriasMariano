@@ -81,7 +81,7 @@ class champi(objeto):
         self.sprite = c.sprite_champi
 
     def actualizar(self, player):
-        return 0
+        self.actualizar_posicion()
 
 
 class moneda(objeto):

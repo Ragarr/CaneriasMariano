@@ -2,14 +2,16 @@
     print("este archivo no es el principal y no esta pensado para ser ejecutado")
     quit()"""
 import pyxel
+from clases.bloque import suelo
 import constants as c
 class npc():
     def __init__(self, coord: list, sprite: list  ) -> None:
         self.__sprite = sprite
         self.__coord = coord
         self.__esta_vivo = True # El npc está vivo 
-        self.__v_x = c.v_npc  # La v_x habrá que modificarla según probemos
+        self.__v_x = -c.v_npc  # La v_x habrá que modificarla según probemos
         self.__v_y = 0
+        self.tiene_hitbox=True
         """
         Cooord es una lista de 2 elementos que contiene la posicón de donde se pinta el sprite
         Sprite es una lista de 6 elementos 
@@ -21,11 +23,6 @@ class npc():
         -la pos y final del sprite
         -color de chroma
         """
-    def sufrir_gravedad(self):
-        if (self.coord[1] < pyxel.height):
-            self.__v_y += c.v_gravedad
-        else: 
-            self.morir()
 
     @property
     def sprite(self):
@@ -70,32 +67,43 @@ class npc():
         if  not isinstance(new_v_y, (int, float)):
             raise ValueError('El valor de la velocidad es int o float')
         self.__v_y=new_v_y
+
+    def sufrir_gravedad(self):
+        if (self.coord[1] < pyxel.height):
+            self.__v_y += c.v_gravedad
+        else:
+            self.morir()
     
     def colisonar_bloques(self, bloques: list):
         for bloque in bloques:
-            colision_superior = False
-            colision_inferior = False
+            en_suelo = False
+
             if self.colisionando(bloque):  # comprueba si hay colision
                 # comprueba si la colision es por encima
-                if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto and not colision_inferior):
-                    self.coord[1] = bloque.coord[1]-self.alto
+                if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
                     self.__v_y = 0
+                
+                    en_suelo= True if isinstance(bloque,suelo) else False
+                else:
+                    self.__v_y = c.v_gravedad
+
                 if ((bloque.coord[0]+bloque.ancho)-self.coord[0] <= self.ancho
-                        and not colision_superior):
-                    self.__v_x = - self.__v_x
-                elif ((bloque.coord[0]+bloque.ancho)-self.coord[0] >= self.ancho
-                      and not colision_superior):
-                    self.__v_x = - self.__v_x
+                        and not en_suelo):
+                    self.__v_x = c.v_npc if not self.es_caparazon else c.v_caparazon
+                if ((bloque.coord[0]+bloque.ancho)-self.coord[0] >= self.ancho
+                      and not en_suelo):
+                    self.__v_x = -c.v_npc if not self.es_caparazon else -c.v_caparazon
     
     def colisionar_npcs(self, npcs):
         for npc in npcs:
-            if npc.es_caparazon:
-                self.morir()
-            else:
-                self.__v_x = -self.__v_x
+            if self.colisionando(npc):
+                if npc.es_caparazon:
+                    self.morir()
+                else:
+                    self.__v_x = -self.__v_x
 
     def actualizar_posicion(self):
-       self.coord[0]+=self.v_x
+       self.coord[0] += self.v_x
        self.coord[1] += self.v_y
 
     def morir(self):
@@ -103,7 +111,6 @@ class npc():
         self.sprite = c.sprite_transparente
 
     def colisionando(self, entity):
-        print("npc colisionando")
         if (entity.tiene_hitbox and abs(entity.coord[0]-self.coord[0]) < self.ancho
                 and abs(entity.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
             return True
@@ -116,6 +123,7 @@ class goompa(npc):
         super().__init__(coord=coord, sprite=c.sprite_goompa)
         self.ancho = c.ancho_goompa
         self.alto = c.alto_goompa
+        self.es_caparazon=False
     
     def colisionar_jugador(self):
         self.sprite=c.sprite_goompa_aplastado
@@ -151,24 +159,16 @@ class koopa_troopa(npc):
             self.frame_concha=pyxel.frame_count
             self.v_x = 0
             self.sprite = c.sprite_concha
-            self.coord[1]+=5
+            self.alto = c.alto_concha
+            self.coord[1]-=15
 
     def actualizar_estado(self, bloques: list, npcs: list):
-        if pyxel.frame_count-self.frame_concha >= c.frames_duracion_concha:
-            self.frame_concha = 400*c.fps
-            self.resurgir()
-
-        for bloque in bloques:
-            if (abs(bloque.coord[0]-self.coord[0]) < self.ancho
-                    and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
-                self.colisionar_bloque()
-
-        for npc in npcs:
-            if (abs(npc.coord[0]-self.coord[0]) < self.ancho and abs(npc.coord[1]-self.coord[1]) < self.alto
-                    and npc.esta_vivo):
-                self.colisionar_bloque()
-
+        self.sufrir_gravedad()
+        self.colisonar_bloques(bloques)
+        self.colisionar_npcs(npcs)
         self.actualizar_posicion()
+
+
 
     def resurgir(self):
         '''El koopa troopa volverá a su estado original pasado un tiempo '''

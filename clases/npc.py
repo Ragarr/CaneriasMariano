@@ -21,6 +21,12 @@ class npc():
         -la pos y final del sprite
         -color de chroma
         """
+    def sufrir_gravedad(self):
+        if (self.coord[1] < pyxel.height):
+            self.__v_y += c.v_gravedad
+        else: 
+            self.morir()
+
     @property
     def sprite(self):
         return self.__sprite
@@ -65,11 +71,28 @@ class npc():
             raise ValueError('El valor de la velocidad es int o float')
         self.__v_y=new_v_y
     
-    def colisionar_bloque(self):
-        '''Se llama  cuando el npc colisiona y queremos que cambia su moviento al sentido contrario'''
-        self.v_x = -self.v_x
+    def colisonar_bloques(self, bloques: list):
+        for bloque in bloques:
+            colision_superior = False
+            colision_inferior = False
+            if self.colisionando(bloque):  # comprueba si hay colision
+                # comprueba si la colision es por encima
+                if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto and not colision_inferior):
+                    self.coord[1] = bloque.coord[1]-self.alto
+                    self.__v_y = 0
+                if ((bloque.coord[0]+bloque.ancho)-self.coord[0] <= self.ancho
+                        and not colision_superior):
+                    self.__v_x = - self.__v_x
+                elif ((bloque.coord[0]+bloque.ancho)-self.coord[0] >= self.ancho
+                      and not colision_superior):
+                    self.__v_x = - self.__v_x
     
-
+    def colisionar_npcs(self, npcs):
+        for npc in npcs:
+            if npc.es_caparazon:
+                self.morir()
+            else:
+                self.__v_x = -self.__v_x
 
     def actualizar_posicion(self):
        self.coord[0]+=self.v_x
@@ -77,7 +100,15 @@ class npc():
 
     def morir(self):
         self.esta_vivo = False
-        self.sprite = [0, 0, 0, 0, 0, c.azul]
+        self.sprite = c.sprite_transparente
+
+    def colisionando(self, entity):
+        print("npc colisionando")
+        if (entity.tiene_hitbox and abs(entity.coord[0]-self.coord[0]) < self.ancho
+                and abs(entity.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
+            return True
+        else:
+            return False
 
 class goompa(npc):
     def __init__ (self, coord: list) -> None:
@@ -85,30 +116,17 @@ class goompa(npc):
         super().__init__(coord=coord, sprite=c.sprite_goompa)
         self.ancho = c.ancho_goompa
         self.alto = c.alto_goompa
+    
     def colisionar_jugador(self):
         self.sprite=c.sprite_goompa_aplastado
         self.morir()
-    def colisionar_npc(self,npc):
-        if npc.es_caparazon:
-            self.morir()
-        else:
-            self.colisionar_bloque()
+
 
     def actualizar_estado(self, bloques: list, npcs: list):
 
-        for bloque in bloques:
-            if (abs(bloque.coord[0]-self.coord[0]) < self.ancho
-                    and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
-                self.colisionar_bloque()
-
-
-        for npc in npcs:
-            if (abs(npc.coord[0]-self.coord[0]) < self.ancho and abs(npc.coord[1]-self.coord[1]) < self.alto
-                    and npc.esta_vivo):
-
-                self.colisionar_npc(npc)
-
-
+        self.sufrir_gravedad()
+        self.colisonar_bloques(bloques)
+        self.colisionar_npcs(npcs)
         self.actualizar_posicion()
 
 

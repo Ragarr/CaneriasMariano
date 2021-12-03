@@ -14,11 +14,11 @@ class App():
         self.jugador = player.mario([20, 12])
         self.__generar_bloques()
         self.__generar_suelo()
-
+        self.__generar_npcs()
         self.objetos = [objeto.champi([130, c.altura_suelo-15]), objeto.estrella([145, c.altura_suelo-15]),
                         objeto.flor([160,c.altura_suelo-15])]
 
-        self.npcs = [npc.goompa([50,50])]
+        
 
         self.atrezzo=[]
 
@@ -77,6 +77,10 @@ class App():
                         bloque.bloque_no_movible([0, c.altura_suelo-3*c.alto_ladrillo]),
                         bloque.bloque_no_movible([c.ancho_pantalla-c.ancho_ladrillo, c.altura_suelo-c.alto_ladrillo]),
                         bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_con_monedas([70, 110])]
+    def __generar_npcs(self):
+        self.npcs = [npc.goompa([50, c.altura_suelo-c.alto_koopa_troopa-1])]
+
+
     def desplazar_nivel(self):
         for bloque in self.__bloques:
             bloque.v_x

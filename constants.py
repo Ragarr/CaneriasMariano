@@ -54,7 +54,7 @@ alto_goompa=16
 alto_koopa_troopa=16
 ancho_interrogacion = ancho_bloque_inamovible = ancho_ladrillo = 15
 alto_interrogacion = alto_ladrillo = alto_bloque_inamovible= 15
-altura_suelo = alto_pantalla-alto_pantalla/8 +2
+altura_suelo = alto_pantalla-alto_pantalla/8  +3
 ancho_tuberia=31
 ancho_suelo=15
 alto_concha=12

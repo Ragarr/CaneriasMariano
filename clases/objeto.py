@@ -89,17 +89,24 @@ class objeto():
         else:
             self.morir()
     def colisionar_bloques(self, bloques: list):
-       for bloque in bloques:
+        for bloque in bloques:
             n_suelo = False
-           
+            
             if self.colisionando(bloque) and  self.coord_iniciales[1]-c.alto_champi/2 +1 < self.coord[1] and  isinstance(bloque, clases.bloque.interrogacion):
                 self.v_y = -0.1
                 self.v_x = 0
+                
             
             elif self.colisionando(bloque):  # comprueba si hay colision
-                self.v_x = 1 if not isinstance(self, flor ) else 0
+                if self.colisionando(bloque) and  self.coord_iniciales[1]-c.alto_champi/2  < self.coord[1] and  isinstance(bloque, clases.bloque.interrogacion) and not isinstance(self, flor ):
+                    self.v_x = 1 
+                    self.coord[1] -= 10
+                    self.v_y = -3
+                    
+                    
+                    
                 # comprueba si la colision es por encima
-                if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
+                elif ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
                     self.__v_y = 0
                     if not isinstance(bloque,clases.bloque.bloque_no_movible) and not isinstance(bloque, clases.bloque.tuberia):
                         self.coord[1] = bloque.coord[1] - self.alto

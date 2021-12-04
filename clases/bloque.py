@@ -185,13 +185,13 @@ class interrogacion(bloque):
         print(self.contenido)
         self.v_y=-0.5
         if self.contenido==1:
-            bloques.append(objeto.champi([self.coord_iniciales[0],self.coord_iniciales[1]-c.alto_champi]))
+            bloques.append(objeto.champi([self.coord[0],self.coord_iniciales[1]-c.alto_champi]))
             self.contenido = 0
         elif self.contenido == 2:
-            bloques.append(objeto.flor([self.coord_iniciales[0],self.coord_iniciales[1]-c.alto_flor]))
+            bloques.append(objeto.flor([self.coord[0],self.coord_iniciales[1]-c.alto_flor]))
             self.contenido = 0
         elif self.contenido == 3:
-            bloques.append(objeto.estrella([self.coord_iniciales[0],self.coord_iniciales[1]-c.alto_estrella]))
+            bloques.append(objeto.estrella([self.coord[0],self.coord_iniciales[1]-c.alto_estrella]))
             self.contenido = 0
         else:
             pass

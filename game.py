@@ -94,12 +94,12 @@ class App():
         self.__bloques = [bloque.ladrillo_con_monedas([100,125]),bloque.interrogacion
         
         ([115,125]),
-                        bloque.ladrillo_no_rompible([0, c.altura_suelo-c.alto_ladrillo]),
-                        bloque.ladrillo_no_rompible([0, c.altura_suelo-2*c.alto_ladrillo]),
-                        bloque.ladrillo_no_rompible([0, c.altura_suelo-3*c.alto_ladrillo]),
-                        bloque.ladrillo_no_rompible([200, c.altura_suelo-c.alto_ladrillo]),
-                        bloque.ladrillo_no_rompible([200, c.altura_suelo-2*c.alto_ladrillo]),
-                        bloque.ladrillo_no_rompible([200, c.altura_suelo-3*c.alto_ladrillo]),
+                        bloque.bloque_no_movible([0, c.altura_suelo-c.alto_ladrillo]),
+                        bloque.bloque_no_movible([0, c.altura_suelo-2*c.alto_ladrillo]),
+                        bloque.bloque_no_movible([0, c.altura_suelo-3*c.alto_ladrillo]),
+                        bloque.bloque_no_movible([200, c.altura_suelo-c.alto_ladrillo]),
+                        bloque.bloque_no_movible([200, c.altura_suelo-2*c.alto_ladrillo]),
+                        bloque.bloque_no_movible([200, c.altura_suelo-3*c.alto_ladrillo]),
                         bloque.ladrillo_con_monedas([85, 125]), bloque.ladrillo_con_monedas([70, 125])]
     
     def __generar_npcs(self):

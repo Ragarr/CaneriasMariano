@@ -96,7 +96,7 @@ class objeto():
                 # comprueba si la colision es por encima
                 if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
                     self.__v_y = 0
-                    if not isinstance(bloque,clases.bloque.ladrillo_no_rompible) and not isinstance(bloque, clases.bloque.tuberia):
+                    if not isinstance(bloque,clases.bloque.bloque_no_movible) and not isinstance(bloque, clases.bloque.tuberia):
                         self.coord[1] = bloque.coord[1] - self.alto
                     else:
                          self.coord[1]= self.coord[1]

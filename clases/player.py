@@ -78,7 +78,12 @@ class mario():
     @property
     def mirando_derecha(self):
         return self.__mirando_derecha
-
+    @property
+    def en_aire(self):
+        return self.__en_aire
+    @en_aire.setter
+    def en_aire(self, new_en_aire):
+        self.__en_aire=new_en_aire
     def __iniciar_temporizadores(self):
 
         """timers en frames para las animaciones """
@@ -96,10 +101,10 @@ class mario():
         self.__andando=False
         self.__girando=False
         self.__mirando_derecha = True
-        self.__permitir_salto = True 
+        self.__en_aire = False 
         self.__muerto = False
         self.__invencible = False  # modo estrella
-        self.__grande = False  # su estado de ser mario, super mario o con fuego
+        self.__grande = True  # su estado de ser mario, super mario o con fuego
         self.__fuego = False # su estado de ser mario, super mario o con fuego
         self.__permitir_fireball = True
         self.__en_transicion = False # para cuando cambia de estado
@@ -125,7 +130,7 @@ class mario():
         self.__actualizar_posicion()
     
     def __convertir_en_supermario(self):
-        self.sprite=c.sprite_smario_quieto
+        self.__grande = True
         self.alto=c.alto_smario
         self.ancho=c.ancho_mario
     def recibir_daño(self):
@@ -169,9 +174,11 @@ class mario():
                 elif ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto and not colision_inferior):
                     #print("colision superior con {}".format(type(bloque)))
                     colision_superior = True
+                    self.en_aire =False
                     self.coord[1] = bloque.coord[1]-self.alto 
                     # permite que se pueda saltar encima de los bloques, si se pone la velocidad
                     if (pyxel.btn(pyxel.KEY_SPACE)):
+                        self.en_aire=True
                         self.__v_y = -c.v_salto
                     else:  # te pega al bloque
                         self.__v_y = 0
@@ -202,9 +209,11 @@ class mario():
                 elif ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto and not colision_inferior):
                     #print("colision superior con {}".format(type(bloque)))
                     colision_superior = True
+                    self.en_aire = False
                     self.coord[1] = bloque.coord[1]-self.alto
                     # permite que se pueda saltar encima de los bloques, si se pone la velocidad
                     if (pyxel.btn(pyxel.KEY_SPACE)):
+                        self.en_aire = True
                         self.__v_y = -c.v_salto
                     else:  # te pega al bloque
                         self.__v_y = 0
@@ -235,21 +244,57 @@ class mario():
                     self.score += 1000
     
     def __actualizar_animaciones(self):
-        if self.__andando and not self.__grande:
-            if self.sprite==c.sprite_mario_quieto and pyxel.frame_count%(c.fps/6)==0:
-                self.sprite=c.sprite_mario_andando
-            elif pyxel.frame_count % (c.fps/2) == 0:
-                self.sprite=c.sprite_mario_quieto
-        elif not self.__grande:
-            self.sprite=c.sprite_mario_quieto
-    
-        if self.__andando and self.__grande:
-            if self.sprite == c.sprite_smario_quieto and pyxel.frame_count % (c.fps/6) == 0:
-                self.sprite = c.sprite_smario_andando1
-            elif pyxel.frame_count % (c.fps/2) == 0:
-                self.sprite = c.sprite_smario_quieto
-        elif  self.__grande:
-            self.sprite = c.sprite_smario_quieto
+        if not self.__grande and not self.__fuego:
+            if self.mirando_derecha:
+                if self.__andando  and not self.en_aire:
+                    if self.sprite==c.sprite_mario_quieto and pyxel.frame_count%(c.fps/4)==0:
+                        self.sprite=c.sprite_mario_andando
+                    elif pyxel.frame_count % (c.fps/2) == 0:
+                        self.sprite=c.sprite_mario_quieto
+                elif self.en_aire:
+                    self.sprite = c.sprite_mario_saltando
+                elif not self.__andando:
+                    self.sprite = c.sprite_mario_quieto
+            else:
+                if self.__andando and not self.en_aire:
+                    if self.sprite == c.sprite_mario_quieto_i and pyxel.frame_count % (c.fps/4) == 0:
+                        self.sprite = c.sprite_mario_andando_i
+                    elif pyxel.frame_count % (c.fps/2) == 0:
+                        self.sprite = c.sprite_mario_quieto_i
+                if not self.__andando and self.en_aire:
+                    self.sprite = c.sprite_mario_saltando_i
+                if not self.__andando and not self.en_aire:
+                    self.sprite = c.sprite_mario_quieto_i
+        elif not self.__fuego:
+            if self.mirando_derecha:
+                if self.__andando and not self.en_aire:
+                    if self.sprite != c.sprite_smario_andando1 and pyxel.frame_count % (c.fps/4) ==0:
+                        print("andando1")
+                        self.sprite = c.sprite_smario_andando1
+                    elif self.sprite != c.sprite_smario_andando2 and pyxel.frame_count % (c.fps/4) == 0:
+                        self.sprite = c.sprite_smario_andando2
+                        print("andando 2")
+                elif self.en_aire:
+                    self.sprite = c.sprite_smario_saltando
+                else:
+                    self.sprite = c.sprite_smario_quieto
+            else:
+                if self.__andando and not self.en_aire:
+                    if self.sprite != c.sprite_smario_andando1_i and pyxel.frame_count % (c.fps/4) == 0:
+                        print("andando1")
+                        self.sprite = c.sprite_smario_andando1_i
+                    elif self.sprite != c.sprite_smario_andando2_i and pyxel.frame_count % (c.fps/4) == 0:
+                        self.sprite = c.sprite_smario_andando2_i
+                        print("andando 2")
+                elif self.en_aire:
+                    self.sprite = c.sprite_smario_saltando_i
+                else:
+                    self.sprite = c.sprite_smario_quieto_i
+
+
+
+                
+
 
     def __sufrir_gravedad(self):
         #mov jugador eje y

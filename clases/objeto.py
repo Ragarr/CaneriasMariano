@@ -92,7 +92,12 @@ class objeto():
        for bloque in bloques:
             n_suelo = False
            
-            if self.colisionando(bloque):  # comprueba si hay colision
+            if self.colisionando(bloque) and  self.coord_iniciales[1]-c.alto_champi/2 +1 < self.coord[1] and  isinstance(bloque, clases.bloque.interrogacion):
+                self.v_y = -0.1
+                self.v_x = 0
+            
+            elif self.colisionando(bloque):  # comprueba si hay colision
+                self.v_x = 1 if not isinstance(self, flor ) else 0
                 # comprueba si la colision es por encima
                 if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
                     self.__v_y = 0
@@ -180,7 +185,7 @@ class champi(objeto):
     def __init__(self, coord: list) -> None:
         super().__init__(coord)
         self.sprite = c.sprite_champi
-        self.v_y=-1
+        self.v_y= 0
         self.v_x = 1
         self.ancho = 15
         self.alto = 15

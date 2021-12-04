@@ -169,7 +169,7 @@ class interrogacion(bloque):
 
         # 1champi, 2flor, 3estrella
         
-        self.__contenido = 3
+        self.__contenido = 1
     
     @property 
     def contenido(self):
@@ -185,7 +185,7 @@ class interrogacion(bloque):
         print(self.contenido)
         self.v_y=-0.5
         if self.contenido==1:
-            bloques.append(objeto.champi([self.coord[0],self.coord_iniciales[1]-c.alto_champi]))
+            bloques.append(objeto.champi([self.coord[0],self.coord_iniciales[1]-c.alto_champi/2]))
             self.contenido = 0
         elif self.contenido == 2:
             bloques.append(objeto.flor([self.coord[0],self.coord_iniciales[1]-c.alto_flor]))

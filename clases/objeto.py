@@ -110,7 +110,7 @@ class objeto():
                 # comprueba si la colision es por encima
                 elif ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
                     self.__v_y = 0
-                    #choque lateral con los bloques y cambio de sentido
+                    #choque lateral con los bloques y cambio de sentido solo con los bloques no movibles y tuberias yas que otros tipos podrían dar pie a errores y estos son los únicos a la altura del suelo
                     if not isinstance(bloque,clases.bloque.bloque_no_movible) and not isinstance(bloque, clases.bloque.tuberia):
                         self.coord[1] = bloque.coord[1] - self.alto
                     else:

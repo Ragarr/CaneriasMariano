@@ -37,7 +37,7 @@ v_objeto_x=2
 v_rebote= 4
 v_npc= 1
 v_goompa, v_koopa_troopa = v_npc, v_npc
-v_caparazon=0
+v_caparazon=3
 
 #----------------------animaciones-------------------------------
 frames_duracion_concha= 10*fps

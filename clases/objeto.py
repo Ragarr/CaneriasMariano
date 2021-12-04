@@ -6,9 +6,11 @@ if __name__ == "__main__":
 
 import constants as c
 import pyxel
+import clases.bloque
+
  
 
-import game
+
 class suelo():
     def __init__(self, coord: list) -> None:
         # una vez que el profesor nos pase el archivo con los sprites
@@ -96,7 +98,6 @@ class objeto():
                     self.__v_y = 0
                     self.coord[1] = bloque.coord[1] - self.alto 
                     n_suelo= True 
-                else:
                     self.__v_y = c.v_gravedad
                 if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
                         and not n_suelo):

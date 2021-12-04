@@ -23,6 +23,7 @@ class bloque():
         self.__v_y=0
         self.__v_x=0
         self.__existe=True
+        self.es_caparazon=False
     @property
     def existe(self):
         return self.__existe
@@ -167,7 +168,8 @@ class interrogacion(bloque):
         super().__init__(coord, c.sprite_interrogacion,c.ancho_interrogacion,c.alto_interrogacion)
 
         # 1champi, 2flor, 3estrella
-        self.__contenido = random.randint(1, 3)
+        
+        self.__contenido = 1
     
     @property 
     def contenido(self):

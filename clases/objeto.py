@@ -3,8 +3,16 @@
 if __name__ == "__main__":
     print("este archivo no es el principal y no esta pensado para ser ejecutado")
     quit()
+
 import constants as c
 import pyxel
+ 
+
+import game
+class suelo():
+    def __init__(self, coord: list) -> None:
+        # una vez que el profesor nos pase el archivo con los sprites
+        super().__init__(coord, c.sprite_suelo, pyxel.width, pyxel.height/3)
 
 
 class objeto():
@@ -16,6 +24,7 @@ class objeto():
         self.__v_y = 0
         self.__esta_activo = True
         self.__existe=True
+        
     @property
     def coord_iniciales(self):
         return self.__coord_iniciales
@@ -58,7 +67,9 @@ class objeto():
             raise ValueError('el estado de activo debe ser un valor booleano')
         self.__esta_activo=esta_activo
 
-
+    def morir(self):
+        self.esta_vivo = False
+        self.sprite = c.sprite_transparente
     def actualizar_posicion(self):
         self.coord[0] += self.v_x
         self.coord[1] += self.v_y
@@ -70,6 +81,42 @@ class objeto():
             return True
         else:
             return False
+    def sufrir_gravedad(self):
+        if (self.coord[1] < pyxel.height):
+            self.__v_y += c.v_gravedad
+        else:
+            self.morir()
+    def colisionar_bloques(self, bloques: list):
+        for bloque in bloques:
+            n_suelo = False
+           
+            if self.colisionando(bloque):  # comprueba si hay colision
+                # comprueba si la colision es por encima
+                if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
+                    self.__v_y = 0
+                    self.coord[1] = bloque.coord[1] - self.alto 
+                    n_suelo= True 
+                else:
+                    self.__v_y = c.v_gravedad
+                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
+                        and not n_suelo):
+                    self.__v_x = -self.__v_x
+                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) >= self.ancho
+                      and not n_suelo):
+                    self.__v_x = -self.__v_x 
+    
+    
+
+                
+
+class moneda(objeto):
+    def __init__(self, coord: list) -> None:
+        super().__init__(coord)
+        self.sprite = c.sprite_moneda_girada
+        self.duracion_frames = pyxel.frame_count+c.fps/3 # durara en pantalla 0.2secs
+        self.v_y=-1.5 
+
+
     
 
     
@@ -101,17 +148,22 @@ class estrella(objeto):
         self.actualizar_posicion()
 
 class champi(objeto):
+
     def __init__(self, coord: list) -> None:
         super().__init__(coord)
         self.sprite = c.sprite_champi
         self.v_y=-1
+        self.v_x = -1
+        self.ancho = 15
+        self.alto = 15
 
-    def actualizar(self, player):
-        if self.coord[1]<=self.coord_iniciales[1]:
-            self.v_y+=0.1
-        else:
-            self.v_y = 0
+    def actualizar(self, bloques):
+        self.sufrir_gravedad()
+        self.colisionar_bloques(bloques)
         self.actualizar_posicion()
+   
+           
+    
 
 
 class moneda(objeto):

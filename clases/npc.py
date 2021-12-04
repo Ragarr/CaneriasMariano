@@ -74,7 +74,7 @@ class npc():
         else:
             self.morir()
     
-    def colisonar_bloques(self, bloques: list):
+    def colisionar_bloques(self, bloques: list):
         for bloque in bloques:
             en_suelo = False
 
@@ -164,7 +164,7 @@ class koopa_troopa(npc):
 
     def actualizar_estado(self, bloques: list, npcs: list):
         self.sufrir_gravedad()
-        self.colisonar_bloques(bloques)
+        self.colisionar_bloques(bloques)
         self.colisionar_npcs(npcs)
         self.actualizar_posicion()
 

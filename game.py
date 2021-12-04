@@ -35,9 +35,9 @@ class App():
         for bloque in self.__bloques:
             bloque.reposicionar()
         for objeto in self.objetos:
-            objeto.actualizar(player.mario)
+            objeto.actualizar(self.__bloques)
         self.contador = 400-int(pyxel.frame_count/c.fps)
-
+       
     def draw(self):
         pyxel.cls(c.azul)
         for i in range(len(self.__bloques)):
@@ -81,8 +81,7 @@ class App():
                 i += 1
     
     def __generar_objetos(self):
-        self.objetos = [objeto.champi([130, c.altura_suelo-15]), objeto.estrella([145, c.altura_suelo-15]),
-                        objeto.flor([160, c.altura_suelo-15])]
+        self.objetos = [objeto.champi([130, c.altura_suelo-18]), ]
     
     def __generar_suelo(self):
         # creacion del suelo
@@ -92,18 +91,16 @@ class App():
             x += c.ancho_suelo
     
     def __generar_bloques(self):
-        self.__bloques = [bloque.ladrillo_con_monedas([100,110]),bloque.interrogacion
+        self.__bloques = [bloque.ladrillo_con_monedas([100,125]),bloque.interrogacion
         
         ([115,125]),
                         bloque.ladrillo_no_rompible([0, c.altura_suelo-c.alto_ladrillo]),
                         bloque.ladrillo_no_rompible([0, c.altura_suelo-2*c.alto_ladrillo]),
                         bloque.ladrillo_no_rompible([0, c.altura_suelo-3*c.alto_ladrillo]),
-                        bloque.ladrillo_no_rompible([500, c.altura_suelo-3*c.alto_ladrillo]),
                         bloque.ladrillo_no_rompible([200, c.altura_suelo-c.alto_ladrillo]),
                         bloque.ladrillo_no_rompible([200, c.altura_suelo-2*c.alto_ladrillo]),
                         bloque.ladrillo_no_rompible([200, c.altura_suelo-3*c.alto_ladrillo]),
-                        bloque.ladrillo_no_rompible([500, c.altura_suelo-3*c.alto_ladrillo]),
-                        bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_con_monedas([70, 110])]
+                        bloque.ladrillo_con_monedas([85, 125]), bloque.ladrillo_con_monedas([70, 125])]
     
     def __generar_npcs(self):
         self.npcs = []

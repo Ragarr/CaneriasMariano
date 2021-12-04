@@ -96,8 +96,12 @@ class objeto():
                 # comprueba si la colision es por encima
                 if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
                     self.__v_y = 0
-                    self.coord[1] = bloque.coord[1] - self.alto 
-                    n_suelo= True
+                    if not isinstance(bloque,clases.bloque.ladrillo_no_rompible) and not isinstance(bloque, clases.bloque.tuberia):
+                        self.coord[1] = bloque.coord[1] - self.alto
+                    else:
+                         self.coord[1]= self.coord[1]
+                         self.v_y = -self.v_y
+                    n_suelo= True 
                     self.v_y = -3 if isinstance(self, estrella) else c.v_gravedad
                 if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
                         and not n_suelo):
@@ -145,7 +149,7 @@ class estrella(objeto):
         self.alto = 15
     def sufrir_gravedad_estrella(self):
         if (self.coord[1] < pyxel.height):
-            self.v_y += 0.2
+            self.v_y += 0.21
         else:
             self.morir()
     

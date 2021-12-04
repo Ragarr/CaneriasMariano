@@ -59,16 +59,18 @@ ancho_tuberia=31
 ancho_suelo=15
 alto_concha=12
 tolerancia_colisiones=2
+alto_champi = alto_estrella = alto_flor = 15
+ancho_champi = ancho_estrella = ancho_flor = 15
 
 #-----------------sprites en general-----------------------------
 sprite_moneda=[0,2,29,9,13,azul]
 sprite_moneda_girada=[0,40,41,9,13,azul]
-sprite_champi=[0,0,45,14,15,azul]
+sprite_champi=[0,0,45,15,15,azul]
 sprite_estrella=[0,17,42,15,15,azul]
-sprite_flor=[0,55,47,14,14,azul]
+sprite_flor=[0,55,47,15,15,azul]
 sprite_nube=[0,39,48,153,13,azul]
-sprite_interrogacion_golpeado=[0,145,27,16,16,azul]
-sprite_interrogacion=[0,177,27,16,16,azul]
+sprite_interrogacion_golpeado=[0,145,27,16,16,blanco]
+sprite_interrogacion=[0,177,27,16,16,blanco]
 sprite_mario_quieto=[0,3,98,15,15,azul]
 sprite_mario_saltando=[0,1,79,15,15,azul]
 sprite_mario_andando=[0,18,99,15,15,azul]

@@ -166,13 +166,35 @@ class interrogacion(bloque):
         """este bloque es tanto el de la interrogacion como el bloque liso dependiendo en si esta activo o no"""
         super().__init__(coord, c.sprite_interrogacion,c.ancho_interrogacion,c.alto_interrogacion)
 
-        # 0-3moneda, 4champi, 5flor, 6estrella
-        self.contenido = random.randint(0, 6)
+        # 1champi, 2flor, 3estrella
+        self.__contenido = random.randint(1, 3)
+    
+    @property 
+    def contenido(self):
+        return self.__contenido
 
-    def golpear(self,bloques=None,player=None):
+    @contenido.setter
+    def contenido(self,new_contenido):
+        self.__contenido = new_contenido
+
+
+    def golpear(self,bloques:list=None,player=None):
         """dara un objeto y se convertirta en un bloque plano"""
-        self.v_y=-0.2
-        self.__sprite = c.sprite_interrogacion_golpeado  # reemplazar el sprite de interrogacion por el liso
+        print(self.contenido)
+        self.v_y=-0.5
+        if self.contenido==1:
+            bloques.append(objeto.champi([self.coord_iniciales[0],self.coord_iniciales[1]-c.alto_champi]))
+            self.contenido = 0
+        elif self.contenido == 2:
+            bloques.append(objeto.flor([self.coord_iniciales[0],self.coord_iniciales[1]-c.alto_flor]))
+            self.contenido = 0
+        elif self.contenido == 3:
+            bloques.append(objeto.estrella([self.coord_iniciales[0],self.coord_iniciales[1]-c.alto_estrella]))
+            self.contenido = 0
+        else:
+            pass
+            
+        self.sprite = c.sprite_interrogacion_golpeado  # reemplazar el sprite de interrogacion por el liso
 
 class tuberia(bloque):
     def __init__(self, coord: list,alto:int) -> None:

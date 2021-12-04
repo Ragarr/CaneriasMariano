@@ -11,10 +11,20 @@ class objeto():
     def __init__(self, coord: list) -> None:
 
         self.__coord = coord
+        self.__coord_iniciales = coord.copy()
         self.__v_x = 0
         self.__v_y = 0
         self.__esta_activo = True
-
+        self.__existe=True
+    @property
+    def coord_iniciales(self):
+        return self.__coord_iniciales
+    @property
+    def existe(self):
+        return self.__existe
+    """@existe.setter
+    def existe(self,new_existe):
+        self.__existe=new_existe"""
     @property
     def coord(self):
         return self.__coord
@@ -52,17 +62,28 @@ class objeto():
     def actualizar_posicion(self):
         self.coord[0] += self.v_x
         self.coord[1] += self.v_y
+    def desaparecer(self):
+        self.__existe=False
+    def colisionando(self,bloque):
+        if (bloque.tiene_hitbox and abs(bloque.coord[0]-self.coord[0]) < self.ancho
+                and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
+            return True
+        else:
+            return False
+    
 
-    def colisionar_bloque(self):
-        self.v_x = 0 - self.v_x
-
-
+    
 class flor(objeto):
     def __init__(self, coord: list) -> None:
         super().__init__(coord)
         self.sprite = c.sprite_flor
+        self.v_y = -1   
 
-    def actualizar(self,player):
+    def actualizar(self, player):
+        if self.coord[1] <= self.coord_iniciales[1]:
+            self.v_y += 0.1
+        else:
+            self.v_y = 0
         self.actualizar_posicion()
 
 
@@ -70,17 +91,26 @@ class estrella(objeto):
     def __init__(self, coord: list) -> None:
         super().__init__(coord)
         self.sprite = c.sprite_estrella
+        self.v_y=-1
 
-    def actualizar(self,player):
+    def actualizar(self, player):
+        if self.coord[1]<=self.coord_iniciales[1]:
+            self.v_y+=0.1
+        else:
+            self.v_y = 0
         self.actualizar_posicion()
-
 
 class champi(objeto):
     def __init__(self, coord: list) -> None:
         super().__init__(coord)
         self.sprite = c.sprite_champi
+        self.v_y=-1
 
     def actualizar(self, player):
+        if self.coord[1]<=self.coord_iniciales[1]:
+            self.v_y+=0.1
+        else:
+            self.v_y = 0
         self.actualizar_posicion()
 
 
@@ -89,7 +119,6 @@ class moneda(objeto):
         super().__init__(coord)
         self.sprite = c.sprite_moneda_girada
         self.duracion_frames = pyxel.frame_count+c.fps/3 # durara en pantalla 0.2secs
-        self.consumida = False
         self.v_y=-1.5 # asi la moneda subira al aparecer
 
     def actualizar(self,player):
@@ -98,7 +127,7 @@ class moneda(objeto):
         elif self.duracion_frames > pyxel.frame_count:
             pass
         else:
-            self.sprite = c.sprite_transparente
+            self.desaparecer()
         self.actualizar_posicion()
  
 

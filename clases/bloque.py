@@ -166,7 +166,7 @@ class interrogacion(bloque):
     def __init__(self, coord: list, contenido = 1) -> None:
         """este bloque es tanto el de la interrogacion como el bloque liso dependiendo en si esta activo o no"""
         super().__init__(coord, c.sprite_interrogacion,c.ancho_interrogacion,c.alto_interrogacion)
-
+        # De base spwanea la seta, ya que es la más habitual
         # 1champi, 2flor, 3estrella
         
         self.__contenido = contenido

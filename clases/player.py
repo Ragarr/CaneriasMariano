@@ -15,10 +15,10 @@ class mario():
         self.__score = 0
         self.__dinero = 0
         self.__coord = coord  # ubicacion de el sprite
+
     @property
     def sprite(self):
         return self.__sprite
-
     @sprite.setter
     def sprite(self, new_sprite: list):
         if not isinstance(new_sprite, list):
@@ -28,24 +28,19 @@ class mario():
         self.__sprite = new_sprite
     @property
     def ancho(self):
-        return self.__ancho
-    
+        return self.__ancho   
     @ancho.setter
     def ancho(self, new_ancho):
-        self.__ancho = new_ancho
-    
+        self.__ancho = new_ancho  
     @property
     def alto(self):
-        return self.__alto
-    
+        return self.__alto 
     @alto.setter
     def alto(self, new_alto):
         self.__alto = new_alto
-
     @property
     def score(self):
         return self.__score
-    
     @score.setter
     def score(self, new_score):
         if not isinstance (new_score, int):
@@ -56,7 +51,6 @@ class mario():
     @property
     def dinero(self):
         return self.__dinero
-    
     @dinero.setter
     def dinero(self, new_dinero):
         if not isinstance (new_dinero, int):
@@ -98,6 +92,7 @@ class mario():
     
     def __iniciar_booleanos(self):
         """boleanos para el comportamiento de mario"""
+        self.__agachado=False
         self.__andando=False
         self.__girando=False
         self.__mirando_derecha = True
@@ -133,6 +128,7 @@ class mario():
         self.__grande = True
         self.alto=c.alto_smario
         self.ancho=c.ancho_mario
+    
     def recibir_daño(self):
         if self.__fuego:
             self.__fuego=False
@@ -141,6 +137,7 @@ class mario():
             self.__grande=False
         else:
             self.__morir()
+    
     def __morir(self):
         pass
 
@@ -149,7 +146,6 @@ class mario():
             self.__colisonar_bloques_grande(bloques , objetos , jugador)
         else:
             self.__colisonar_bloques_pequeño(bloques, objetos, jugador)
-
 
     def __colisionando(self, entity):
         if (entity.tiene_hitbox and abs(entity.coord[0]-self.coord[0]) < self.ancho
@@ -267,34 +263,37 @@ class mario():
                     self.sprite = c.sprite_mario_quieto_i
         elif not self.__fuego:
             if self.mirando_derecha:
-                if self.__andando and not self.en_aire:
+                if self.__agachado:
+                    self.sprite=c.sprite_smario_agachado
+                if self.__andando and not self.en_aire and not self.__agachado:
                     if self.sprite != c.sprite_smario_andando1 and pyxel.frame_count % (c.fps/4) ==0:
                         print("andando1")
                         self.sprite = c.sprite_smario_andando1
-                    elif self.sprite != c.sprite_smario_andando2 and pyxel.frame_count % (c.fps/4) == 0:
+                    elif self.sprite != c.sprite_smario_andando2 and pyxel.frame_count % (c.fps/4) == 0 :
                         self.sprite = c.sprite_smario_andando2
                         print("andando 2")
-                elif self.en_aire:
+                elif self.en_aire and not self.__agachado:
                     self.sprite = c.sprite_smario_saltando
-                else:
+                elif  not self.__agachado:
                     self.sprite = c.sprite_smario_quieto
+                else:
+                    self.sprite = c.sprite_smario_agachado
             else:
-                if self.__andando and not self.en_aire:
+                if self.__agachado:
+                    self.sprite = c.sprite_smario_agachado_i
+                if self.__andando and not self.en_aire and not self.__agachado:
                     if self.sprite != c.sprite_smario_andando1_i and pyxel.frame_count % (c.fps/4) == 0:
                         print("andando1")
                         self.sprite = c.sprite_smario_andando1_i
                     elif self.sprite != c.sprite_smario_andando2_i and pyxel.frame_count % (c.fps/4) == 0:
                         self.sprite = c.sprite_smario_andando2_i
                         print("andando 2")
-                elif self.en_aire:
+                elif self.en_aire and not self.__agachado:
                     self.sprite = c.sprite_smario_saltando_i
-                else:
+                elif not self.__agachado:
                     self.sprite = c.sprite_smario_quieto_i
-
-
-
-                
-
+                else:
+                    self.sprite = c.sprite_smario_agachado
 
     def __sufrir_gravedad(self):
         #mov jugador eje y
@@ -303,6 +302,7 @@ class mario():
             self.__v_y += c.v_gravedad
         else: 
             self.muerto=True
+    
     def __detectar_botones(self):
         if pyxel.btn(pyxel.KEY_D) and not self.__bloque_a_derecha:  # acelera si pulsas la D
             self.__v_x = min(self.__v_x+c.v_avance, c.v_player_max_x)
@@ -319,4 +319,12 @@ class mario():
         elif not pyxel.btn(pyxel.KEY_D) and not self.__mirando_derecha: # Deceleras si avancas hacia detras y no pulsas la A ni la D
             self.__v_x = min(self.__v_x+c.v_rozamiento, 0)
             self.__andando=False
+        if pyxel.btn(pyxel.KEY_S):
+            if  self.en_aire:
+                self.__v_y += 0.5
+            self.__agachado=True
+        else:
+            self.__agachado = False
+            
+        
 

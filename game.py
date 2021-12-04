@@ -37,13 +37,13 @@ class App():
         for objeto in self.objetos:
             objeto.actualizar(self.__bloques)
         self.contador = 400-int(pyxel.frame_count/c.fps)
-       
+
     def draw(self):
         pyxel.cls(c.azul)
-        for i in range(len(self.objetos)):
-            pyxel.blt(*self.objetos[i].coord, *self.objetos[i].sprite)
         for i in range(len(self.__bloques)):
             pyxel.blt(self.__redondear(self.__bloques[i].coord[0]),self.__redondear(self.__bloques[i].coord[1]),*self.__bloques[i].sprite)
+        for i in range(len(self.objetos)):
+            pyxel.blt(*self.objetos[i].coord, *self.objetos[i].sprite)
         for i in range(len(self.npcs)):
             pyxel.blt(*self.npcs[i].coord, *self.npcs[i].sprite)
         for i in range(len(self.atrezzo)):
@@ -58,7 +58,7 @@ class App():
         i=0
         while i < len(bloques):
             bloque=bloques[i]
-            if not bloque.existe:
+            if not bloque.existe or bloque.coord[0]< -bloque.ancho:
                 print("bloque eliminado")
                 del(bloques[i])
             else:   
@@ -66,7 +66,7 @@ class App():
         i = 0
         while i < len(npcs):
             npc = npcs[i]
-            if not npc.esta_vivo:
+            if not npc.esta_vivo or npc.coord[0] < -npc.ancho:
                 print("npc eliminado")
                 del(npcs[i])
             else:
@@ -74,14 +74,15 @@ class App():
         i = 0
         while i < len(objetos):
             objeto = objetos[i]
-            if not objeto.existe:
+            if not objeto.existe or objeto.coord[0]< - objeto.ancho:
                 print("objeto eliminado")
                 del(objetos[i])
             else:
                 i += 1
     
     def __generar_objetos(self):
-        self.objetos = [objeto.champi([130, c.altura_suelo-18]), ]
+        self.objetos = [objeto.champi([130, c.altura_suelo-15]), objeto.estrella([145, c.altura_suelo-15]),
+                        objeto.flor([160, c.altura_suelo-15])]
     
     def __generar_suelo(self):
         # creacion del suelo
@@ -91,16 +92,16 @@ class App():
             x += c.ancho_suelo
     
     def __generar_bloques(self):
-        self.__bloques = [bloque.ladrillo_con_monedas([100,125]),bloque.interrogacion
-        
-        ([115,125]),
+        self.__bloques = [bloque.ladrillo_con_monedas([100,110]),bloque.interrogacion([115,125]),
                         bloque.bloque_no_movible([0, c.altura_suelo-c.alto_ladrillo]),
                         bloque.bloque_no_movible([0, c.altura_suelo-2*c.alto_ladrillo]),
                         bloque.bloque_no_movible([0, c.altura_suelo-3*c.alto_ladrillo]),
+                        bloque.bloque_no_movible([500, c.altura_suelo-3*c.alto_ladrillo]),
                         bloque.bloque_no_movible([200, c.altura_suelo-c.alto_ladrillo]),
                         bloque.bloque_no_movible([200, c.altura_suelo-2*c.alto_ladrillo]),
                         bloque.bloque_no_movible([200, c.altura_suelo-3*c.alto_ladrillo]),
-                        bloque.ladrillo_con_monedas([85, 125]), bloque.ladrillo_con_monedas([70, 125])]
+                        bloque.bloque_no_movible([500, c.altura_suelo-3*c.alto_ladrillo]),
+                        bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_con_monedas([70, 110])]
     
     def __generar_npcs(self):
         self.npcs = []

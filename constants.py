@@ -45,7 +45,7 @@ frames_duracion_concha= 10*fps
 
 #-----------------coeficientes para las hitboxes-------------------
 ancho_mario = 15
-alto_mario=15
+alto_mario=alto_smario_agachado=15
 ancho_smario = 15
 alto_smario = 31
 ancho_goompa=16
@@ -92,11 +92,11 @@ sprite_mario_andando = [0, 18, 99, 15, 15, azul]
 sprite_mario_girando = [0, 36, 99, 15, 15, azul]
 sprite_smario_quieto = [0, 54, 82, 15, 31, azul]
 sprite_smario_andando1 = [0, 89, 82, 15, 31, azul]
-sprite_smario_andando2 = [0, 107, 84, 15, 30, azul]
+sprite_smario_andando2 = [0, 107, 84, 13, 30, azul]
 sprite_smario_girando = [0, 124, 83, 15, 31, azul]
 sprite_smario_saltando = [0, 148, 80, 15, 31, azul]
 sprite_smario_fuego = [0, 168, 81, 15, 31, azul]
-sprite_smario_agachado = [0, 187, 92, 15, 21, azul]
+sprite_smario_agachado = [0, 187, 82, 16, 31, azul]
 # mirando a izq
 sprite_mario_quieto_i = [0, 3, 98, -15, 15, azul]
 sprite_mario_saltando_i = [0, 1, 79, -15, 15, azul]
@@ -104,9 +104,9 @@ sprite_mario_andando_i = [0, 18, 99, -15, 15, azul]
 sprite_mario_girando_i = [0, 36, 99, -15, 15, azul]
 sprite_smario_quieto_i = [0, 54, 82, -15, 31, azul]
 sprite_smario_andando1_i = [0, 89, 82, -15, 31, azul]
-sprite_smario_andando2_i = [0, 107, 84,- 15, 30, azul]
+sprite_smario_andando2_i = [0, 107, 84,- 13, 30, azul]
 sprite_smario_girando_i = [0, 124, 83, -15, 31, azul]
 sprite_smario_saltando_i = [0, 148, 80, -15, 31, azul]
 sprite_smario_fuego_i = [0, 168, 81, -15, 31, azul]
-sprite_smario_agachado_i = [0, 187, 92, -15, 21, azul]
+sprite_smario_agachado_i = [0, 187, 82, -16, 31, azul]
 

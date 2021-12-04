@@ -89,7 +89,7 @@ class objeto():
         else:
             self.morir()
     def colisionar_bloques(self, bloques: list):
-        for bloque in bloques:
+       for bloque in bloques:
             n_suelo = False
            
             if self.colisionando(bloque):  # comprueba si hay colision
@@ -97,15 +97,15 @@ class objeto():
                 if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
                     self.__v_y = 0
                     self.coord[1] = bloque.coord[1] - self.alto 
-                    n_suelo= True 
-                    self.__v_y = c.v_gravedad
+                    n_suelo= True
+                    self.v_y = -3 if isinstance(self, estrella) else c.v_gravedad
                 if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
                         and not n_suelo):
                     self.__v_x = -self.__v_x
                 if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) >= self.ancho
                       and not n_suelo):
                     self.__v_x = -self.__v_x 
-    
+        
     
 
                 
@@ -139,14 +139,37 @@ class estrella(objeto):
     def __init__(self, coord: list) -> None:
         super().__init__(coord)
         self.sprite = c.sprite_estrella
-        self.v_y=-1
-
+        self.v_y= 1
+        self.v_x = 1
+        self.ancho = 15
+        self.alto = 15
+    def sufrir_gravedad_estrella(self):
+        if (self.coord[1] < pyxel.height):
+            self.v_y += 0.2
+        else:
+            self.morir()
+    
+    
     def actualizar(self, player):
         if self.coord[1]<=self.coord_iniciales[1]:
             self.v_y+=0.1
         else:
             self.v_y = 0
         self.actualizar_posicion()
+    
+    
+    def actualizar(self, bloques ):
+       
+        self.sufrir_gravedad_estrella()
+        self.colisionar_bloques(bloques)
+        self.actualizar_posicion()
+        
+
+        
+       
+        
+        
+   
 
 class champi(objeto):
 
@@ -154,7 +177,7 @@ class champi(objeto):
         super().__init__(coord)
         self.sprite = c.sprite_champi
         self.v_y=-1
-        self.v_x = -1
+        self.v_x = 1
         self.ancho = 15
         self.alto = 15
 

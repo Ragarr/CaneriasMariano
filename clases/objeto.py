@@ -92,13 +92,13 @@ class objeto():
         for bloque in bloques:
             n_suelo = False
             
-            if self.colisionando(bloque) and  self.coord_iniciales[1]-c.alto_champi/2 +1 < self.coord[1] and  isinstance(bloque, clases.bloque.interrogacion):
+            if self.colisionando(bloque) and  self.coord_iniciales[1]-c.alto_champi/2 +1 < self.coord[1] and  isinstance(bloque, clases.bloque.interrogacion) and not isinstance(self, estrella):
                 self.v_y = -0.1
                 self.v_x = 0
                 
             
             elif self.colisionando(bloque):  # comprueba si hay colision
-                if self.colisionando(bloque) and  self.coord_iniciales[1]-c.alto_champi/2  < self.coord[1] and  isinstance(bloque, clases.bloque.interrogacion) and not isinstance(self, flor ):
+                if self.colisionando(bloque) and  self.coord_iniciales[1]-c.alto_champi/2  < self.coord[1] and  isinstance(bloque, clases.bloque.interrogacion) and  isinstance(self, champi ):
                     self.v_x = 1 
                     self.coord[1] -= 10
                     self.v_y = -3

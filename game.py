@@ -59,6 +59,7 @@ class App():
         while i < len(bloques):
             bloque=bloques[i]
             if not bloque.existe:
+                print("bloque eliminado")
                 del(bloques[i])
             else:   
                 i+=1
@@ -66,7 +67,16 @@ class App():
         while i < len(npcs):
             npc = npcs[i]
             if not npc.esta_vivo:
+                print("npc eliminado")
                 del(npcs[i])
+            else:
+                i += 1
+        i = 0
+        while i < len(objetos):
+            objeto = objetos[i]
+            if not objeto.existe:
+                print("objeto eliminado")
+                del(objetos[i])
             else:
                 i += 1
     
@@ -82,7 +92,9 @@ class App():
             x += c.ancho_suelo
     
     def __generar_bloques(self):
-        self.__bloques = [bloque.ladrillo_con_monedas([100,110]),bloque.ladrillo_no_rompible([115,125]),
+        self.__bloques = [bloque.ladrillo_con_monedas([100,110]),bloque.interrogacion
+        
+        ([115,125]),
                         bloque.ladrillo_no_rompible([0, c.altura_suelo-c.alto_ladrillo]),
                         bloque.ladrillo_no_rompible([0, c.altura_suelo-2*c.alto_ladrillo]),
                         bloque.ladrillo_no_rompible([0, c.altura_suelo-3*c.alto_ladrillo]),

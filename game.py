@@ -40,10 +40,10 @@ class App():
        
     def draw(self):
         pyxel.cls(c.azul)
-        for i in range(len(self.__bloques)):
-            pyxel.blt(self.__redondear(self.__bloques[i].coord[0]),self.__redondear(self.__bloques[i].coord[1]),*self.__bloques[i].sprite)
         for i in range(len(self.objetos)):
             pyxel.blt(*self.objetos[i].coord, *self.objetos[i].sprite)
+        for i in range(len(self.__bloques)):
+            pyxel.blt(self.__redondear(self.__bloques[i].coord[0]),self.__redondear(self.__bloques[i].coord[1]),*self.__bloques[i].sprite)
         for i in range(len(self.npcs)):
             pyxel.blt(*self.npcs[i].coord, *self.npcs[i].sprite)
         for i in range(len(self.atrezzo)):

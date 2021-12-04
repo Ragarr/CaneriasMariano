@@ -169,7 +169,7 @@ class interrogacion(bloque):
 
         # 1champi, 2flor, 3estrella
         
-        self.__contenido = 2
+        self.__contenido = 1
     
     @property 
     def contenido(self):

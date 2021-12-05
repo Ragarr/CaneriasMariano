@@ -205,11 +205,11 @@ class suelo(bloque):
         # una vez que el profesor nos pase el archivo con los sprites
         super().__init__(coord, c.sprite_suelo, pyxel.width, pyxel.height/3)
 
-class bloque_no_movible(bloque):
+class escalera(bloque):
     """este bloque SOLO puede usarse para hacer escaleras o a nivel de suelo"""
-    def __init__(self, coord: list, bloques_en_escaleras:int = 1) -> None:
+    def __init__(self, coord: list, alto:int = 1) -> None:
         
-        super().__init__(coord,[0,113,1,15,bloques_en_escaleras*c.alto_bloque_inamovible, c.azul], c.ancho_bloque_inamovible, bloques_en_escaleras * c.alto_bloque_inamovible)
+        super().__init__(coord,c.escalera(alto), c.ancho_escalera, alto * c.alto_escalera)
 
     def golpear(self, bloques=None, player=None):
         pass

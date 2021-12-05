@@ -81,7 +81,7 @@ class App():
                 i += 1
     
     def __generar_objetos(self):
-        self.objetos = [objeto.flor([300, c.altura_suelo-c.alto_ladrillo-8])]
+        self.objetos = []
     
     def __generar_suelo(self):
         # creacion del suelo
@@ -91,15 +91,11 @@ class App():
             x += c.ancho_suelo
     
     def __generar_bloques(self):
-        self.__bloques = [bloque.interrogacion([100,110]),bloque.interrogacion([115,110]),
-                        
-                        bloque.bloque_no_movible([0, c.altura_suelo-3*c.alto_ladrillo, 3]),
-                        bloque.bloque_no_movible([500, c.altura_suelo-3*c.alto_ladrillo]),
-                        bloque.bloque_no_movible([200, c.altura_suelo-c.alto_ladrillo]),
-                        bloque.bloque_no_movible([200, c.altura_suelo-2*c.alto_ladrillo]),
-                        bloque.bloque_no_movible([200, c.altura_suelo-3*c.alto_ladrillo]),
-                        bloque.bloque_no_movible([500, c.altura_suelo-3*c.alto_ladrillo, 3]),
-                        bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_rompible([70, 110], True)]
+        self.__bloques = [bloque.escalera([200, c.altura_suelo-15*3-1], 3), 
+        bloque.escalera([200-17, c.altura_suelo-15*2-1], 2), bloque.escalera([200-17-17, c.altura_suelo-15-1], 1), 
+        bloque.interrogacion([300, c.altura_suelo-50]), bloque.ladrillo_rompible([400, c.altura_suelo-50], True)
+        
+        ]
     
     def __generar_npcs(self):
         self.npcs = [npc.goompa([200,50])]

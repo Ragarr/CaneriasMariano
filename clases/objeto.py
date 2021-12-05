@@ -155,7 +155,7 @@ class estrella(objeto):
                 if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
                     self.v_y = 0
                     #choque lateral con los bloques y cambio de sentido solo con los bloques no movibles y tuberias yas que otros tipos podrían dar pie a errores y estos son los únicos a la altura del suelo
-                    if not isinstance(bloque, clases.bloque.bloque_no_movible) and not isinstance(bloque, clases.bloque.tuberia):
+                    if not isinstance(bloque, clases.bloque.escalera) and not isinstance(bloque, clases.bloque.tuberia):
                         self.coord[1] = bloque.coord[1] - self.alto
                     else:
                         self.coord[1] = self.coord[1]
@@ -214,7 +214,7 @@ class champi(objeto):
                 elif ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
                     self.v_y = 0
                     #choque lateral con los bloques y cambio de sentido solo con los bloques no movibles y tuberias yas que otros tipos podrían dar pie a errores y estos son los únicos a la altura del suelo
-                    if not isinstance(bloque, clases.bloque.bloque_no_movible) and not isinstance(bloque, clases.bloque.tuberia):
+                    if not isinstance(bloque, clases.bloque.escalera) and not isinstance(bloque, clases.bloque.tuberia):
                         self.coord[1] = bloque.coord[1] - self.alto
                     else:
                         self.coord[1] = self.coord[1]
@@ -288,7 +288,7 @@ class fireball(objeto):
                 if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
                     self.v_y = 0
                     #choque lateral con los bloques y cambio de sentido solo con los bloques no movibles y tuberias yas que otros tipos podrían dar pie a errores y estos son los únicos a la altura del suelo
-                    if not isinstance(bloque, clases.bloque.bloque_no_movible) and not isinstance(bloque, clases.bloque.tuberia):
+                    if not isinstance(bloque, clases.bloque.escalera) and not isinstance(bloque, clases.bloque.tuberia):
                         self.coord[1] = bloque.coord[1] - self.alto
                     else:
                         self.coord[1] = self.coord[1]

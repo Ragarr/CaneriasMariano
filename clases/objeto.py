@@ -68,10 +68,11 @@ class objeto():
         if not isinstance(esta_activo, bool):
             raise ValueError('el estado de activo debe ser un valor booleano')
         self.__esta_activo=esta_activo
-
+    def colisionar_jugador(self):
+        self.morir()
     def morir(self):
         self.esta_vivo = False
-        self.sprite = c.sprite_transparente
+    
     def actualizar_posicion(self):
         self.coord[0] += self.v_x
         self.coord[1] += self.v_y

@@ -112,20 +112,6 @@ class bloque():
         self.coord[0]+=self.__v_x
 
 
-
-
-
-class ladrillo_no_rompible(bloque):
-    def __init__(self, coord: list,) -> None:
-        """un bloque con textura de ladrillo que no interactua con el jugador"""
-        # una vez que el profesor nos pase el archivo con los sprites
-        super().__init__(coord, c.sprite_ladrillo, c.ancho_ladrillo,c.alto_ladrillo)
-
-
-    def golpear(self,bloques=None,player=None):
-        self.v_y=-0.5
-
-
 class ladrillo_rompible(bloque):
     def __init__(self, coord: list, estrella = False) -> None:
         self.Estrella = estrella
@@ -135,12 +121,12 @@ class ladrillo_rompible(bloque):
     def golpear(self,bloques=None,player=None):
         """Solo en algunos casos el bloque contendrá una estrella por ello hemos introducido un bool q nos inidica si hay o no una estrella"""
         self.v_y=-0.6
-        if self.Estrella:
+        if self.Estrella and player.grande:
             bloques.append(objeto.estrella([self.coord[0],self.coord_iniciales[1]-c.alto_estrella]))
             self.Estrella = False
             self.sprite = c.sprite_interrogacion_golpeado
             #el bloque con estrella ya no es rompible en cualquier otro caso se rompe al instante
-        elif self.sprite!= c.sprite_interrogacion_golpeado:
+        elif self.sprite!= c.sprite_interrogacion_golpeado and player.grande:
              self.romper()
 
     def romper(self):
@@ -158,12 +144,13 @@ class ladrillo_con_monedas(bloque):
 
     def golpear(self, objetos:list,player = None):
         """dara monedas hasta que no haya, entonces se rompera"""
-        if self.monedas < 1:
-            self.romper()
-        self.v_y-=0.5
-        self.monedas =(self.monedas- 1) # resta una moneda al contenido del bloque
-        objetos.append(objeto.moneda([self.coord[0],self.coord[1]-15]))
-        player.dinero += 1
+        self.v_y -= 0.5
+        if player.grande:
+            if self.monedas < 1:
+                self.romper()
+            self.monedas =(self.monedas- 1) # resta una moneda al contenido del bloque
+            objetos.append(objeto.moneda([self.coord[0],self.coord[1]-15]))
+            player.dinero += 1
 
         
         
@@ -179,7 +166,7 @@ class interrogacion(bloque):
         # De base spwanea la seta, ya que es la más habitual
         # 1champi, 2flor, 3estrella
         
-        self.__contenido = 1
+        self.__contenido = True
     
     @property 
     def contenido(self):
@@ -190,16 +177,15 @@ class interrogacion(bloque):
         self.__contenido = new_contenido
 
 
-    def golpear(self,bloques:list, mario):
+    def golpear(self,bloques:list, player:mario):
         """Dará un objeto seta si es pequeño o si es grande dará una flor y se convertirta en un bloque plano"""
         print(self.contenido)
-        self.v_y=-0.6
-        if self.contenido == 1 and not mario.alto == 31:
-            #Hemos utilizado el parámetro altura ya que el booleano de alto al privatizarlo provocaba un error de overflow
-            bloques.append(objeto.champi([self.coord[0],self.coord_iniciales[1]-c.alto_champi/2]))#Crea la seta al inicio de su animación
-            self.contenido = 0
-        elif  self.contenido == 1 :
+        self.v_y=-0.5
+        if self.contenido and player.grande:
             bloques.append(objeto.flor([self.coord[0],self.coord_iniciales[1]-c.alto_flor]))#Crea una flor encima del bloque
+            self.contenido = 0
+        elif  self.contenido:
+            bloques.append(objeto.champi([self.coord[0],self.coord_iniciales[1]-c.alto_champi/2]))#Crea la seta al inicio de su animación
             self.contenido = 0
         else:
             pass

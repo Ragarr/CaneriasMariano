@@ -139,6 +139,7 @@ class mario():
             self.__fuego=False
             self.__grande=True
         elif self.__grande:
+            self.alto=c.alto_mario
             self.__grande=False
         else:
             self.__morir()
@@ -191,7 +192,6 @@ class mario():
                       and not colision_superior) and not (self.__grande or self.__fuego):  # jugador a la izquierda del bloque
                     self.__v_x = -self.__v_x
 
-
     def __colisonar_bloques_grande(self, bloques: list, objetos: list, jugador):
         self.__bloque_a_derecha = False
         self.__bloque_a_izquierda = False
@@ -223,7 +223,6 @@ class mario():
                       and not colision_superior) and not (self.__grande or self.__fuego):  # jugador a la izquierda del bloque
                     self.__v_x = -self.__v_x
 
-
     def __colisionar_npcs(self,npcs:list):
         for npc in npcs:
             if self.__colisionando(npc):  # comprueba si hay colision
@@ -239,6 +238,7 @@ class mario():
                     npc.colisionar_jugador()
                     self.__v_y = -c.v_rebote
                     self.score += 1000
+    
     def __colisionar_objetos(self, objetos:list):
         for objeto in objetos:
             if self.__colisionando(objeto):  # comprueba si hay colision
@@ -263,9 +263,6 @@ class mario():
                     objeto.colisionar_jugador()
                     self.score += 1000
 
-
-                
-    
     def __actualizar_animaciones(self):
         if not self.__grande and not self.__fuego:
             if self.mirando_derecha:
@@ -282,7 +279,7 @@ class mario():
                     self.sprite = c.sprite_mario_quieto
             else:
                 if self.v_x > 0:
-                    self.sprite = c.sprite_smario_girando
+                    self.sprite = c.sprite_mario_girando
                 if self.__andando and not self.en_aire:
                     if self.sprite == c.sprite_mario_quieto_i and pyxel.frame_count % (c.fps/4) == 0:
                         self.sprite = c.sprite_mario_andando_i
@@ -329,7 +326,43 @@ class mario():
                     self.sprite = c.sprite_smario_quieto_i
                 else:
                     self.sprite = c.sprite_smario_agachado_i
+        elif self.__fuego:
+            if self.mirando_derecha:
+                if self.v_x < 0:
+                    self.sprite = c.sprite_smario_fuego_girando_i
+                if self.__agachado:
+                    self.sprite = c.sprite_smario_fuego_agachado
+                if self.__andando and not self.en_aire and not self.__agachado:
+                    if self.sprite != c.sprite_smario_fuego_andando1 and pyxel.frame_count % (c.fps/4) == 0:
 
+                        self.sprite = c.sprite_smario_fuego_andando1
+                    elif self.sprite != c.sprite_smario_fuego_andando2 and pyxel.frame_count % (c.fps/4) == 0:
+                        self.sprite = c.sprite_smario_fuego_andando2
+
+                elif self.en_aire and not self.__agachado:
+                    self.sprite = c.sprite_smario_fuego_saltando
+                elif not self.__agachado:
+                    self.sprite = c.sprite_smario_fuego_quieto
+                else:
+                    self.sprite = c.sprite_smario_fuego_agachado
+            else:
+                if self.v_x > 0:
+                    self.sprite = c.sprite_smario_fuego_girando
+                if self.__agachado:
+                    self.sprite = c.sprite_smario_fuego_agachado_i
+                if self.__andando and not self.en_aire and not self.__agachado:
+                    if self.sprite != c.sprite_smario_fuego_andando1_i and pyxel.frame_count % (c.fps/4) == 0:
+
+                        self.sprite = c.sprite_smario_fuego_andando1_i
+                    elif self.sprite != c.sprite_smario_fuego_andando2_i and pyxel.frame_count % (c.fps/4) == 0:
+                        self.sprite = c.sprite_smario_fuego_andando2_i
+                elif self.en_aire and not self.__agachado:
+                    self.sprite = c.sprite_smario_fuego_saltando_i
+                elif not self.__agachado:
+                    self.sprite = c.sprite_smario_fuego_quieto_i
+                else:
+                    self.sprite = c.sprite_smario_fuego_agachado_i  # cuando es de fuego
+                    
     def __sufrir_gravedad(self):
         #mov jugador eje y
         #gravedad

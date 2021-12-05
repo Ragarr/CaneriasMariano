@@ -228,3 +228,4 @@ class moneda(objeto):
             self.sprite = c.sprite_moneda
         else:
             self.sprite = c.sprite_moneda_girada
+

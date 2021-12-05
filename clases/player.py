@@ -101,7 +101,7 @@ class mario():
         self.__en_aire = False 
         self.__muerto = False
         self.__invencible = False  # modo estrella
-        self.__grande = False  # su estado de ser mario, super mario o con fuego
+        self.__grande = True  # su estado de ser mario, super mario o con fuego
         self.__fuego = False # su estado de ser mario, super mario o con fuego
         self.__permitir_fireball = True
         self.__en_transicion = False # para cuando cambia de estado
@@ -171,7 +171,6 @@ class mario():
                     colision_inferior = True
                 # comprueba si la colision es por encima
                 elif ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto and not colision_inferior):
-                    #print("colision superior con {}".format(type(bloque)))
                     colision_superior = True
                     self.en_aire =False
                     self.coord[1] = bloque.coord[1]-self.alto 
@@ -190,7 +189,6 @@ class mario():
                       and not colision_superior) and not (self.__grande or self.__fuego):  # jugador a la izquierda del bloque
                     self.__v_x = -self.__v_x
 
-                    #print("colision izquierda con {}".format(type(bloque)))
 
     def __colisonar_bloques_grande(self, bloques: list, objetos: list, jugador):
         self.__bloque_a_derecha = False
@@ -206,7 +204,6 @@ class mario():
                     colision_inferior = True
                 # comprueba si la colision es por encima
                 elif ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto and not colision_inferior):
-                    #print("colision superior con {}".format(type(bloque)))
                     colision_superior = True
                     self.en_aire = False
                     self.coord[1] = bloque.coord[1]-self.alto
@@ -224,7 +221,6 @@ class mario():
                       and not colision_superior) and not (self.__grande or self.__fuego):  # jugador a la izquierda del bloque
                     self.__v_x = -self.__v_x
 
-                    #print("colision izquierda con {}".format(type(bloque)))
 
     def __colisionar_npcs(self,npcs:list):
         for npc in npcs:
@@ -245,6 +241,8 @@ class mario():
     def __actualizar_animaciones(self):
         if not self.__grande and not self.__fuego:
             if self.mirando_derecha:
+                if self.v_x<0:
+                    self.sprite=c.sprite_mario_girando_i
                 if self.__andando  and not self.en_aire:
                     if self.sprite==c.sprite_mario_quieto and pyxel.frame_count%(c.fps/4)==0:
                         self.sprite=c.sprite_mario_andando
@@ -255,6 +253,8 @@ class mario():
                 elif not self.__andando:
                     self.sprite = c.sprite_mario_quieto
             else:
+                if self.v_x > 0:
+                    self.sprite = c.sprite_smario_girando
                 if self.__andando and not self.en_aire:
                     if self.sprite == c.sprite_mario_quieto_i and pyxel.frame_count % (c.fps/4) == 0:
                         self.sprite = c.sprite_mario_andando_i
@@ -265,32 +265,36 @@ class mario():
                 if not self.__andando and not self.en_aire:
                     self.sprite = c.sprite_mario_quieto_i
         elif not self.__fuego:
+            
             if self.mirando_derecha:
+                if self.v_x < 0:
+                    self.sprite = c.sprite_smario_girando_i
                 if self.__agachado:
                     self.sprite=c.sprite_smario_agachado
                 if self.__andando and not self.en_aire and not self.__agachado:
                     if self.sprite != c.sprite_smario_andando1 and pyxel.frame_count % (c.fps/4) ==0:
-                        print("andando1")
+                        
                         self.sprite = c.sprite_smario_andando1
                     elif self.sprite != c.sprite_smario_andando2 and pyxel.frame_count % (c.fps/4) == 0 :
                         self.sprite = c.sprite_smario_andando2
-                        print("andando 2")
+                    
                 elif self.en_aire and not self.__agachado:
                     self.sprite = c.sprite_smario_saltando
                 elif  not self.__agachado:
                     self.sprite = c.sprite_smario_quieto
                 else:
                     self.sprite = c.sprite_smario_agachado
-            elif not self.mirando_derecha:
+            else:
+                if self.v_x > 0:
+                    self.sprite = c.sprite_smario_girando
                 if self.__agachado:
                     self.sprite = c.sprite_smario_agachado_i
                 if self.__andando and not self.en_aire and not self.__agachado:
                     if self.sprite != c.sprite_smario_andando1_i and pyxel.frame_count % (c.fps/4) == 0:
-                        print("andando1")
+
                         self.sprite = c.sprite_smario_andando1_i
                     elif self.sprite != c.sprite_smario_andando2_i and pyxel.frame_count % (c.fps/4) == 0:
                         self.sprite = c.sprite_smario_andando2_i
-                        print("andando 2")
                 elif self.en_aire and not self.__agachado:
                     self.sprite = c.sprite_smario_saltando_i
                 elif not self.__agachado:

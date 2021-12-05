@@ -54,7 +54,7 @@ alto_goompa=16
 alto_koopa_troopa=16
 ancho_interrogacion = ancho_bloque_inamovible = ancho_ladrillo = 15
 alto_interrogacion = alto_ladrillo = alto_bloque_inamovible= 15
-altura_suelo = alto_pantalla-alto_pantalla/8  +3
+altura_suelo = alto_pantalla-alto_pantalla /8  +3
 ancho_tuberia=31
 ancho_suelo=15
 alto_concha=12
@@ -76,6 +76,9 @@ sprite_smario_lanzando_fuego=[0,0,132,15,31,azul]
 sprite_fireball=[0,16,144,16,16,azul]
 def tuberia(alto:int=48):
     return [0,79,178,31,alto,azul]
+def escalera(alto:int):
+    """especificar alto en bloques no en pixeles"""
+    return [0, 113, 1, 17, 15*alto+1,azul]
 sprite_suelo=[0,0,227,ancho_suelo,22,azul] # el suelo puede medir hasta 250 de ancho
 sprite_ladrillo=[0,160,208,15,15,-1]
 sprite_transparente=[0,0,0,0,0,azul]

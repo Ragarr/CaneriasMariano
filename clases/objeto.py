@@ -228,7 +228,9 @@ class champi(objeto):
                 if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) >= self.ancho
                         and not n_suelo):
                     self.v_x = -self.v_x
-   
+
+    def colisionar_jugador(self):
+        self.morir()
 class moneda(objeto):
     def __init__(self, coord: list) -> None:
         super().__init__(coord)
@@ -253,6 +255,8 @@ class moneda(objeto):
         else:
             self.sprite = c.sprite_moneda_girada
 
+    def colisionar_jugador(self):
+        pass
 class fireball(objeto):
     def __init__(self, coord: list, derecha: bool) -> None:
         super().__init__(coord)
@@ -298,3 +302,6 @@ class fireball(objeto):
                 if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) >= self.ancho
                         and not n_suelo):
                     self.v_x = -self.v_x
+
+    def colisionar_jugador(self):
+        pass

@@ -128,6 +128,7 @@ class mario():
         self.__detectar_botones(objetos)
         self.__actualizar_animaciones()
         self.__actualizar_posicion()
+        self.__timer_fireball = self.__timer_fireball-1 if self.__timer_fireball >0 else 0
     
     def __convertir_en_supermario(self):
         self.__grande = True
@@ -394,9 +395,12 @@ class mario():
         else:
             self.__agachado = False
         
-        if pyxel.btn(pyxel.KEY_E):
+        if pyxel.btn(pyxel.KEY_E) and self.__fuego and self.__timer_fireball==0:
+            self.__permitir_fireball=False
+            self.__timer_fireball = 30
             self.__disparar_fuego(objetos)
 
     def __disparar_fuego(self,objetos:list):
         self.sprite = c.sprite_smario_fuego_disparando if self.__mirando_derecha else c.sprite_smario_fuego_disparando_i
-        objetos.append(fireball([self.coord[0]+self.ancho,self.coord[1]-10]))
+        ball_coord = [self.coord[0]-9, self.coord[1]+5] if not  self.mirando_derecha else [self.coord[0]+self.ancho, self.coord[1]+5]
+        objetos.append(fireball(ball_coord,self.mirando_derecha))

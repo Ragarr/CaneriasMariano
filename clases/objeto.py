@@ -85,9 +85,6 @@ class objeto():
         if not isinstance(new_existe, bool):
             raise ValueError('el estado de activo debe ser un valor booleano')
         self.__existe= new_existe
-    def colisionar_jugador(self):
-        
-        self.morir()
     def morir(self):
         self.__existe = False
     
@@ -131,6 +128,9 @@ class flor(objeto):
                 self.v_y = -0.1
                 self.v_x = 0
 
+    def colisionar_jugador(self):
+        self.morir()
+
 class estrella(objeto):
     def __init__(self, coord: list) -> None:
         super().__init__(coord)
@@ -169,6 +169,9 @@ class estrella(objeto):
                 if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) >= self.ancho
                         and not n_suelo):
                     self.v_x = -self.v_x
+
+    def colisionar_jugador(self):
+        self.morir()
 
 
     def actualizar(self, bloques ):
@@ -251,11 +254,11 @@ class moneda(objeto):
             self.sprite = c.sprite_moneda_girada
 
 class fireball(objeto):
-    def __init__(self, coord: list) -> None:
+    def __init__(self, coord: list, derecha: bool) -> None:
         super().__init__(coord)
         self.sprite = c.sprite_fireball
-        self.v_y = 1
-        self.v_x = 1
+        self.v_y = 1.5
+        self.v_x = 2 if derecha else -2
         self.ancho = 7
         self.alto = 7
 
@@ -271,3 +274,27 @@ class fireball(objeto):
         self.sufrir_gravedad_estrella()
         self.colisionar_bloques(bloques)
         self.actualizar_posicion()
+
+    def colisionar_bloques(self, bloques: list):
+        for bloque in bloques:
+            n_suelo = False  # Nos permite saber si está tocando una superficie para que no siga precipitándose a la nada
+
+            if self.colisionando(bloque):  # comprueba si hay colision
+                # comprueba si la colision es por encima
+                if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
+                    self.v_y = 0
+                    #choque lateral con los bloques y cambio de sentido solo con los bloques no movibles y tuberias yas que otros tipos podrían dar pie a errores y estos son los únicos a la altura del suelo
+                    if not isinstance(bloque, clases.bloque.bloque_no_movible) and not isinstance(bloque, clases.bloque.tuberia):
+                        self.coord[1] = bloque.coord[1] - self.alto
+                    else:
+                        self.coord[1] = self.coord[1]
+                        self.v_y = -self.v_y
+                    n_suelo = True  # Es importante para que no se enbucle el suelo
+                    # Salto de la estrella
+                    self.v_y = - 3
+                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
+                        and not n_suelo):
+                    self.v_x = -self.v_x
+                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) >= self.ancho
+                        and not n_suelo):
+                    self.v_x = -self.v_x

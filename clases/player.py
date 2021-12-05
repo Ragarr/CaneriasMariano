@@ -278,7 +278,7 @@ class mario():
                     self.sprite = c.sprite_smario_quieto
                 else:
                     self.sprite = c.sprite_smario_agachado
-            else:
+            elif not self.mirando_derecha:
                 if self.__agachado:
                     self.sprite = c.sprite_smario_agachado_i
                 if self.__andando and not self.en_aire and not self.__agachado:
@@ -293,7 +293,7 @@ class mario():
                 elif not self.__agachado:
                     self.sprite = c.sprite_smario_quieto_i
                 else:
-                    self.sprite = c.sprite_smario_agachado
+                    self.sprite = c.sprite_smario_agachado_i
 
     def __sufrir_gravedad(self):
         #mov jugador eje y

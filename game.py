@@ -92,7 +92,7 @@ class App():
             x += c.ancho_suelo
     
     def __generar_bloques(self):
-        self.__bloques = [bloque.ladrillo_con_monedas([100,110]),bloque.interrogacion([115,125]),
+        self.__bloques = [bloque.ladrillo_con_monedas([100,110]),bloque.interrogacion([115,110]),
                         bloque.bloque_no_movible([0, c.altura_suelo-c.alto_ladrillo]),
                         bloque.bloque_no_movible([0, c.altura_suelo-2*c.alto_ladrillo]),
                         bloque.bloque_no_movible([0, c.altura_suelo-3*c.alto_ladrillo]),

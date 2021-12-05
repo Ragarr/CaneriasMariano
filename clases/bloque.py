@@ -182,7 +182,7 @@ class interrogacion(bloque):
         print(self.contenido)
         self.v_y=-0.5
         if self.contenido and player.grande:
-            bloques.append(objeto.flor([self.coord[0],self.coord_iniciales[1]-c.alto_flor]))#Crea una flor encima del bloque
+            bloques.append(objeto.flor([self.coord[0],self.coord_iniciales[1]-c.alto_flor-8]))#Crea una flor encima del bloque
             self.contenido = 0
         elif  self.contenido:
             bloques.append(objeto.champi([self.coord[0],self.coord_iniciales[1]-c.alto_champi/2]))#Crea la seta al inicio de su animación

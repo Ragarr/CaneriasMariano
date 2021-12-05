@@ -3,7 +3,7 @@ if __name__ == "__main__":
     print("este archivo no es el principal y no esta pensado para ser ejecutado")
     quit()
 import pyxel
-from clases.objeto import champi, estrella, flor, moneda
+from clases.objeto import champi, estrella, fireball, flor, moneda
 import constants as c
 class mario():
     def __init__(self, coord: list) -> None:
@@ -125,7 +125,7 @@ class mario():
         self.__colisonar_bloques(bloques,objetos,jugador)
         self.__colisionar_npcs(npcs)
         self.__colisionar_objetos(objetos)
-        self.__detectar_botones()
+        self.__detectar_botones(objetos)
         self.__actualizar_animaciones()
         self.__actualizar_posicion()
     
@@ -371,7 +371,7 @@ class mario():
         else: 
             self.muerto=True
     
-    def __detectar_botones(self):
+    def __detectar_botones(self,objetos:list):
         if pyxel.btn(pyxel.KEY_D) and not self.__bloque_a_derecha:  # acelera si pulsas la D
             self.__v_x = min(self.__v_x+c.v_avance, c.v_player_max_x)
             self.__mirando_derecha=True
@@ -393,6 +393,10 @@ class mario():
             self.__agachado=True
         else:
             self.__agachado = False
-            
         
+        if pyxel.btn(pyxel.KEY_E):
+            self.__disparar_fuego(objetos)
 
+    def __disparar_fuego(self,objetos:list):
+        self.sprite = c.sprite_smario_fuego_disparando if self.__mirando_derecha else c.sprite_smario_fuego_disparando_i
+        objetos.append(fireball([self.coord[0]+self.ancho,self.coord[1]-10]))

@@ -83,7 +83,7 @@ sprite_goompa=[0,16,0,16,16,azul]
 sprite_goompa_aplastado=[0,32,0,16,16,azul]
 sprite_koopa_troopa=[0,16,16,16,16,azul]
 sprite_concha=[0,32,22,16,10,azul]
-sprite_bloque_inamovible= [0,1,114,16,16,azul]
+sprite_bloque_inamovible= [0,1,114,15,15,azul]
 #-----------sprites mario-------------
 # mirando a der
 sprite_mario_quieto = [0, 3, 98, 15, 15, azul]

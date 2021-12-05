@@ -153,7 +153,6 @@ class flor(objeto):
             self.v_y += 0.1
         else:
             self.v_y = 0
-        
         self.actualizar_posicion()
 
 

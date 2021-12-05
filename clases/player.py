@@ -263,7 +263,7 @@ class mario():
                     if self.__grande:
                         objeto.colisionar_jugador()
                         self.score += 5000
-                elif objeto.coord[1]-8 > self.coord[1]:
+                elif objeto.coord[1]- 16 > self.coord[1]:
                     objeto.colisionar_jugador()
                     self.score += 1000
 

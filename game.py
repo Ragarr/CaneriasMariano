@@ -73,6 +73,7 @@ class App():
                 i += 1
         i = 0
         while i < len(objetos):
+            print(objetos)
             objeto = objetos[i]
             if not objeto.existe or objeto.coord[0]< - objeto.ancho:
                 print("objeto eliminado")
@@ -104,7 +105,7 @@ class App():
                         bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_rompible([70, 110], True)]
     
     def __generar_npcs(self):
-        self.npcs = [npc.goompa([100, c.altura_suelo-c.alto_ladrillo]), npc.goompa([150, c.altura_suelo-c.alto_ladrillo])]
+        self.npcs = [npc.goompa([100, c.altura_suelo-c.alto_ladrillo])]
 
     def __mantener_jugador_en_pantalla(self):
         if self.jugador.coord[0]<0:

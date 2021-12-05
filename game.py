@@ -101,7 +101,7 @@ class App():
                         bloque.bloque_no_movible([200, c.altura_suelo-2*c.alto_ladrillo]),
                         bloque.bloque_no_movible([200, c.altura_suelo-3*c.alto_ladrillo]),
                         bloque.bloque_no_movible([500, c.altura_suelo-3*c.alto_ladrillo]),
-                        bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_con_monedas([70, 110])]
+                        bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_rompible([70, 110], True)]
     
     def __generar_npcs(self):
         self.npcs = []

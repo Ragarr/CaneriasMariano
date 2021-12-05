@@ -126,16 +126,24 @@ class ladrillo_no_rompible(bloque):
 
 
 class ladrillo_rompible(bloque):
-    def __init__(self, coord: list) -> None:
+    def __init__(self, coord: list, estrella = False) -> None:
+        self.Estrella = estrella
         """un bloque con textura de ladrillo que cuando es golpeado por el jugador suelta le da una moneda"""
         super().__init__(coord, c.sprite_ladrillo, c.ancho_ladrillo, c.alto_ladrillo)
-
+        
     def golpear(self,bloques=None,player=None):
         """rompe el bloque"""
-        self.romper()
+        self.v_y=-0.6
+        if self.Estrella:
+            bloques.append(objeto.estrella([self.coord[0],self.coord_iniciales[1]-c.alto_estrella]))
+            self.Estrella = False
+            self.sprite = c.sprite_interrogacion_golpeado
+        elif self.sprite!= c.sprite_interrogacion_golpeado:
+             self.romper()
 
     def romper(self):
         self.existe=False
+
 
 
 class ladrillo_con_monedas(bloque):
@@ -169,7 +177,7 @@ class interrogacion(bloque):
         # De base spwanea la seta, ya que es la más habitual
         # 1champi, 2flor, 3estrella
         
-        self.__contenido = 2
+        self.__contenido = 1
     
     @property 
     def contenido(self):
@@ -183,15 +191,12 @@ class interrogacion(bloque):
     def golpear(self,bloques:list=None,player=None):
         """dara un objeto y se convertirta en un bloque plano"""
         print(self.contenido)
-        self.v_y=-0.5
+        self.v_y=-0.6
         if self.contenido==1:
             bloques.append(objeto.champi([self.coord[0],self.coord_iniciales[1]-c.alto_champi/2]))
             self.contenido = 0
         elif self.contenido == 2:
             bloques.append(objeto.flor([self.coord[0],self.coord_iniciales[1]-c.alto_flor]))
-            self.contenido = 0
-        elif self.contenido == 3:
-            bloques.append(objeto.estrella([self.coord[0],self.coord_iniciales[1]-c.alto_estrella]))
             self.contenido = 0
         else:
             pass

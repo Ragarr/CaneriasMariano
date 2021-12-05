@@ -246,7 +246,7 @@ class mario():
                     objeto.colisionar_jugador()
                     self.__grande = True
                     self.score += 1000
-                elif isinstance(objeto, flor) and not self.__fuego and  (objeto.coord[1]- 16 > self.coord[1] or not self.__grande):
+                elif isinstance(objeto, flor) and (not self.__fuego and  objeto.coord[1]- 16 > self.coord[1] or not self.__grande):
                     objeto.colisionar_jugador()
                     self.__grande = True
                     self.__fuego = True
@@ -387,7 +387,7 @@ class mario():
         elif not pyxel.btn(pyxel.KEY_D) and not self.__mirando_derecha: # Deceleras si avancas hacia detras y no pulsas la A ni la D
             self.__v_x = min(self.__v_x+c.v_rozamiento, 0)
             self.__andando=False
-        if pyxel.btn(pyxel.KEY_S):
+        if pyxel.btn(pyxel.KEY_S) and self.__grande:
             if  self.en_aire:
                 self.__v_y += 0.5
             self.__agachado=True

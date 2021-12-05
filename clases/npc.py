@@ -133,7 +133,7 @@ class goompa(npc):
     def actualizar_estado(self, bloques: list, npcs: list):
 
         self.sufrir_gravedad()
-        self.colisonar_bloques(bloques)
+        self.colisionar_bloques(bloques)
         self.colisionar_npcs(npcs)
         self.actualizar_posicion()
 

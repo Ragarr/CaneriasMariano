@@ -40,10 +40,10 @@ class App():
 
     def draw(self):
         pyxel.cls(c.azul)
-        for i in range(len(self.__bloques)):
-            pyxel.blt(self.__redondear(self.__bloques[i].coord[0]),self.__redondear(self.__bloques[i].coord[1]),*self.__bloques[i].sprite)
         for i in range(len(self.objetos)):
             pyxel.blt(*self.objetos[i].coord, *self.objetos[i].sprite)
+        for i in range(len(self.__bloques)):
+            pyxel.blt(self.__redondear(self.__bloques[i].coord[0]),self.__redondear(self.__bloques[i].coord[1]),*self.__bloques[i].sprite)
         for i in range(len(self.npcs)):
             pyxel.blt(*self.npcs[i].coord, *self.npcs[i].sprite)
         for i in range(len(self.atrezzo)):
@@ -81,7 +81,7 @@ class App():
                 i += 1
     
     def __generar_objetos(self):
-        self.objetos = [objeto.champi([130, c.altura_suelo-15]), objeto.estrella([145, c.altura_suelo-15]),
+        self.objetos = [objeto.estrella([145, c.altura_suelo-15]),
                         objeto.flor([160, c.altura_suelo-15])]
     
     def __generar_suelo(self):
@@ -104,7 +104,7 @@ class App():
                         bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_rompible([70, 110], True)]
     
     def __generar_npcs(self):
-        self.npcs = []
+        self.npcs = [npc.goompa([100, c.altura_suelo-c.alto_ladrillo])]
 
     def __mantener_jugador_en_pantalla(self):
         if self.jugador.coord[0]<0:

@@ -86,7 +86,7 @@ class mario():
         """timers en frames para las animaciones """
         self.__timer_andar = 0
         self.__timer_invencible_animation = 0
-        self.__timer_inicio_invencibilidad = 0
+        self.__timer_invencibilidad = 0
         self.__timer_transicion_fuego = 0
         self.__timer_muerte = 0
         self.__timer_transicion = 0 # animacion de transicion y frames de invulnerabilidad
@@ -133,6 +133,7 @@ class mario():
     def __actualizar_timers(self):
         self.__timer_fireball = self.__timer_fireball-1 if self.__timer_fireball >0 else 0
         self.__timer_transicion = self.__timer_transicion-1 if self.__timer_transicion >0 else 0
+        self.__timer_invencibilidad = self.__timer_invencibilidad-1 if self.__timer_invencibilidad >0 else 0
 
     def __convertir_en_supermario(self):
         self.__grande = True
@@ -142,7 +143,8 @@ class mario():
     def recibir_daño(self):
         if self.__fuego:
             self.__fuego=False
-            self.__grande= False
+            self.__grande= True
+            
         elif self.__grande:
             self.alto=c.alto_mario
             self.__grande=False
@@ -230,19 +232,16 @@ class mario():
 
     def __colisionar_npcs(self,npcs:list):
         for npc in npcs:
-            if self.__colisionando(npc):  # comprueba si hay colision
-                if ((npc.coord[0]-self.coord[0]+self.ancho) < c.tolerancia_colisiones
-                        and not self.__en_transicion
-                        and npc.esta_vivo):
-                    self.recibir_daño()
-
-                elif ((npc.coord[1]-(self.coord[1]+self.alto)) < self.alto
-                      and not abs(npc.coord[0]-self.coord[0]) < 2
-                      and not self.__en_transicion
-                      and npc.esta_vivo):
+            if ((self.coord[1]+self.alto <= npc.coord[1] and not abs(self.coord[1]+self.alto-npc.coord[1]) > 10) and abs(self.coord[0]-npc.coord[0]) < self.ancho 
+                and self.__timer_invencibilidad==0):
+                    print("npc pisado")
+                    
                     npc.colisionar_jugador()
-                    self.__v_y = -c.v_rebote
-                    self.score += 1000
+                    self.__v_y=-c.v_salto
+            elif self.__colisionando(npc) and self.__timer_invencibilidad == 0:
+                self.__timer_invencibilidad = c.fps  # un segundo de invulnerabilidad
+                self.recibir_daño()
+                    
     
     def __colisionar_objetos(self, objetos:list):
         for objeto in objetos:

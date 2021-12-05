@@ -117,7 +117,7 @@ class flor(objeto):
         self.v_y = -1   
 
     def actualizar(self, player):
-        if self.coord[1] <= self.coord_iniciales[1]:
+        if self.coord[1] <= self.coord_iniciales[1]+8:
             self.v_y += 0.1
         else:
             self.v_y = 0

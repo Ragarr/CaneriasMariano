@@ -73,7 +73,6 @@ class App():
                 i += 1
         i = 0
         while i < len(objetos):
-            print(objetos)
             objeto = objetos[i]
             if not objeto.existe or objeto.coord[0]< - objeto.ancho:
                 print("objeto eliminado")

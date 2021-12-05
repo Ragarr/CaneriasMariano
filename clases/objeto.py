@@ -72,23 +72,21 @@ class objeto():
         self.__esta_activo=esta_activo
     @property
     def existe(self):
-        return self.existe
-    @esta_activo.setter
+        return self.__existe
+    @existe.setter
     def existe (self,new_existe:bool):
         if not isinstance(new_existe, bool):
             raise ValueError('el estado de activo debe ser un valor booleano')
-        self.__esta_activo= new_existe
+        self.__existe= new_existe
     def colisionar_jugador(self):
         
         self.morir()
     def morir(self):
-        self.existe = False
+        self.__existe = False
     
     def actualizar_posicion(self):
         self.coord[0] += self.v_x
         self.coord[1] += self.v_y
-    def desaparecer(self):
-        self.__existe=False
     def colisionando(self,bloque):
         if (bloque.tiene_hitbox and abs(bloque.coord[0]-self.coord[0]) < self.ancho
                 and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
@@ -221,7 +219,7 @@ class moneda(objeto):
         elif self.duracion_frames > pyxel.frame_count:
             pass
         else:
-            self.desaparecer()
+            self.morir()
         self.actualizar_posicion()
  
 

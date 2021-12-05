@@ -203,7 +203,7 @@ class champi(objeto):
             elif self.colisionando(bloque):  # comprueba si hay colision
                 #salto de la seta justo cuando sale de un objeto de interrogación
                 if self.colisionando(bloque) and self.coord_iniciales[1]-c.alto_champi/2 < self.coord[1] and isinstance(bloque, clases.bloque.interrogacion):
-                    self.v_x = 1
+                    self.v_x = 1.2
                     self.coord[1] -= 10
                     self.v_y = -3
 

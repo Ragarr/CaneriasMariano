@@ -25,7 +25,9 @@ class objeto():
         self.__v_x = 0
         self.__v_y = 0
         self.__esta_activo = True
-        self.__existe=True
+        self.__existe = True
+        self.tiene_hitbox = True
+        
         
     @property
     def coord_iniciales(self):

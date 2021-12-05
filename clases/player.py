@@ -104,6 +104,7 @@ class mario():
         self.__permitir_fireball = True
         self.__en_transicion = False # para cuando cambia de estado
         self.__perdiendo_invencibilidad = False # para la estrella
+    
        
     def __iniciar_fuerzas(self):
         self.__v_x = 0

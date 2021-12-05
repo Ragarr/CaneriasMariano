@@ -5,6 +5,7 @@ if __name__ == "__main__":
 import random
 import pyxel
 from clases import objeto
+from clases.player import mario
 import constants as c
 
 class bloque():
@@ -132,12 +133,13 @@ class ladrillo_rompible(bloque):
         super().__init__(coord, c.sprite_ladrillo, c.ancho_ladrillo, c.alto_ladrillo)
         
     def golpear(self,bloques=None,player=None):
-        """rompe el bloque"""
+        """Solo en algunos casos el bloque contendrá una estrella por ello hemos introducido un bool q nos inidica si hay o no una estrella"""
         self.v_y=-0.6
         if self.Estrella:
             bloques.append(objeto.estrella([self.coord[0],self.coord_iniciales[1]-c.alto_estrella]))
             self.Estrella = False
             self.sprite = c.sprite_interrogacion_golpeado
+            #el bloque con estrella ya no es rompible en cualquier otro caso se rompe al instante
         elif self.sprite!= c.sprite_interrogacion_golpeado:
              self.romper()
 
@@ -154,7 +156,7 @@ class ladrillo_con_monedas(bloque):
         self.monedas = random.randint(1,6)
         # controla si el objeto tiene colisiones
 
-    def golpear(self, objetos:list,player=None):
+    def golpear(self, objetos:list,player = None):
         """dara monedas hasta que no haya, entonces se rompera"""
         if self.monedas < 1:
             self.romper()
@@ -188,15 +190,16 @@ class interrogacion(bloque):
         self.__contenido = new_contenido
 
 
-    def golpear(self,bloques:list=None,player=None):
-        """dara un objeto y se convertirta en un bloque plano"""
+    def golpear(self,bloques:list, mario):
+        """Dará un objeto seta si es pequeño o si es grande dará una flor y se convertirta en un bloque plano"""
         print(self.contenido)
         self.v_y=-0.6
-        if self.contenido==1:
-            bloques.append(objeto.champi([self.coord[0],self.coord_iniciales[1]-c.alto_champi/2]))
+        if self.contenido == 1 and not mario.alto == 31:
+            #Hemos utilizado el parámetro altura ya que el booleano de alto al privatizarlo provocaba un error de overflow
+            bloques.append(objeto.champi([self.coord[0],self.coord_iniciales[1]-c.alto_champi/2]))#Crea la seta al inicio de su animación
             self.contenido = 0
-        elif self.contenido == 2:
-            bloques.append(objeto.flor([self.coord[0],self.coord_iniciales[1]-c.alto_flor]))
+        elif  self.contenido == 1 :
+            bloques.append(objeto.flor([self.coord[0],self.coord_iniciales[1]-c.alto_flor]))#Crea una flor encima del bloque
             self.contenido = 0
         else:
             pass

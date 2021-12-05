@@ -120,7 +120,7 @@ class npc():
     
     def colisionar_con_objeto(self,objetos:list):
         for objeto in objetos:
-            if isinstance(objeto,fireball):
+            if self.colisionando(objeto) and isinstance(objeto,fireball):
                 self.morir()
 
 

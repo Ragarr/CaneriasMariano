@@ -102,7 +102,7 @@ class App():
                         bloque.ladrillo_con_monedas([85, 110]), bloque.ladrillo_rompible([70, 110], True)]
     
     def __generar_npcs(self):
-        self.npcs = []
+        self.npcs = [npc.goompa([200,50])]
 
     def __mantener_jugador_en_pantalla(self):
         if self.jugador.coord[0]<0:

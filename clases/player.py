@@ -102,8 +102,8 @@ class mario():
         self.__en_aire = False 
         self.__muerto = False
         self.__invencible = False  # modo estrella
-        self.__grande = False  # su estado de ser mario, super mario o con fuego
-        self.__fuego = False # su estado de ser mario, super mario o con fuego
+        self.__grande = True  # su estado de ser mario, super mario o con fuego
+        self.__fuego = True # su estado de ser mario, super mario o con fuego
         self.__permitir_fireball = True
         self.__en_transicion = False # para cuando cambia de estado
         self.__perdiendo_invencibilidad = False # para la estrella

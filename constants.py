@@ -73,7 +73,7 @@ sprite_interrogacion_golpeado=[0,145,27,16,16,blanco]
 sprite_interrogacion=[0,177,27,16,16,blanco]
 sprite_mario_verde=[0,206,82,15,31,azul]
 sprite_smario_lanzando_fuego=[0,0,132,15,31,azul]
-sprite_fireball=[0,21,147,7,7,azul]
+sprite_fireball=[0,16,144,16,16,azul]
 def tuberia(alto:int=48):
     return [0,79,178,31,alto,azul]
 sprite_suelo=[0,0,227,ancho_suelo,22,azul] # el suelo puede medir hasta 250 de ancho
@@ -83,7 +83,7 @@ sprite_goompa=[0,16,0,16,16,azul]
 sprite_goompa_aplastado=[0,32,0,16,16,azul]
 sprite_koopa_troopa=[0,16,16,16,16,azul]
 sprite_concha=[0,32,22,16,10,azul]
-sprite_bloque_inamovible= [0,1,114,15,15,azul]
+
 #-----------sprites mario-------------
 # mirando a der
 sprite_mario_quieto = [0, 3, 98, 15, 15, azul]
@@ -101,7 +101,7 @@ sprite_smario_fuego_andando2 = sprite_smario_fuego_disparando = [0, 0, 134, 15, 
 sprite_smario_fuego_quieto = [0, 168, 81, 15, 31, azul]
 sprite_smario_fuego_girando = [0, 36, 131, 15, 31, azul]
 sprite_smario_fuego_saltando= [0,59,128,15,31,azul]
-sprite_smario_fuego_agachado = [0, 83, 140,16, 31, azul]
+sprite_smario_fuego_agachado = [0, 83, 130 ,16, 31, azul]
 
 # mirando a izq
 sprite_mario_quieto_i = [0, 3, 98, -15, 15, azul]
@@ -119,7 +119,7 @@ sprite_smario_fuego_andando2_i = sprite_smario_fuego_disparando_i = [0, 0, 134, 
 sprite_smario_fuego_quieto_i = [0, 168, 81, -15, 31, azul]
 sprite_smario_fuego_girando_i = [0, 36, 131, -15, 31, azul]
 sprite_smario_fuego_saltando_i = [0, 59, 128, -15, 31, azul]
-sprite_smario_fuego_agachado_i = [0, 83, 140, -16, 31, azul]
+sprite_smario_fuego_agachado_i = [0, 83, 130, -16, 31, azul]
 
 
 

@@ -4,6 +4,7 @@
 import pyxel
 from clases.bloque import suelo
 import constants as c
+from clases.objeto import fireball
 class npc():
     def __init__(self, coord: list, sprite: list  ) -> None:
         self.__sprite = sprite
@@ -116,6 +117,12 @@ class npc():
             return True
         else:
             return False
+    
+    def colisionar_con_objeto(self,objetos:list):
+        for objeto in objetos:
+            if self.colisionando(objeto) and isinstance(objeto,fireball):
+                self.morir()
+
 
 class goompa(npc):
     def __init__ (self, coord: list) -> None:
@@ -130,12 +137,13 @@ class goompa(npc):
         self.morir()
 
 
-    def actualizar_estado(self, bloques: list, npcs: list):
+    def actualizar_estado(self, bloques: list, npcs: list,objetos:list):
 
         self.sufrir_gravedad()
         self.colisionar_bloques(bloques)
         self.colisionar_npcs(npcs)
         self.actualizar_posicion()
+        self.colisionar_con_objeto(objetos)
 
 
 class koopa_troopa(npc):
@@ -162,10 +170,11 @@ class koopa_troopa(npc):
             self.alto = c.alto_concha
             self.coord[1]-=15
 
-    def actualizar_estado(self, bloques: list, npcs: list):
+    def actualizar_estado(self, bloques: list, npcs: list, objetos:list):
         self.sufrir_gravedad()
         self.colisionar_bloques(bloques)
         self.colisionar_npcs(npcs)
+        self.colisionar_con_objeto(objetos)
         self.actualizar_posicion()
 
 

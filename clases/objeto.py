@@ -28,16 +28,23 @@ class objeto():
         self.__existe = True
         self.tiene_hitbox = True
         
-        
+    @property
+    def v_x(self):
+        return self.__v_x
+    @v_x.setter
+    def v_x(self, new_v_x):
+        self.__v_x=new_v_x
+
+
+
+
     @property
     def coord_iniciales(self):
         return self.__coord_iniciales
     @property
     def existe(self):
         return self.__existe
-    """@existe.setter
-    def existe(self,new_existe):
-        self.__existe=new_existe"""
+
     @property
     def coord(self):
         return self.__coord
@@ -78,9 +85,6 @@ class objeto():
         if not isinstance(new_existe, bool):
             raise ValueError('el estado de activo debe ser un valor booleano')
         self.__existe= new_existe
-    def colisionar_jugador(self):
-        
-        self.morir()
     def morir(self):
         self.__existe = False
     
@@ -99,44 +103,7 @@ class objeto():
             self.__v_y += c.v_gravedad
         else:
             self.morir()
-    def colisionar_bloques(self, bloques: list):
-        for bloque in bloques:
-            n_suelo = False # Nos permite saber si está tocando una superficie para que no siga precipitándose a la nada
-            # animación de la seta subiendo, estática en el sitio hasta que llegue a la parte de arriba quedándose quieto en las x
-            if self.colisionando(bloque) and  self.coord_iniciales[1]-c.alto_champi/2 +1 < self.coord[1] and  isinstance(bloque, clases.bloque.interrogacion) and not isinstance(self, estrella):
-                self.v_y = -0.1
-                self.v_x = 0
-                
-            
-            elif self.colisionando(bloque):  # comprueba si hay colision
-                #salto de la seta justo cuando sale de un objeto de interrogación
-                if self.colisionando(bloque) and  self.coord_iniciales[1]-c.alto_champi/2  < self.coord[1] and  isinstance(bloque, clases.bloque.interrogacion) and  isinstance(self, champi ):
-                    self.v_x = 1 
-                    self.coord[1] -= 10
-                    self.v_y = -3
-                    
-                    
-                    
-                # comprueba si la colision es por encima
-                elif ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
-                    self.__v_y = 0
-                    #choque lateral con los bloques y cambio de sentido solo con los bloques no movibles y tuberias yas que otros tipos podrían dar pie a errores y estos son los únicos a la altura del suelo
-                    if not isinstance(bloque,clases.bloque.bloque_no_movible) and not isinstance(bloque, clases.bloque.tuberia):
-                        self.coord[1] = bloque.coord[1] - self.alto
-                    else:
-                         self.coord[1]= self.coord[1]
-                         self.v_y = -self.v_y
-                    n_suelo= True #Es importante para que no se enbucle el suelo
-                    self.v_y = -3 if isinstance(self, estrella) else c.v_gravedad #Salto de la estrella
-                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
-                        and not n_suelo):
-                    self.__v_x = -self.__v_x
-                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) >= self.ancho
-                      and not n_suelo):
-                    self.__v_x = -self.__v_x 
-        
     
-
 
 class flor(objeto):
     def __init__(self, coord: list) -> None:
@@ -147,12 +114,22 @@ class flor(objeto):
         self.v_y = -1   
 
     def actualizar(self, player):
-        if self.coord[1] <= self.coord_iniciales[1]:
+        if self.coord[1] <= self.coord_iniciales[1]+8:
             self.v_y += 0.1
         else:
             self.v_y = 0
         self.actualizar_posicion()
+    
+    def colisionar_bloques(self, bloques: list):
+        for bloque in bloques:
+            n_suelo = False  # Nos permite saber si está tocando una superficie para que no siga precipitándose a la nada
+            # animación de la seta subiendo, estática en el sitio hasta que llegue a la parte de arriba quedándose quieto en las x
+            if self.colisionando(bloque) and self.coord_iniciales[1]-c.alto_champi/2 + 1 < self.coord[1] and isinstance(bloque, clases.bloque.interrogacion) and not isinstance(self, estrella):
+                self.v_y = -0.1
+                self.v_x = 0
 
+    def colisionar_jugador(self):
+        self.morir()
 
 class estrella(objeto):
     def __init__(self, coord: list) -> None:
@@ -168,31 +145,48 @@ class estrella(objeto):
             self.v_y += 0.21
         else:
             self.morir()
-    
-    
-   
-    
-    
+
+    def colisionar_bloques(self, bloques: list):
+        for bloque in bloques:
+            n_suelo = False  # Nos permite saber si está tocando una superficie para que no siga precipitándose a la nada
+
+            if self.colisionando(bloque):  # comprueba si hay colision
+                # comprueba si la colision es por encima
+                if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
+                    self.v_y = 0
+                    #choque lateral con los bloques y cambio de sentido solo con los bloques no movibles y tuberias yas que otros tipos podrían dar pie a errores y estos son los únicos a la altura del suelo
+                    if not isinstance(bloque, clases.bloque.bloque_no_movible) and not isinstance(bloque, clases.bloque.tuberia):
+                        self.coord[1] = bloque.coord[1] - self.alto
+                    else:
+                        self.coord[1] = self.coord[1]
+                        self.v_y = -self.v_y
+                    n_suelo = True  # Es importante para que no se enbucle el suelo
+                    # Salto de la estrella
+                    self.v_y = - 3
+                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
+                        and not n_suelo):
+                    self.v_x = -self.v_x
+                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) >= self.ancho
+                        and not n_suelo):
+                    self.v_x = -self.v_x
+
+    def colisionar_jugador(self):
+        self.morir()
+
+
     def actualizar(self, bloques ):
        
         self.sufrir_gravedad_estrella()
         self.colisionar_bloques(bloques)
         self.actualizar_posicion()
         
-
-        
-       
-        
-        
-   
-
 class champi(objeto):
 
     def __init__(self, coord: list) -> None:
         super().__init__(coord)
         self.sprite = c.sprite_champi
         self.v_y= 0
-        self.v_x = 1
+        self.v_x = 1.2
         self.ancho = 15
         self.alto = 15
 
@@ -200,11 +194,43 @@ class champi(objeto):
         self.sufrir_gravedad()
         self.colisionar_bloques(bloques)
         self.actualizar_posicion()
-   
-           
-    
 
+    def colisionar_bloques(self, bloques: list):
+        for bloque in bloques:
+            n_suelo = False  # Nos permite saber si está tocando una superficie para que no siga precipitándose a la nada
+            # animación de la seta subiendo, estática en el sitio hasta que llegue a la parte de arriba quedándose quieto en las x
+            if self.colisionando(bloque) and self.coord_iniciales[1]-c.alto_champi/2 + 1 < self.coord[1] and isinstance(bloque, clases.bloque.interrogacion):
+                self.v_y = -0.1
+                self.v_x = 0
 
+            elif self.colisionando(bloque):  # comprueba si hay colision
+                #salto de la seta justo cuando sale de un objeto de interrogación
+                if self.colisionando(bloque) and self.coord_iniciales[1]-c.alto_champi/2 < self.coord[1] and isinstance(bloque, clases.bloque.interrogacion):
+                    self.v_x = 1.2
+                    self.coord[1] -= 10
+                    self.v_y = -3
+
+                # comprueba si la colision es por encima
+                elif ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
+                    self.v_y = 0
+                    #choque lateral con los bloques y cambio de sentido solo con los bloques no movibles y tuberias yas que otros tipos podrían dar pie a errores y estos son los únicos a la altura del suelo
+                    if not isinstance(bloque, clases.bloque.bloque_no_movible) and not isinstance(bloque, clases.bloque.tuberia):
+                        self.coord[1] = bloque.coord[1] - self.alto
+                    else:
+                        self.coord[1] = self.coord[1]
+                        self.v_y = -self.v_y
+                    n_suelo = True  # Es importante para que no se enbucle el suelo
+                    # Salto de la estrella
+                    self.v_y = c.v_gravedad
+                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
+                        and not n_suelo):
+                    self.v_x = -self.v_x
+                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) >= self.ancho
+                        and not n_suelo):
+                    self.v_x = -self.v_x
+
+    def colisionar_jugador(self):
+        self.morir()
 class moneda(objeto):
     def __init__(self, coord: list) -> None:
         super().__init__(coord)
@@ -229,3 +255,53 @@ class moneda(objeto):
         else:
             self.sprite = c.sprite_moneda_girada
 
+    def colisionar_jugador(self):
+        pass
+class fireball(objeto):
+    def __init__(self, coord: list, derecha: bool) -> None:
+        super().__init__(coord)
+        self.sprite = c.sprite_fireball
+        self.v_y = 1.5
+        self.v_x = 2 if derecha else -2
+        self.ancho = 7
+        self.alto = 7
+
+    def sufrir_gravedad_estrella(self):
+        #Parametro diferenciador del resto de objetos para que la animación de la estrella sea más natural
+        if (self.coord[1] < pyxel.height):
+            self.v_y += 0.21
+        else:
+            self.morir()
+
+    def actualizar(self, bloques):
+
+        self.sufrir_gravedad_estrella()
+        self.colisionar_bloques(bloques)
+        self.actualizar_posicion()
+
+    def colisionar_bloques(self, bloques: list):
+        for bloque in bloques:
+            n_suelo = False  # Nos permite saber si está tocando una superficie para que no siga precipitándose a la nada
+
+            if self.colisionando(bloque):  # comprueba si hay colision
+                # comprueba si la colision es por encima
+                if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
+                    self.v_y = 0
+                    #choque lateral con los bloques y cambio de sentido solo con los bloques no movibles y tuberias yas que otros tipos podrían dar pie a errores y estos son los únicos a la altura del suelo
+                    if not isinstance(bloque, clases.bloque.bloque_no_movible) and not isinstance(bloque, clases.bloque.tuberia):
+                        self.coord[1] = bloque.coord[1] - self.alto
+                    else:
+                        self.coord[1] = self.coord[1]
+                        self.v_y = -self.v_y
+                    n_suelo = True  # Es importante para que no se enbucle el suelo
+                    # Salto de la estrella
+                    self.v_y = - 3
+                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
+                        and not n_suelo):
+                    self.v_x = -self.v_x
+                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) >= self.ancho
+                        and not n_suelo):
+                    self.v_x = -self.v_x
+
+    def colisionar_jugador(self):
+        pass

@@ -3,7 +3,7 @@ if __name__ == "__main__":
     print("este archivo no es el principal y no esta pensado para ser ejecutado")
     quit()
 import pyxel
-from clases.objeto import champi, estrella, flor, moneda
+from clases.objeto import champi, estrella, fireball, flor, moneda
 import constants as c
 class mario():
     def __init__(self, coord: list) -> None:
@@ -86,7 +86,7 @@ class mario():
         """timers en frames para las animaciones """
         self.__timer_andar = 0
         self.__timer_invencible_animation = 0
-        self.__timer_inicio_invencibilidad = 0
+        self.__timer_invencibilidad = 0
         self.__timer_transicion_fuego = 0
         self.__timer_muerte = 0
         self.__timer_transicion = 0 # animacion de transicion y frames de invulnerabilidad
@@ -103,7 +103,7 @@ class mario():
         self.__muerto = False
         self.__invencible = False  # modo estrella
         self.__grande = True  # su estado de ser mario, super mario o con fuego
-        self.__fuego = False # su estado de ser mario, super mario o con fuego
+        self.__fuego = True # su estado de ser mario, super mario o con fuego
         self.__permitir_fireball = True
         self.__en_transicion = False # para cuando cambia de estado
         self.__perdiendo_invencibilidad = False # para la estrella
@@ -125,10 +125,16 @@ class mario():
         self.__colisonar_bloques(bloques,objetos,jugador)
         self.__colisionar_npcs(npcs)
         self.__colisionar_objetos(objetos)
-        self.__detectar_botones()
+        self.__detectar_botones(objetos)
         self.__actualizar_animaciones()
         self.__actualizar_posicion()
-    
+        self.__actualizar_timers()
+        
+    def __actualizar_timers(self):
+        self.__timer_fireball = self.__timer_fireball-1 if self.__timer_fireball >0 else 0
+        self.__timer_transicion = self.__timer_transicion-1 if self.__timer_transicion >0 else 0
+        self.__timer_invencibilidad = self.__timer_invencibilidad-1 if self.__timer_invencibilidad >0 else 0
+
     def __convertir_en_supermario(self):
         self.__grande = True
         self.alto=c.alto_smario
@@ -137,7 +143,8 @@ class mario():
     def recibir_daño(self):
         if self.__fuego:
             self.__fuego=False
-            self.__grande=True
+            self.__grande= True
+            
         elif self.__grande:
             self.alto=c.alto_mario
             self.__grande=False
@@ -225,19 +232,16 @@ class mario():
 
     def __colisionar_npcs(self,npcs:list):
         for npc in npcs:
-            if self.__colisionando(npc):  # comprueba si hay colision
-                if ((npc.coord[0]-self.coord[0]+self.ancho) < c.tolerancia_colisiones
-                        and not self.__en_transicion
-                        and npc.esta_vivo):
-                    self.recibir_daño()
-
-                elif ((npc.coord[1]-(self.coord[1]+self.alto)) < self.alto
-                      and not abs(npc.coord[0]-self.coord[0]) < 2
-                      and not self.__en_transicion
-                      and npc.esta_vivo):
+            if ((self.coord[1]+self.alto <= npc.coord[1] and not abs(self.coord[1]+self.alto-npc.coord[1]) > 10) and abs(self.coord[0]-npc.coord[0]) < self.ancho 
+                and self.__timer_invencibilidad==0):
+                    print("npc pisado")
+                    
                     npc.colisionar_jugador()
-                    self.__v_y = -c.v_rebote
-                    self.score += 1000
+                    self.__v_y=-c.v_salto
+            elif self.__colisionando(npc) and self.__timer_invencibilidad == 0:
+                self.__timer_invencibilidad = c.fps  # un segundo de invulnerabilidad
+                self.recibir_daño()
+                    
     
     def __colisionar_objetos(self, objetos:list):
         for objeto in objetos:
@@ -246,7 +250,7 @@ class mario():
                     objeto.colisionar_jugador()
                     self.__grande = True
                     self.score += 1000
-                elif isinstance(objeto, flor) and not self.__fuego:
+                elif isinstance(objeto, flor) and (not self.__fuego and  objeto.coord[1]- 16 > self.coord[1] or not self.__grande):
                     objeto.colisionar_jugador()
                     self.__grande = True
                     self.__fuego = True
@@ -327,7 +331,9 @@ class mario():
                 else:
                     self.sprite = c.sprite_smario_agachado_i
         elif self.__fuego:
-            if self.mirando_derecha:
+            if self.__timer_transicion!=0:
+                pass
+            elif self.mirando_derecha:
                 if self.v_x < 0:
                     self.sprite = c.sprite_smario_fuego_girando_i
                 if self.__agachado:
@@ -371,7 +377,7 @@ class mario():
         else: 
             self.muerto=True
     
-    def __detectar_botones(self):
+    def __detectar_botones(self,objetos:list):
         if pyxel.btn(pyxel.KEY_D) and not self.__bloque_a_derecha:  # acelera si pulsas la D
             self.__v_x = min(self.__v_x+c.v_avance, c.v_player_max_x)
             self.__mirando_derecha=True
@@ -387,12 +393,20 @@ class mario():
         elif not pyxel.btn(pyxel.KEY_D) and not self.__mirando_derecha: # Deceleras si avancas hacia detras y no pulsas la A ni la D
             self.__v_x = min(self.__v_x+c.v_rozamiento, 0)
             self.__andando=False
-        if pyxel.btn(pyxel.KEY_S):
+        if pyxel.btn(pyxel.KEY_S) and self.__grande:
             if  self.en_aire:
                 self.__v_y += 0.5
             self.__agachado=True
         else:
             self.__agachado = False
-            
         
+        if pyxel.btn(pyxel.KEY_E) and self.__fuego and self.__timer_fireball==0:
+            self.__permitir_fireball=False
+            self.__timer_fireball = 30
+            self.__disparar_fuego(objetos)
 
+    def __disparar_fuego(self,objetos:list):
+        self.sprite = c.sprite_smario_fuego_disparando if self.__mirando_derecha else c.sprite_smario_fuego_disparando_i
+        self.__timer_transicion=20
+        ball_coord = [self.coord[0]-9, self.coord[1]+5] if not  self.mirando_derecha else [self.coord[0]+self.ancho, self.coord[1]+5]
+        objetos.append(fireball(ball_coord,self.mirando_derecha))

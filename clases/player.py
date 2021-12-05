@@ -2,6 +2,7 @@
 if __name__ == "__main__":
     print("este archivo no es el principal y no esta pensado para ser ejecutado")
     quit()
+from math import fabs
 import pyxel
 import constants as c
 class mario():
@@ -15,7 +16,9 @@ class mario():
         self.__score = 0
         self.__dinero = 0
         self.__coord = coord  # ubicacion de el sprite
-
+    @property
+    def grande(self):
+        return self.__grande
     @property
     def sprite(self):
         return self.__sprite
@@ -99,7 +102,7 @@ class mario():
         self.__en_aire = False 
         self.__muerto = False
         self.__invencible = False  # modo estrella
-        self.__grande = True  # su estado de ser mario, super mario o con fuego
+        self.__grande = False  # su estado de ser mario, super mario o con fuego
         self.__fuego = False # su estado de ser mario, super mario o con fuego
         self.__permitir_fireball = True
         self.__en_transicion = False # para cuando cambia de estado

@@ -194,7 +194,9 @@ class interrogacion(bloque):
 
 class tuberia(bloque):
     def __init__(self, coord: list,alto:int) -> None:
-        super().__init__(coord, c.tuberia(alto), c.ancho_tuberia,alto) # una vez que el profesor nos pase el archivo con los sprites
+        super().__init__(coord, c.tuberia(alto)) # una vez que el profesor nos pase el archivo con los sprites
+        self.__alto=alto
+        self.__ancho=c.ancho_tuberia
 
     def golpear(self,bloques=None, player=None):
         pass
@@ -205,8 +207,9 @@ class suelo(bloque):
 
 class escalera(bloque):
     """este bloque SOLO puede usarse para hacer escaleras o a nivel de suelo"""
-    def __init__(self, coord: list, alto) -> None:
-        super().__init__(coord, c.escalera(alto), 17, alto*15+1)
+    def __init__(self, coord: list, alto:int = 1) -> None:
+        
+        super().__init__(coord,c.escalera(alto), c.ancho_escalera, alto * c.alto_escalera)
 
     def golpear(self, bloques=None, player=None):
         pass

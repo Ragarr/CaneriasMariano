@@ -183,7 +183,7 @@ class champi(objeto):
         super().__init__(coord)
         self.sprite = c.sprite_champi
         self.v_y= 0
-        self.v_x = 1
+        self.v_x = 1.2
         self.ancho = 15
         self.alto = 15
 

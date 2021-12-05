@@ -81,7 +81,7 @@ class App():
                 i += 1
     
     def __generar_objetos(self):
-        self.objetos = [objeto.champi([130, c.altura_suelo-15]), objeto.estrella([145, c.altura_suelo-15]),
+        self.objetos = [objeto.estrella([145, c.altura_suelo-15]),
                         objeto.flor([160, c.altura_suelo-15])]
     
     def __generar_suelo(self):

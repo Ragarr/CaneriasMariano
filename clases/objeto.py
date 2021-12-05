@@ -70,10 +70,19 @@ class objeto():
         if not isinstance(esta_activo, bool):
             raise ValueError('el estado de activo debe ser un valor booleano')
         self.__esta_activo=esta_activo
+    @property
+    def existe(self):
+        return self.existe
+    @esta_activo.setter
+    def existe (self,new_existe:bool):
+        if not isinstance(new_existe, bool):
+            raise ValueError('el estado de activo debe ser un valor booleano')
+        self.__esta_activo= new_existe
     def colisionar_jugador(self):
+        
         self.morir()
     def morir(self):
-        self.esta_vivo = False
+        self.existe = False
     
     def actualizar_posicion(self):
         self.coord[0] += self.v_x
@@ -144,6 +153,7 @@ class flor(objeto):
             self.v_y += 0.1
         else:
             self.v_y = 0
+        
         self.actualizar_posicion()
 
 

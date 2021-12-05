@@ -3,7 +3,7 @@ if __name__ == "__main__":
     print("este archivo no es el principal y no esta pensado para ser ejecutado")
     quit()
 import pyxel
-from clases.objeto import champi, estrella, flor
+from clases.objeto import champi, estrella, flor, moneda
 import constants as c
 class mario():
     def __init__(self, coord: list) -> None:
@@ -248,16 +248,26 @@ class mario():
             if self.__colisionando(objeto):  # comprueba si hay colision
                 if isinstance(objeto, champi):
                     objeto.colisionar_jugador()
-                    self.score += 3000
+                    self.__grande = True
+                    self.score += 1000
                 elif isinstance(objeto, flor) and not self.__fuego:
                     objeto.colisionar_jugador()
+                    self.__grande = True
                     self.__fuego = True
-                    self.score += 5000
+                    print(self.__fuego)
+                    self.score += 3000
                 elif isinstance(objeto, estrella):
                     if not self.__grande:
                         objeto.colisionar_jugador()
+                        self.score += 5000
                     if self.__grande:
                         objeto.colisionar_jugador()
+                        self.score += 5000
+                elif objeto.coord[1]-8 > self.coord[1]:
+                    objeto.colisionar_jugador()
+                    self.score += 1000
+
+
                 
     
     def __actualizar_animaciones(self):

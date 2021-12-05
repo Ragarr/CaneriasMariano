@@ -102,7 +102,7 @@ class mario():
         self.__en_aire = False 
         self.__muerto = False
         self.__invencible = False  # modo estrella
-        self.__grande = True  # su estado de ser mario, super mario o con fuego
+        self.__grande = False  # su estado de ser mario, super mario o con fuego
         self.__fuego = False # su estado de ser mario, super mario o con fuego
         self.__permitir_fireball = True
         self.__en_transicion = False # para cuando cambia de estado
@@ -137,7 +137,7 @@ class mario():
     def recibir_daño(self):
         if self.__fuego:
             self.__fuego=False
-            self.__grande=True
+            self.__grande= False
         elif self.__grande:
             self.alto=c.alto_mario
             self.__grande=False
@@ -246,7 +246,7 @@ class mario():
                     objeto.colisionar_jugador()
                     self.__grande = True
                     self.score += 1000
-                elif isinstance(objeto, flor) and not self.__fuego:
+                elif isinstance(objeto, flor) and not self.__fuego and  (objeto.coord[1]- 16 > self.coord[1] or not self.__grande):
                     objeto.colisionar_jugador()
                     self.__grande = True
                     self.__fuego = True

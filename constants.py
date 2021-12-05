@@ -101,7 +101,7 @@ sprite_smario_fuego_andando2 = sprite_smario_fuego_disparando = [0, 0, 134, 15, 
 sprite_smario_fuego_quieto = [0, 168, 81, 15, 31, azul]
 sprite_smario_fuego_girando = [0, 36, 131, 15, 31, azul]
 sprite_smario_fuego_saltando= [0,59,128,15,31,azul]
-sprite_smario_fuego_agachado = [0, 83, 140,16, 31, azul]
+sprite_smario_fuego_agachado = [0, 83, 130 ,16, 31, azul]
 
 # mirando a izq
 sprite_mario_quieto_i = [0, 3, 98, -15, 15, azul]
@@ -119,7 +119,7 @@ sprite_smario_fuego_andando2_i = sprite_smario_fuego_disparando_i = [0, 0, 134, 
 sprite_smario_fuego_quieto_i = [0, 168, 81, -15, 31, azul]
 sprite_smario_fuego_girando_i = [0, 36, 131, -15, 31, azul]
 sprite_smario_fuego_saltando_i = [0, 59, 128, -15, 31, azul]
-sprite_smario_fuego_agachado_i = [0, 83, 140, -16, 31, azul]
+sprite_smario_fuego_agachado_i = [0, 83, 130, -16, 31, azul]
 
 
 

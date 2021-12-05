@@ -208,7 +208,7 @@ class suelo(bloque):
 class bloque_no_movible(bloque):
     """este bloque SOLO puede usarse para hacer escaleras o a nivel de suelo"""
     def __init__(self, coord: list,alto_en_bloques) -> None:
-        super().__init__(coord,[0,1,114,15,15,azul], c.ancho_bloque_inamovible, alto_en_bloques *c.alto_bloque_inamovible)
+        super().__init__(coord,[0,1,114,15,15,c.azul], c.ancho_bloque_inamovible, alto_en_bloques *c.alto_bloque_inamovible)
 
     def golpear(self, bloques=None, player=None):
         pass

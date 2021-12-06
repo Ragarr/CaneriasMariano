@@ -9,7 +9,7 @@ from clases.player import mario
 import constants as c
 
 class bloque():
-    def __init__(self, coord: list, sprite: list, ancho, alto ) -> None:
+    def __init__(self, coord: list, sprite: list, ancho, alto, izquierda = False, derecha = False ) -> None:
         """coord es una lista de 2 elementos 
         que contiene en este orden los siguienes valores x e y  del origen
         """
@@ -25,6 +25,8 @@ class bloque():
         self.__v_x=0
         self.__existe=True
         self.es_caparazon=False
+        self.__pared_izquierda = izquierda
+        self.__pared_derecha = derecha
     @property
     def existe(self):
         return self.__existe
@@ -101,6 +103,22 @@ class bloque():
     @coord_iniciales.setter
     def coord_iniciales(self):
         self.__coord=self.__coord.copy()
+    @property
+    def pared_izquierda(self):
+        return self.__pared_izquierda
+    @pared_izquierda.setter
+    def pared_izquierda(self, New__pared_izquierda:bool):
+        self.__pared_izquierda= New__pared_izquierda
+    
+    @property
+    def pared_derecha(self):
+        return self.__pared_derecha
+    @pared_izquierda.setter
+    def pared_derecha(self, New__pared_derecha:bool):
+        self.__pared_derecha= New__pared_derecha
+
+
+   
     
     def reposicionar(self):
         # print(int(self.coord[1]), int(self.coord_iniciales[1]))
@@ -207,9 +225,9 @@ class suelo(bloque):
 
 class escalera(bloque):
     """este bloque SOLO puede usarse para hacer escaleras o a nivel de suelo"""
-    def __init__(self, coord: list, alto:int = 1) -> None:
+    def __init__(self, coord: list, alto:int, colisiones: bool = False) -> None:
         
-        super().__init__(coord,c.escalera(alto), c.ancho_escalera, alto * c.alto_escalera)
+        super().__init__(coord,c.escalera(alto), c.ancho_escalera, alto*c.alto_escalera , colisiones, c.colisiones(colisiones))
 
     def golpear(self, bloques=None, player=None):
         pass

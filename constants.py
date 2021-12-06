@@ -60,7 +60,7 @@ alto_ladrillo = 15
 alto_escalera= 15
 
 altura_suelo = alto_pantalla-alto_pantalla/8  +3
-ancho_tuberia=31
+ancho_tuberia= 31
 ancho_suelo=15
 alto_concha=12
 tolerancia_colisiones=2

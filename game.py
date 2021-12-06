@@ -95,8 +95,7 @@ class App():
         bloque.escalera([200-17, c.altura_suelo-15*2], 2, False), bloque.escalera([200-17-17, c.altura_suelo-15], 1, False),
         bloque.escalera([300, c.altura_suelo-15*3], 3, True), 
         bloque.escalera([300+17, c.altura_suelo-15*2], 2, True), bloque.escalera([300+34, c.altura_suelo-15], 1, True), 
-         bloque.ladrillo_rompible([400, c.altura_suelo-50], False)
-        
+        bloque.ladrillo_rompible([400, c.altura_suelo-50], False), bloque.tuberia([600, c.altura_suelo-60], 60)
         ]
     
     def __generar_npcs(self):

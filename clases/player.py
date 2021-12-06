@@ -161,7 +161,7 @@ class mario():
             self.__colisonar_bloques_pequeño(bloques, objetos, jugador)
 
     def __colisionando(self, entity):
-        if (entity.tiene_hitbox and abs(entity.coord[0]-self.coord[0]) < self.ancho
+        if (entity.tiene_hitbox and abs(entity.coord[0]-self.coord[0]) < entity.ancho and entity.coord[0]-self.ancho < self.coord[0]
                 and abs(entity.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
             return True
         else:
@@ -203,22 +203,23 @@ class mario():
             #colisones con escaleras 
             if ( bloque.pared_derecha and bloque.coord[0]+bloque.ancho < self.coord[0] 
                 and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]):
-                    self.__v_x = -1.5*self.__v_x
+                    self.__v_x = +1
             if ( bloque.pared_izquierda and self.coord[0]+self.ancho < bloque.coord[0] 
                 and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
-                     self.__v_x = -1.5*self.__v_x
+                     self.__v_x = -1
     def __colisonar_bloques_grande(self, bloques: list, objetos: list, jugador):
         self.__bloque_a_derecha = False
         self.__bloque_a_izquierda = False
         for bloque in bloques:
             colision_superior = False
             colision_inferior = False
-            if self.__colisionando(bloque):  # comprueba si hay colision
+            if self.__colisionando(bloque)   :  # comprueba si hay colision
                 if abs(bloque.coord[1]+bloque.alto-self.coord[1]) <= c.tolerancia_colisiones and not colision_superior:
                     bloque.golpear(objetos, jugador)
                     self.__v_y = 2*c.v_gravedad
                     self.coord[1] = bloque.coord_iniciales[1]+bloque.alto
                     colision_inferior = True
+                    
                 # comprueba si la colision es por encima
                 elif ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto and not colision_inferior):
                     colision_superior = True
@@ -238,11 +239,11 @@ class mario():
                       and not colision_superior) and not (self.__grande or self.__fuego):  # jugador a la izquierda del bloque
                     self.__v_x = -self.__v_x
             if (  bloque.pared_derecha and bloque.coord[0]+bloque.ancho < self.coord[0] 
-                and bloque.coord[0]+bloque.ancho +3 > self.coord[0] and self.coord[1] > bloque.coord[1]):
-                    self.__v_x = -1.5*self.__v_x
+                and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]):
+                    self.__v_x = +1
             if ( bloque.pared_izquierda and self.coord[0]+self.ancho < bloque.coord[0] 
-                and self.coord[0]+self.ancho + 3> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
-                     self.__v_x = -1.5*self.__v_x
+                and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
+                     self.__v_x = -1
     def __colisionar_npcs(self,npcs:list):
         for npc in npcs:
             if ((self.coord[1]+self.alto <= npc.coord[1] and not abs(self.coord[1]+self.alto-npc.coord[1]) > 10) and abs(self.coord[0]-npc.coord[0]) < self.ancho 

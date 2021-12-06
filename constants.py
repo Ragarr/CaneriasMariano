@@ -82,8 +82,10 @@ sprite_fireball=[0,19,143,15,15,azul]
 def tuberia(alto:int=48):
     return [0,79,178,31,alto,azul]
 sprite_suelo=[0,0,227,ancho_suelo,22,azul] # el suelo puede medir hasta 250 de ancho
-def escalera(alto:int = 1):
+
+def escalera(alto:int, bloque:bool):
     '''El alto se cuenta en bloques y no en pyxeles'''
+   
     return [0,113,1,17,alto*15, azul]
 sprite_ladrillo=[0,160,208,15,15,-1]
 sprite_transparente=[0,0,0,0,0,azul]
@@ -91,6 +93,7 @@ sprite_goompa=[0,16,0,16,16,azul]
 sprite_goompa_aplastado=[0,32,0,16,16,azul]
 sprite_koopa_troopa=[0,16,16,16,16,azul]
 sprite_concha=[0,32,22,16,10,azul]
+
 
 #-----------sprites mario-------------
 # mirando a der

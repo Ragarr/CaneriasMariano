@@ -200,6 +200,7 @@ class mario():
                 elif (abs((bloque.coord[0])-self.coord[0]+self.ancho) >= self.ancho
                       and not colision_superior) and not (self.__grande or self.__fuego):  # jugador a la izquierda del bloque
                     self.__v_x = -1.2*self.__v_x
+            #colisones con escaleras 
             if ( (bloque.alto == 30 or bloque.alto == 45 or bloque.alto == 60 or bloque.alto == 75) and bloque.coord[0]+bloque.ancho < self.coord[0] 
                 and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]):
                     self.__v_x = -1.5*self.__v_x

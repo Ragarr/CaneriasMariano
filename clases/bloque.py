@@ -225,7 +225,7 @@ class escalera(bloque):
     """este bloque SOLO puede usarse para hacer escaleras o a nivel de suelo"""
     def __init__(self, coord: list, alto:int, colisiones: bool = False) -> None:
         
-        super().__init__(coord,c.escalera(alto), c.ancho_escalera, alto*c.alto_escalera , colisiones, c.colisiones(colisiones))
+        super().__init__(coord,c.escalera(alto), c.ancho_escalera, alto*c.alto_escalera , colisiones, not colisiones)
 
     def golpear(self, bloques=None, player=None):
         pass

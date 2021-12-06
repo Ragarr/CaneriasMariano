@@ -82,14 +82,9 @@ sprite_fireball=[0,19,143,15,15,azul]
 
 
 def tuberia(alto:int=48):
-    return [0,79,178,31,alto,azul]
+    return [0,79,178,32,alto,azul]
 sprite_suelo=[0,0,227,ancho_suelo,22,azul] # el suelo puede medir hasta 250 de ancho
-def colisiones(colisiones:bool):
-    if colisiones:
-        colisiones = False
-    elif not colisiones:
-        colisiones = True
-    return 
+
 def escalera(alto:int ):
     '''El alto se cuenta en bloques y no en pyxeles'''
    

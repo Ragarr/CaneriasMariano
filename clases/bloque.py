@@ -203,22 +203,22 @@ class interrogacion(bloque):
         self.__contenido = new_tiene_monedas
 
 
-    def golpear(self,bloques:list, player):
+    def golpear(self, objetos:list, player):
         """Dará un objeto seta si es pequeño o si es grande dará una flor y se convertirta en un bloque plano"""
         self.v_y=-0.5
         if self.__tiene_monedas:   
             if self.monedas >= 1:
                 self.monedas =(self.monedas- 1) # resta una moneda al contenido del bloque
-                bloques.append(objeto.moneda([self.coord[0],self.coord[1]-15]))
+                objetos.append(objeto.moneda([self.coord[0],self.coord[1]-15]))
                 player.dinero += 1
             else:
                 self.sprite = c.sprite_interrogacion_golpeado
         else:    
             if self.contenido and player.grande:
-                bloques.append(objeto.flor([self.coord[0],self.coord_iniciales[1]-c.alto_flor-8]))#Crea una flor encima del bloque
+                objetos.append(objeto.flor([self.coord[0],self.coord_iniciales[1]-c.alto_flor-8]))#Crea una flor encima del bloque
                 self.contenido = 0
             elif self.contenido:
-                bloques.append(objeto.champi([self.coord[0],self.coord_iniciales[1]-c.alto_champi/2]))#Crea la seta al inicio de su animación
+                objetos.append(objeto.champi([self.coord[0],self.coord_iniciales[1]-c.alto_champi/2]))#Crea la seta al inicio de su animación
                 self.contenido = 0
             else:
                 pass

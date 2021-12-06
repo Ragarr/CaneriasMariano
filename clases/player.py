@@ -15,7 +15,20 @@ class mario():
         self.__iniciar_fuerzas()
         self.__score = 0
         self.__dinero = 0
+        self.__vidas=1
         self.__coord = coord  # ubicacion de el sprite
+    @property
+    def muerto(self):
+        return self.__muerto
+    @muerto.setter
+    def muerto(self,new):
+        self.__muerto=new
+    @property
+    def vidas(self):
+        return self.__vidas
+    @vidas.setter
+    def vidas(self,new_vidas):
+        self.__vidas=new_vidas
     @property
     def grande(self):
         return self.__grande
@@ -150,9 +163,11 @@ class mario():
             self.__grande=False
         else:
             self.__morir()
+        print("daño recibido")
     
     def __morir(self):
-        pass
+        self.vidas-=1
+        self.muerto=True
 
     def __colisonar_bloques(self, bloques: list, objetos: list, jugador):
         if self.__grande or self.__fuego:
@@ -386,7 +401,7 @@ class mario():
         if (self.coord[1] < pyxel.height):
             self.__v_y += c.v_gravedad
         else: 
-            self.muerto=True
+            self.__morir()
     
     def __detectar_botones(self,objetos:list):
         if pyxel.btn(pyxel.KEY_D) and not self.__bloque_a_derecha:  # acelera si pulsas la D

@@ -287,14 +287,14 @@ class mario():
                     objeto.colisionar_jugador()
                     self.__grande = True
                     self.__fuego = True
-                    self.score += 3000
+                    self.score += 1000
                 elif isinstance(objeto, estrella):
                     if not self.__grande:
                         objeto.colisionar_jugador()
-                        self.score += 5000
+                        self.score += 1000
                     if self.__grande:
                         objeto.colisionar_jugador()
-                        self.score += 5000
+                        self.score += 1000
                 elif not isinstance(objeto, moneda) and  objeto.coord[1]- 16 > self.coord[1]:
                     objeto.colisionar_jugador()
                     self.score += 1000

@@ -176,11 +176,15 @@ class mario():
             self.__colisonar_bloques_pequeño(bloques, objetos, jugador)
 
     def __colisionando(self, entity):
+        colisionando = False
         if (entity.tiene_hitbox and abs(entity.coord[0]-self.coord[0]) < entity.ancho and entity.coord[0]-self.ancho < self.coord[0]
                 and abs(entity.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
-            return True
-        else:
-            return False
+            if entity.ancho == 256 and entity.coord[0]+24 < self.coord[0]+ self.ancho:#comprueba si hay un precipicio
+                colisionando = False
+            else:
+                colisionando = True
+        
+        return colisionando
 
     def __colisonar_bloques_pequeño(self,bloques:list,objetos:list,jugador):
         self.__bloque_a_derecha=False

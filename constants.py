@@ -79,11 +79,18 @@ sprite_interrogacion=[0,177,27,16,16,blanco]
 sprite_mario_verde=[0,206,82,15,31,azul]
 sprite_smario_lanzando_fuego=[0,0,132,15,31,azul]
 sprite_fireball=[0,19,143,15,15,azul]
+
+
 def tuberia(alto:int=48):
     return [0,79,178,31,alto,azul]
 sprite_suelo=[0,0,227,ancho_suelo,22,azul] # el suelo puede medir hasta 250 de ancho
-
-def escalera(alto:int, bloque:bool):
+def colisiones(colisiones:bool):
+    if colisiones:
+        colisiones = False
+    elif not colisiones:
+        colisiones = True
+    return 
+def escalera(alto:int ):
     '''El alto se cuenta en bloques y no en pyxeles'''
    
     return [0,113,1,17,alto*15, azul]

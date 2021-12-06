@@ -201,10 +201,10 @@ class mario():
                       and not colision_superior) and not (self.__grande or self.__fuego):  # jugador a la izquierda del bloque
                     self.__v_x = -1.2*self.__v_x
             #colisones con escaleras 
-            if ( (bloque.alto == 30 or bloque.alto == 45 or bloque.alto == 60 or bloque.alto == 75 or bloque.alto ==100) and bloque.coord[0]+bloque.ancho < self.coord[0] 
+            if ( bloque.pared_derecha and bloque.coord[0]+bloque.ancho < self.coord[0] 
                 and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]):
                     self.__v_x = -1.5*self.__v_x
-            if ( (bloque.alto == 29 or bloque.alto == 44 or bloque.alto == 59 or bloque.alto == 75 or bloque.alto == 100) and self.coord[0]+self.ancho < bloque.coord[0] 
+            if ( bloque.pared_izquierda and self.coord[0]+self.ancho < bloque.coord[0] 
                 and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
                      self.__v_x = -1.5*self.__v_x
     def __colisonar_bloques_grande(self, bloques: list, objetos: list, jugador):
@@ -237,11 +237,11 @@ class mario():
                 elif (abs((bloque.coord[0])-self.coord[0]+self.ancho) >= self.ancho
                       and not colision_superior) and not (self.__grande or self.__fuego):  # jugador a la izquierda del bloque
                     self.__v_x = -self.__v_x
-            if ( (bloque.alto == 30 or bloque.alto == 45 or bloque.alto == 60 or bloque.alto == 75 or bloque.alto ==100) and bloque.coord[0]+bloque.ancho < self.coord[0] 
-                and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]):
+            if (  bloque.pared_derecha and bloque.coord[0]+bloque.ancho < self.coord[0] 
+                and bloque.coord[0]+bloque.ancho +3 > self.coord[0] and self.coord[1] > bloque.coord[1]):
                     self.__v_x = -1.5*self.__v_x
-            if ( (bloque.alto == 29 or bloque.alto == 44 or bloque.alto == 59 or bloque.alto == 75 or bloque.alto ==100) and self.coord[0]+self.ancho < bloque.coord[0] 
-                and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
+            if ( bloque.pared_izquierda and self.coord[0]+self.ancho < bloque.coord[0] 
+                and self.coord[0]+self.ancho + 3> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
                      self.__v_x = -1.5*self.__v_x
     def __colisionar_npcs(self,npcs:list):
         for npc in npcs:

@@ -1,7 +1,6 @@
 if __name__ == "__main__":
-    #print("este archivo no es el principal y no esta pensado para ser ejecutado")
-    #quit()
-    pass
+    print("este archivo no es el principal y no esta pensado para ser ejecutado")
+    quit()
 
 class atrezzo():
     def __init__(self,coord, sprite:list) -> None:
@@ -26,7 +25,6 @@ class atrezzo():
 
     @coord.setter # el setter
     def coord(self,coord:list):
-        # print("modificando las coordenadas")
         if not isinstance(coord,list):
             raise ValueError("las coordenadas deben ser una lista")
         if len(coord) !=2:

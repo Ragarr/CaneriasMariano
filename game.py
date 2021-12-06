@@ -30,7 +30,7 @@ class App():
             self.__borrar_entidades(self.__bloques, self.npcs, self.objetos)
             self.__mantener_jugador_en_pantalla()
             for npc in self.npcs:
-                npc.actualizar_estado(self.__bloques , (other_npc for other_npc in self.npcs if other_npc != npc),self.objetos ) # paso la lista de npcs exluyendo el npc a evaluar
+                npc.actualizar_estado(self.__bloques , (other_npc for other_npc in self.npcs if other_npc != npc),self.objetos,self.jugador ) # paso la lista de npcs exluyendo el npc a evaluar
             for bloque in self.__bloques:
                 bloque.reposicionar()
             for objeto in self.objetos:

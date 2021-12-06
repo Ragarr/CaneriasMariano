@@ -1,6 +1,6 @@
-"""if __name__ == "__main__":
+if __name__ == "__main__":
     print("este archivo no es el principal y no esta pensado para ser ejecutado")
-    quit()"""
+    quit()
 import pyxel
 from clases.bloque import suelo
 import constants as c
@@ -137,13 +137,15 @@ class goompa(npc):
         self.morir()
 
 
-    def actualizar_estado(self, bloques: list, npcs: list,objetos:list):
-
-        self.sufrir_gravedad()
-        self.colisionar_bloques(bloques)
-        self.colisionar_npcs(npcs)
-        self.actualizar_posicion()
-        self.colisionar_con_objeto(objetos)
+    def actualizar_estado(self, bloques: list, npcs: list,objetos:list,jugador):
+        if jugador.coord[0] + pyxel.width <self.coord[0]:
+            pass
+        else:
+            self.sufrir_gravedad()
+            self.colisionar_bloques(bloques)
+            self.colisionar_npcs(npcs)
+            self.actualizar_posicion()
+            self.colisionar_con_objeto(objetos)
 
 
 class koopa_troopa(npc):
@@ -170,12 +172,15 @@ class koopa_troopa(npc):
             self.alto = c.alto_concha
             self.coord[1]-=15
 
-    def actualizar_estado(self, bloques: list, npcs: list, objetos:list):
-        self.sufrir_gravedad()
-        self.colisionar_bloques(bloques)
-        self.colisionar_npcs(npcs)
-        self.colisionar_con_objeto(objetos)
-        self.actualizar_posicion()
+    def actualizar_estado(self, bloques: list, npcs: list, objetos:list,jugador):
+        if jugador.coord[0]+pyxel.width<self.coord[0]:
+            pass
+        else:
+            self.sufrir_gravedad()
+            self.colisionar_bloques(bloques)
+            self.colisionar_npcs(npcs)
+            self.colisionar_con_objeto(objetos)
+            self.actualizar_posicion()
 
 
 

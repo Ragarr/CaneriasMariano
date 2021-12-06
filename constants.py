@@ -2,9 +2,6 @@
 
 # --------------------inicializacion del juego--------------------
 
-from clases.objeto import estrella
-
-
 ancho_pantalla = 256
 alto_pantalla = 200
 fps = 60

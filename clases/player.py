@@ -179,7 +179,12 @@ class mario():
     def __colisionando(self, entity):
         if (entity.tiene_hitbox and abs(entity.coord[0]-self.coord[0]) < entity.ancho and entity.coord[0]-self.ancho < self.coord[0]
                 and abs(entity.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
-            return True
+            if entity.ancho == 256 and entity.coord[0]+24 < self.coord[0]+ self.ancho:#comprueba si hay un precipicio
+                return False
+            else:
+                return True
+        
+            
         else:
             return False
 

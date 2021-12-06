@@ -164,6 +164,7 @@ class App():
 
     def reset_level(self):
         """reinicia el nivel manteniendo las vidas del jugador"""
+        player.mario.coord= [20,c.altura_suelo]
         self.tiempo = c.tiempo  # contador de la esquina superior derecha
         self.__generar_bloques()
         self.__generar_suelo()

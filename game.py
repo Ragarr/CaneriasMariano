@@ -8,61 +8,59 @@ import constants as c
 class App():
     def __init__(self) -> None:
         self.en_menu=True
-        pyxel.init(c.ancho_pantalla, c.alto_pantalla, caption="test", fps=c.fps)
+        pyxel.init(c.ancho_pantalla, c.alto_pantalla, caption="Cañerias Mariano", fps=c.fps)
         pyxel.load(c.assets_path)
-        self.contador = 0
+        self.tiempo = c.tiempo # contador de la esquina superior derecha
         self.jugador = player.mario([30, c.altura_suelo-15])
         self.__generar_bloques()
         self.__generar_suelo()
         self.__generar_npcs()
         self.__generar_objetos()
         self.__generar_atrezzo()
-        self.atrezzo=[]
-        self.pantalla_muerte=self.jugador.muerto
-        # esto tiene que ir al final del init
         pyxel.run(self.update,self.draw)
 
     def update(self):
-        print(self.jugador.vidas,self.jugador.muerto)
-        if self.en_menu:
+        if self.en_menu: # comprueba si estamos en el menu de inicio para que no se ejecute el nivel
             if pyxel.btnp(pyxel.KEY_ENTER):
                 self.en_menu=False
-        elif self.jugador.muerto:
-            if self.jugador.vidas<=0:
+        elif self.jugador.muerto:  # comprueba si estamos en el menu de muerte para que no se ejecute el nivel
+            if self.jugador.vidas <= 0:  # si no te quedan vidas reinicia el juego entero
                 if pyxel.btnp(pyxel.KEY_ENTER):
                     self.__init__()
-            if pyxel.btnp(pyxel.KEY_ENTER):
+            if pyxel.btnp(pyxel.KEY_ENTER):  # reinicia el nivel
                 self.reset_level()
                 self.jugador.muerto=False
+        elif self.tiempo<0: # mueres si te quedas sin tiempo
+            self.jugador.morir()
 
-        else:
+        else: # ejecucion normal del nivel tras comprobar que no estamos en un menu
             self.jugador.actualizar_estado(self.__bloques,self.npcs,self.objetos,self.jugador)
-            self.__borrar_entidades(self.__bloques, self.npcs, self.objetos)
+            self.__borrar_entidades(self.__bloques, self.npcs, self.objetos,self.atrezzo)
             self.__mantener_jugador_en_pantalla()
-            for npc in self.npcs:
-                npc.actualizar_estado(self.__bloques , (other_npc for other_npc in self.npcs if other_npc != npc),self.objetos,self.jugador ) # paso la lista de npcs exluyendo el npc a evaluar
-            for bloque in self.__bloques:
+            for npc in self.npcs: # actualiza a los npcs uno por uno
+                npc.actualizar_estado(self.__bloques , (other_npc for other_npc in self.npcs if other_npc != npc),self.objetos,self.jugador ) # hay que excluir al propio npc
+            for bloque in self.__bloques: # actualiza los bloques uno por uno
                 bloque.reposicionar()
-            for objeto in self.objetos:
+            for objeto in self.objetos:  # actualiza los objetos uno por uno
                 objeto.actualizar(self.__bloques)
-            self.contador = 400-int(pyxel.frame_count/c.fps)
+            self.tiempo -= 1 if pyxel.frame_count%c.fps==0 else 0 # actualiza el contador de la derecha
 
     def draw(self):
         
-        if self.en_menu:
+        if self.en_menu: #si estas en el menu de inicio dibuja solo el menu de inicio
             pyxel.cls(c.azul)
             pyxel.blt(20,30,*c.sprite_cartel)
             pyxel.text(pyxel.width/3, pyxel.height-pyxel.height/3,"PULSA INTRO PARA EMPEZAR",c.blanco)
-        elif self.jugador.muerto:
+        elif self.jugador.muerto:  # si estas en el menu de muerte dibuja solo el menu de muerte
             pyxel.cls(c.negro)
-            if self.jugador.vidas <= 0:
+            if self.jugador.vidas <= 0: # si te has quedado sin vidas muestra la pantalla para reiniciar el juego
                 pyxel.text(pyxel.width/2+c.ancho_mario+3, pyxel.height/2,"HAS MUERTO",c.blanco)
                 pyxel.text(pyxel.width/2+c.ancho_mario+3, pyxel.height/2+10,"pulsa intro para reiniciar",c.blanco)
-            else:
+            else:  # si  no te has quedado sin vidas muestra la pantalla para reiniciar el nivel
                 pyxel.blt(pyxel.width/2,pyxel.height/2, *self.jugador.sprite)
                 pyxel.text(pyxel.width/2+c.ancho_mario+3, pyxel.height/2,"x  {}".format(self.jugador.vidas),c.blanco)
             
-        else:
+        else: # dibujado normal del nivel
             pyxel.cls(c.azul)
             #bloques, objetos, npcs y atrezzo
             for i in range(len(self.objetos)):
@@ -77,41 +75,46 @@ class App():
             pyxel.blt(*self.jugador.coord,*self.jugador.sprite)
             #timer
             pyxel.text(pyxel.width-40, 10, "TIME",c.blanco)
-            pyxel.text(pyxel.width-20,10,str(self.contador),c.blanco)
+            pyxel.text(pyxel.width-20,10,str(self.tiempo),c.blanco)
             #monedas
-            pyxel.text(70, 10, "COINS: {}".format(self.jugador.dinero), c.blanco)
+            pyxel.blt(90,10,*c.sprite_moneda_chiquita)
+            pyxel.text(100, 10, str(self.jugador.dinero), c.blanco)
             #puntuacion mario
             pyxel.text(30, 10, "MARIO", c.blanco)
             pyxel.text(30, 20, "{:06d}".format(self.jugador.score), c.blanco)
-
-            
-
-            
-
-
-            
+      
     def __generar_atrezzo(self):
         self.atrezzo=[]
-    def __borrar_entidades(self, bloques: list, npcs: list, objetos: list):
+    
+    def __borrar_entidades(self, bloques: list, npcs: list, objetos: list, decorados:list):
+        """un bucle que va recorriendo todas las entidades del juego viendo si deben ser eliminadas:
+                las elimina si no existen(bloques y objetos),estan muertas(npcs) o salen por la izquierda de la pantalla"""
         i=0
-        while i < len(bloques):
+        while i < len(bloques): # revisa los bloques
             bloque=bloques[i]
             if not bloque.existe or bloque.coord[0]< -bloque.ancho:
                 del(bloques[i])
             else:   
                 i+=1
         i = 0
-        while i < len(npcs):
+        while i < len(npcs):  # revisa los npcs
             npc = npcs[i]
             if not npc.esta_vivo or npc.coord[0] < -npc.ancho:
                 del(npcs[i])
             else:
                 i += 1
         i = 0
-        while i < len(objetos):
+        while i < len(objetos):  # revisa los objetos
             objeto = objetos[i]
             if not objeto.existe or objeto.coord[0]< - objeto.ancho:
                 del(objetos[i])
+            else:
+                i += 1
+        i = 0
+        while i < len(decorados):  # revisa los objetos
+            decorado = atrezzo[i]
+            if  decorado.coord[0] < - decorado.ancho:
+                del(decorados[i])
             else:
                 i += 1
     
@@ -119,7 +122,7 @@ class App():
         self.objetos = []
     
     def __generar_suelo(self):
-        # creacion del suelo
+        """el suelo son bloques pero es comodo y visual generarlos a parte"""
         x = 0
         while x < 10*pyxel.width:
             self.__bloques.append(bloque.suelo([x, c.altura_suelo]))
@@ -137,6 +140,7 @@ class App():
         self.npcs = [npc.goompa([400,50])]
 
     def __mantener_jugador_en_pantalla(self):
+        """hace que el jugador no puda salir por la izquierda y si llega al centro mueve el nivel"""
         if self.jugador.coord[0]<0:
             self.jugador.coord[0] =0
         if self.jugador.coord[0] > pyxel.width/2 and self.jugador.mirando_derecha:
@@ -144,22 +148,27 @@ class App():
             self.__desplazar_nivel()
      
     def __desplazar_nivel(self):
+        """se asegura de que el jugador se mantiene en el centro de la pantalla trasmitiendo su movimiento a las demas entidades"""
         for bloque in self.__bloques:
             bloque.coord[0]-=self.jugador.v_x
         for objeto in self.objetos:
             objeto.coord[0] -= self.jugador.v_x
         for npc in self.npcs:
             npc.coord[0] -= self.jugador.v_x
+        for decorado in self.atrezzo:
+            decorado.coord[0] -= self.jugador.v_x
 
     def __redondear(self,n:float)->int:
-        return round(n-0.000001)
+        """esta funcion es necesaria para evitar que visualmente las entidades no vibren al desplazarse"""
+        return round(n-0.000001) # el metodo round funciona un poco mal en este caso pero asi siempre redondea correctamente
 
     def reset_level(self):
+        """reinicia el nivel manteniendo las vidas del jugador"""
+        self.tiempo = c.tiempo  # contador de la esquina superior derecha
         self.__generar_bloques()
         self.__generar_suelo()
         self.__generar_npcs()
         self.__generar_objetos()
         self.__generar_atrezzo()
-        self.atrezzo = []
-        self.pantalla_muerte = self.jugador.muerto
+
 App()

@@ -6,7 +6,7 @@ ancho_pantalla = 256
 alto_pantalla = 200
 fps = 60
 assets_path = "assets/editor/assets/mario_assets.pyxres"
-
+tiempo=400 #segundos
 
 # ----------------------------colores-----------------------------
 negro = 0
@@ -78,6 +78,7 @@ punt_estrella=1000
 
 
 #-----------------sprites en general-----------------------------
+sprite_moneda_chiquita = [0, 2, 29, 9, 13, azul] # editar esto
 sprite_moneda=[0,2,29,9,13,azul]
 sprite_moneda_girada=[0,40,41,9,13,azul]
 sprite_champi=[0,0,45,15,15,azul]
@@ -90,16 +91,17 @@ sprite_mario_verde=[0,206,82,15,31,azul]
 sprite_smario_lanzando_fuego=[0,0,132,15,31,azul]
 sprite_fireball=[0,19,143,15,15,azul]
 sprite_cartel=[1,0,0,208,80,azul]
-
-
+## como el tamaño de la tuberia es variable en vez de una constante tenemos una funcion
 def tuberia(alto:int=48):
+    """el alto se cuenta en pixeles"""
     return [0,79,178,32,alto,azul]
-sprite_suelo=[0,0,227,ancho_suelo,22,azul] # el suelo puede medir hasta 250 de ancho
 
-def escalera(alto:int ):
-    '''El alto se cuenta en bloques y no en pyxeles'''
-   
-    return [0,113,1,17,alto*15, azul]
+## como el tamaño de la escalera es variable en vez de una constante tenemos una funcion
+def escalera(alto: int):
+    '''El alto se cuenta en bloques y no en pixeles'''
+    return [0, 113, 1, 17, alto*15, azul] 
+
+sprite_suelo=[0,0,227,ancho_suelo,22,azul] # el suelo puede medir hasta 250 de ancho
 sprite_ladrillo=[0,160,208,15,15,-1]
 sprite_transparente=[0,0,0,0,0,azul]
 sprite_goompa=[0,16,0,16,16,azul]
@@ -144,6 +146,3 @@ sprite_smario_fuego_quieto_i = [0, 168, 81, -15, 31, azul]
 sprite_smario_fuego_girando_i = [0, 36, 131, -15, 31, azul]
 sprite_smario_fuego_saltando_i = [0, 59, 128, -15, 31, azul]
 sprite_smario_fuego_agachado_i = [0, 83, 130, -16, 31, azul]
-
-
-

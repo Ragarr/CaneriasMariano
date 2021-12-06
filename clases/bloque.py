@@ -211,11 +211,9 @@ class interrogacion(bloque):
         self.sprite = c.sprite_interrogacion_golpeado  # reemplazar el sprite de interrogacion por el liso
 
 class tuberia(bloque):
-    def __init__(self, coord: list,alto:int) -> None:
-        super().__init__(coord, c.tuberia(alto)) # una vez que el profesor nos pase el archivo con los sprites
-        self.__alto=alto
-        self.__ancho=c.ancho_tuberia
-
+    def __init__(self, coord: list, alto:int, colision = True) -> None:
+        super().__init__(coord, c.tuberia(alto), c.ancho_tuberia, alto, colision, colision )
+        
     def golpear(self,bloques=None, player=None):
         pass
 class suelo(bloque):
@@ -227,7 +225,7 @@ class escalera(bloque):
     """este bloque SOLO puede usarse para hacer escaleras o a nivel de suelo"""
     def __init__(self, coord: list, alto:int, colisiones: bool = False) -> None:
         
-        super().__init__(coord,c.escalera(alto), c.ancho_escalera, alto*c.alto_escalera , colisiones, c.colisiones(colisiones))
+        super().__init__(coord,c.escalera(alto), c.ancho_escalera, alto*c.alto_escalera , colisiones, not colisiones)
 
     def golpear(self, bloques=None, player=None):
         pass

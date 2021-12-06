@@ -18,13 +18,23 @@ class App():
         self.__generar_objetos()
         self.__generar_atrezzo()
         self.atrezzo=[]
+        self.pantalla_muerte=self.jugador.muerto
         # esto tiene que ir al final del init
         pyxel.run(self.update,self.draw)
 
     def update(self):
+        print(self.jugador.vidas,self.jugador.muerto)
         if self.en_menu:
             if pyxel.btnp(pyxel.KEY_ENTER):
                 self.en_menu=False
+        elif self.jugador.muerto:
+            if self.jugador.vidas<=0:
+                if pyxel.btnp(pyxel.KEY_ENTER):
+                    self.__init__()
+            if pyxel.btnp(pyxel.KEY_ENTER):
+                self.reset_level()
+                self.jugador.muerto=False
+
         else:
             self.jugador.actualizar_estado(self.__bloques,self.npcs,self.objetos,self.jugador)
             self.__borrar_entidades(self.__bloques, self.npcs, self.objetos)
@@ -38,29 +48,41 @@ class App():
             self.contador = 400-int(pyxel.frame_count/c.fps)
 
     def draw(self):
-        pyxel.cls(c.azul)
+        
         if self.en_menu:
+            pyxel.cls(c.azul)
             pyxel.blt(20,30,*c.sprite_cartel)
             pyxel.text(pyxel.width/3, pyxel.height-pyxel.height/3,"PULSA INTRO PARA EMPEZAR",c.blanco)
-        #bloques, objetos, npcs y atrezzo
-        for i in range(len(self.objetos)):
-            pyxel.blt(*self.objetos[i].coord, *self.objetos[i].sprite)
-        for i in range(len(self.__bloques)):
-            pyxel.blt(self.__redondear(self.__bloques[i].coord[0]),self.__redondear(self.__bloques[i].coord[1]),*self.__bloques[i].sprite)
-        for i in range(len(self.npcs)):
-            pyxel.blt(*self.npcs[i].coord, *self.npcs[i].sprite)
-        for i in range(len(self.atrezzo)):
-            pyxel.blt(*self.atrezzo[i].coord, *self.atrezzo[i].sprite)
-        #el jugador
-        pyxel.blt(*self.jugador.coord,*self.jugador.sprite)
-        #timer
-        pyxel.text(pyxel.width-40, 10, "TIME",c.blanco)
-        pyxel.text(pyxel.width-20,10,str(self.contador),c.blanco)
-        #monedas
-        pyxel.text(70, 10, "COINS: {}".format(self.jugador.dinero), c.blanco)
-        #puntuacion mario
-        pyxel.text(30, 10, "MARIO", c.blanco)
-        pyxel.text(30, 20, "{:06d}".format(self.jugador.score), c.blanco)
+        elif self.jugador.muerto:
+            pyxel.cls(c.negro)
+            if self.jugador.vidas <= 0:
+                pyxel.text(pyxel.width/2+c.ancho_mario+3, pyxel.height/2,"HAS MUERTO",c.blanco)
+                pyxel.text(pyxel.width/2+c.ancho_mario+3, pyxel.height/2+10,"pulsa intro para reiniciar",c.blanco)
+            else:
+                pyxel.blt(pyxel.width/2,pyxel.height/2, *self.jugador.sprite)
+                pyxel.text(pyxel.width/2+c.ancho_mario+3, pyxel.height/2,"x  {}".format(self.jugador.vidas),c.blanco)
+            
+        else:
+            pyxel.cls(c.azul)
+            #bloques, objetos, npcs y atrezzo
+            for i in range(len(self.objetos)):
+                pyxel.blt(*self.objetos[i].coord, *self.objetos[i].sprite)
+            for i in range(len(self.__bloques)):
+                pyxel.blt(self.__redondear(self.__bloques[i].coord[0]),self.__redondear(self.__bloques[i].coord[1]),*self.__bloques[i].sprite)
+            for i in range(len(self.npcs)):
+                pyxel.blt(*self.npcs[i].coord, *self.npcs[i].sprite)
+            for i in range(len(self.atrezzo)):
+                pyxel.blt(*self.atrezzo[i].coord, *self.atrezzo[i].sprite)
+            #el jugador
+            pyxel.blt(*self.jugador.coord,*self.jugador.sprite)
+            #timer
+            pyxel.text(pyxel.width-40, 10, "TIME",c.blanco)
+            pyxel.text(pyxel.width-20,10,str(self.contador),c.blanco)
+            #monedas
+            pyxel.text(70, 10, "COINS: {}".format(self.jugador.dinero), c.blanco)
+            #puntuacion mario
+            pyxel.text(30, 10, "MARIO", c.blanco)
+            pyxel.text(30, 20, "{:06d}".format(self.jugador.score), c.blanco)
 
             
 
@@ -131,4 +153,13 @@ class App():
 
     def __redondear(self,n:float)->int:
         return round(n-0.000001)
+
+    def reset_level(self):
+        self.__generar_bloques()
+        self.__generar_suelo()
+        self.__generar_npcs()
+        self.__generar_objetos()
+        self.__generar_atrezzo()
+        self.atrezzo = []
+        self.pantalla_muerte = self.jugador.muerto
 App()

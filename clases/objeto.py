@@ -231,6 +231,7 @@ class champi(objeto):
 
     def colisionar_jugador(self):
         self.morir()
+        
 class moneda(objeto):
     def __init__(self, coord: list) -> None:
         super().__init__(coord)

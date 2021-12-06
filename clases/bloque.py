@@ -121,7 +121,6 @@ class bloque():
    
     
     def reposicionar(self):
-        # print(int(self.coord[1]), int(self.coord_iniciales[1]))
         self.coord[1] = min(self.coord[1]+self.v_y,self.coord_iniciales[1]+2)
         if self.coord[1] < self.coord_iniciales[1]:
             self.v_y+=0.1
@@ -197,7 +196,6 @@ class interrogacion(bloque):
 
     def golpear(self,bloques:list, player:mario):
         """Dará un objeto seta si es pequeño o si es grande dará una flor y se convertirta en un bloque plano"""
-        print(self.contenido)
         self.v_y=-0.5
         if self.contenido and player.grande:
             bloques.append(objeto.flor([self.coord[0],self.coord_iniciales[1]-c.alto_flor-8]))#Crea una flor encima del bloque

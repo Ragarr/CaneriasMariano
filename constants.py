@@ -67,6 +67,16 @@ tolerancia_colisiones=2
 alto_champi = alto_estrella = alto_flor = 15
 ancho_champi = ancho_estrella = ancho_flor = 15
 
+
+#----------------------puntuaciones------------------------------
+punt_goompa=100
+punt_koopa_troopa=200
+punt_moneda=200
+punt_champi=1000
+punt_flor=1000
+punt_estrella=1000
+
+
 #-----------------sprites en general-----------------------------
 sprite_moneda=[0,2,29,9,13,azul]
 sprite_moneda_girada=[0,40,41,9,13,azul]
@@ -79,6 +89,7 @@ sprite_interrogacion=[0,177,27,16,16,blanco]
 sprite_mario_verde=[0,206,82,15,31,azul]
 sprite_smario_lanzando_fuego=[0,0,132,15,31,azul]
 sprite_fireball=[0,19,143,15,15,azul]
+sprite_cartel=[1,0,0,208,80,azul]
 
 
 def tuberia(alto:int=48):

@@ -102,8 +102,8 @@ class mario():
         self.__en_aire = False 
         self.__muerto = False
         self.__invencible = False  # modo estrella
-        self.__grande = True  # su estado de ser mario, super mario o con fuego
-        self.__fuego = True # su estado de ser mario, super mario o con fuego
+        self.__grande = False  # su estado de ser mario, super mario o con fuego
+        self.__fuego = False # su estado de ser mario, super mario o con fuego
         self.__permitir_fireball = True
         self.__en_transicion = False # para cuando cambia de estado
         self.__perdiendo_invencibilidad = False # para la estrella
@@ -194,7 +194,6 @@ class mario():
                 if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
                         and not colision_superior and not (self.__grande or self.__fuego)): # jugador a la derecha del bloque
                     self.__v_x=-1.2*self.__v_x
-                    print(bloque.alto)
 
                     
                 elif (abs((bloque.coord[0])-self.coord[0]+self.ancho) >= self.ancho
@@ -248,7 +247,6 @@ class mario():
         for npc in npcs:
             if ((self.coord[1]+self.alto <= npc.coord[1] and not abs(self.coord[1]+self.alto-npc.coord[1]) > 10) and abs(self.coord[0]-npc.coord[0]) < self.ancho 
                 and self.__timer_invencibilidad==0):
-                    print("npc pisado")
                     
                     npc.colisionar_jugador()
                     self.__v_y=-c.v_salto
@@ -268,7 +266,6 @@ class mario():
                     objeto.colisionar_jugador()
                     self.__grande = True
                     self.__fuego = True
-                    print(self.__fuego)
                     self.score += 3000
                 elif isinstance(objeto, estrella):
                     if not self.__grande:

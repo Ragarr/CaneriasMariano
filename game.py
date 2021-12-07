@@ -74,6 +74,12 @@ class game():
             
             #el jugador
             pyxel.blt(*self.jugador.coord,*self.jugador.sprite)
+            if self.jugador.estrella:# hace la animacion del brillo del modo estrella   
+                if pyxel.frame_count % (c.fps/4) == 0:
+                    pyxel.blt(self.jugador.coord[0], self.jugador.coord[1],
+                              *c.sprite_animacion_estrella_amarillo(self.jugador.alto))
+                elif pyxel.frame_count % (c.fps/2) == 0:
+                    pyxel.blt(self.jugador.coord[0],self.jugador.coord[1], *c.sprite_animacion_estrella_verde(self.jugador.alto))
             #timer
             pyxel.text(pyxel.width-40, 10, "TIME",c.blanco)
             pyxel.text(pyxel.width-20,10,str(self.tiempo),c.blanco)

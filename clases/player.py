@@ -163,7 +163,6 @@ class mario():
             self.__grande=False
         else:
             self.morir()
-        print("daño recibido")
     
     def morir(self):
         self.vidas-=1
@@ -268,6 +267,7 @@ class mario():
         for npc in npcs:
             if ((self.coord[1]+self.alto <= npc.coord[1] and not abs(self.coord[1]+self.alto-npc.coord[1]) > 10) and abs(self.coord[0]-npc.coord[0]) < self.ancho 
                 and self.__timer_invencibilidad==0):
+                    self.__timer_invencibilidad = c.fps/4 #un cuarto de segundo de invulnerabilidad para evitar cosas raras
                     npc.colisionar_jugador(jugador)
                     self.__v_y=-c.v_salto
 

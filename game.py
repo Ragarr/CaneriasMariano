@@ -142,7 +142,7 @@ class game():
         ]
     
     def __generar_npcs(self):
-        self.npcs = [npc.goompa([600,50]), npc.koopa_troopa([700,50])]
+        self.npcs = [npc.goompa([600,40]), npc.koopa_troopa([700,40])]
 
     def __mantener_jugador_en_pantalla(self):
         """hace que el jugador no puda salir por la izquierda y si llega al centro mueve el nivel"""

@@ -107,9 +107,6 @@ class npc():
        self.coord[0] += self.v_x
        self.coord[1] += self.v_y
 
-    def morir(self):
-        self.esta_vivo = False
-        self.sprite = c.sprite_transparente
 
     def colisionando(self, entity):
         if (entity.tiene_hitbox and abs(entity.coord[0]-self.coord[0]) < self.ancho
@@ -134,9 +131,13 @@ class goompa(npc):
         self.es_caparazon=False
     
     def colisionar_jugador(self,jugador):
-        self.sprite=c.sprite_goompa_aplastado
-        jugador.score+=c.punt_goompa
-        self.morir()
+        self.morir(jugador)
+    
+    def morir(self,jugador):
+        self.sprite = c.sprite_goompa_aplastado
+        jugador.score += c.punt_goompa
+        self.esta_vivo=False
+
 
 
     def actualizar_estado(self, bloques: list, npcs: list,objetos:list,jugador):
@@ -183,6 +184,11 @@ class koopa_troopa(npc):
             self.colisionar_npcs(npcs)
             self.colisionar_con_objeto(objetos,jugador)
             self.actualizar_posicion()
+
+    def morir(self):
+        self.esta_vivo = False
+
+        self.sprite = c.sprite_transparente
 
 
 

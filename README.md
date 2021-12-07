@@ -16,3 +16,5 @@ para desplazar las cosas usamos sus coordenadas directamente en vez de sus veloc
 ### tengo dudas de porque hay un objeto llamado suelo
 ### el koopa hace daño al caerle encima
 ### creo que los npcs atraviesan las tuberias
+### hay que hacerque el goompa cambie de sprite al morir y no desaparezca automaticamente
+

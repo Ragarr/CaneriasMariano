@@ -134,6 +134,8 @@ class mario():
         """actualiza las velocidades, el tamaño y en general todos los atributos del jugador"""
         if self.__grande:
             self.__convertir_en_supermario()
+        if self.__timer_estrella==0:
+            self.__desconvertir_en_estrella()
         self.__sufrir_gravedad()
         self.__colisonar_bloques(bloques,objetos,jugador)
         self.__colisionar_npcs(npcs,jugador)
@@ -144,14 +146,27 @@ class mario():
         self.__actualizar_timers()
         
     def __actualizar_timers(self):
-        self.__timer_fireball = self.__timer_fireball-1 if self.__timer_fireball >0 else 0
-        self.__timer_transicion = self.__timer_transicion-1 if self.__timer_transicion >0 else 0
-        self.__timer_invencibilidad = self.__timer_invencibilidad-1 if self.__timer_invencibilidad >0 else 0
+        # el  -1 significa que el timer esta apagado
+        self.__timer_fireball = self.__timer_fireball-1 if self.__timer_fireball >0 else -1 
+        self.__timer_transicion = self.__timer_transicion-1 if self.__timer_transicion >0 else -1
+        self.__timer_invencibilidad = self.__timer_invencibilidad-1 if self.__timer_invencibilidad >0 else -1
+        self.__timer_estrella = self.__timer_estrella-1 if self.__timer_estrella>0 else -1
+
 
     def __convertir_en_supermario(self):
         self.__grande = True
         self.alto=c.alto_smario
         self.ancho=c.ancho_mario
+    
+    def __convertir_en_estrella(self):
+        self.__estrella=True
+        self.__timer_estrella=c.fps*30 #30 secs
+        c.v_player_max_x+=2
+        c.v_avance+=1
+    def __desconvertir_en_estrella(self):
+        self.__estrella = False
+        c.v_player_max_x -= 2
+        c.v_avance -= 1
     
     def recibir_daño(self):
         if self.__fuego:
@@ -174,7 +189,6 @@ class mario():
             self.__colisonar_bloques_grande(bloques , objetos , jugador)
         else:
             self.__colisonar_bloques_pequeño(bloques, objetos, jugador)
-
     def __colisionando(self, entity):
         if (entity.tiene_hitbox and abs(entity.coord[0]-self.coord[0]) < entity.ancho and entity.coord[0]-self.ancho < self.coord[0]
                 and abs(entity.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
@@ -186,7 +200,6 @@ class mario():
             
         else:
             return False
-
     def __colisonar_bloques_pequeño(self,bloques:list,objetos:list,jugador):
         self.__bloque_a_derecha=False
         self.__bloque_a_izquierda=False
@@ -278,9 +291,7 @@ class mario():
 
                 elif self.__colisionando(npc) and self.__timer_invencibilidad == 0:
                     self.__timer_invencibilidad = c.fps  # un segundo de invulnerabilidad
-                    self.recibir_daño()
-                    
-    
+                    self.recibir_daño()   
     def __colisionar_objetos(self, objetos:list,jugador):
         for objeto in objetos:
             if self.__colisionando(objeto):  # comprueba si hay colision
@@ -294,13 +305,8 @@ class mario():
                     self.__fuego = True
                     self.score += c.punt_flor
                 elif isinstance(objeto, estrella):
-                    if not self.__grande:
-                        objeto.colisionar_jugador()
-                        self.score += c.punt_estrella
-                    if self.__grande:
-                        objeto.colisionar_jugador()
-                        self.score += c.punt_estrella
-                
+                    objeto.colisionar_jugador()
+                    self.__convertir_en_estrella()
 
     def __actualizar_animaciones(self):
         if not self.__grande and not self.__fuego:

@@ -69,11 +69,11 @@ class npc():
             raise ValueError('El valor de la velocidad es int o float')
         self.__v_y=new_v_y
 
-    def sufrir_gravedad(self):
+    def sufrir_gravedad(self,jugador):
         if (self.coord[1] < pyxel.height):
             self.__v_y += c.v_gravedad
         else:
-            self.morir()
+            self.morir(jugador)
     
     def colisionar_bloques(self, bloques: list):
         for bloque in bloques:
@@ -102,11 +102,11 @@ class npc():
                      self.v_x = -self.v_x
 
     
-    def colisionar_npcs(self, npcs):
+    def colisionar_npcs(self, npcs,jugador):
         for npc in npcs:
             if self.colisionando(npc):
                 if npc.es_caparazon:
-                    self.morir()
+                    self.morir(jugador)
                 else:
                     self.__v_x = -self.__v_x
 
@@ -126,7 +126,7 @@ class npc():
         for objeto in objetos:
             if self.colisionando(objeto) and isinstance(objeto,fireball):
                 jugador.score+=c.punt_goompa # ambas son iguales
-                self.morir()
+                self.morir(jugador)
 
 
 class goompa(npc):
@@ -151,9 +151,9 @@ class goompa(npc):
         if jugador.coord[0] + pyxel.width <self.coord[0]:
             pass
         else:
-            self.sufrir_gravedad()
+            self.sufrir_gravedad(jugador)
             self.colisionar_bloques(bloques)
-            self.colisionar_npcs(npcs)
+            self.colisionar_npcs(npcs,jugador)
             self.actualizar_posicion()
             self.colisionar_con_objeto(objetos,jugador)
 
@@ -186,15 +186,15 @@ class koopa_troopa(npc):
         if jugador.coord[0]+pyxel.width<self.coord[0]:
             pass
         else:
-            self.sufrir_gravedad()
+            self.sufrir_gravedad(jugador)
             self.colisionar_bloques(bloques)
-            self.colisionar_npcs(npcs)
+            self.colisionar_npcs(npcs,jugador)
             self.colisionar_con_objeto(objetos,jugador)
             self.actualizar_posicion()
 
-    def morir(self):
+    def morir(self,jugador):
         self.esta_vivo = False
-
+        jugador.score+=c.punt
         self.sprite = c.sprite_transparente
 
 

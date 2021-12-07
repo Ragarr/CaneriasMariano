@@ -11,12 +11,6 @@ import clases.bloque
  
 
 
-class suelo():
-    def __init__(self, coord: list) -> None:
-        # una vez que el profesor nos pase el archivo con los sprites
-        super().__init__(coord, c.sprite_suelo, pyxel.width, pyxel.height/3)
-
-
 class objeto():
     def __init__(self, coord: list) -> None:
 

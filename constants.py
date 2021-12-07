@@ -78,7 +78,7 @@ punt_estrella=1000
 
 
 #-----------------sprites en general-----------------------------
-sprite_moneda_chiquita = [0, 2, 29, 9, 13, azul] # editar esto
+sprite_moneda_chiquita = [1, 0, 96, 9, 9, azul] # editar esto
 sprite_moneda=[0,2,29,9,13,azul]
 sprite_moneda_girada=[0,40,41,9,13,azul]
 sprite_champi=[0,0,45,15,15,azul]

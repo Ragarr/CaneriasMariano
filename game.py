@@ -2,14 +2,14 @@ import pyxel
 from clases import bloque
 from clases import player
 from clases import npc
-from clases import objeto
+from clases.objeto import moneda, fireball, champi, flor, estrella
 from clases import atrezzo
 import constants as c
-class App():
+class game():
     def __init__(self) -> None:
-        self.en_menu=True
         pyxel.init(c.ancho_pantalla, c.alto_pantalla, caption="Cañerias Mariano", fps=c.fps)
         pyxel.load(c.assets_path)
+        self.en_menu = True
         self.tiempo = c.tiempo # contador de la esquina superior derecha
         self.jugador = player.mario([30, c.altura_suelo-15])
         self.__generar_bloques()
@@ -26,7 +26,7 @@ class App():
         elif self.jugador.muerto:  # comprueba si estamos en el menu de muerte para que no se ejecute el nivel
             if self.jugador.vidas <= 0:  # si no te quedan vidas reinicia el juego entero
                 if pyxel.btnp(pyxel.KEY_ENTER):
-                    self.__init__()
+                    self.reset_game()
             if pyxel.btnp(pyxel.KEY_ENTER):  # reinicia el nivel
                 self.reset_level()
                 self.jugador.muerto=False
@@ -77,8 +77,8 @@ class App():
             pyxel.text(pyxel.width-40, 10, "TIME",c.blanco)
             pyxel.text(pyxel.width-20,10,str(self.tiempo),c.blanco)
             #monedas
-            pyxel.blt(90,10,*c.sprite_moneda_chiquita)
-            pyxel.text(100, 10, str(self.jugador.dinero), c.blanco)
+            pyxel.blt(100,9,*c.sprite_moneda_chiquita)
+            pyxel.text(103, 11, str(self.jugador.dinero), c.negro)
             #puntuacion mario
             pyxel.text(30, 10, "MARIO", c.blanco)
             pyxel.text(30, 20, "{:06d}".format(self.jugador.score), c.blanco)
@@ -107,6 +107,8 @@ class App():
         while i < len(objetos):  # revisa los objetos
             objeto = objetos[i]
             if not objeto.existe or objeto.coord[0]< - objeto.ancho:
+                if isinstance(objeto,moneda):
+                    self.jugador.score+=c.punt_moneda
                 del(objetos[i])
             else:
                 i += 1
@@ -122,7 +124,7 @@ class App():
         self.objetos = []
     
     def __generar_suelo(self):
-        """el suelo son bloques pero es comodo y visual generarlos a parte"""
+        """el suelo son bloques, pero es comodo y visual generarlos a parte"""
         x = 0
         while x < 10*pyxel.width:
             self.__bloques.append(bloque.suelo([x, c.altura_suelo]))
@@ -134,11 +136,12 @@ class App():
         bloque.escalera([500, c.altura_suelo-15*3], 3, True), 
         bloque.escalera([500+17, c.altura_suelo-15*2], 2, True), bloque.escalera([500+34, c.altura_suelo-15], 1, True), 
         bloque.ladrillo_rompible([600, c.altura_suelo-50], False), bloque.tuberia([800, c.altura_suelo-60], 60),
-        bloque.interrogacion([200,c.altura_suelo-50], True), bloque.interrogacion([300,c.altura_suelo-50])
+        bloque.interrogacion([200,c.altura_suelo-50], True), bloque.interrogacion([300,c.altura_suelo-50]),
+        bloque.interrogacion([320, c.altura_suelo-50])
         ]
     
     def __generar_npcs(self):
-        self.npcs = [npc.goompa([400,50])]
+        self.npcs = [npc.goompa([600,50]), npc.koopa_troopa([700,50])]
 
     def __mantener_jugador_en_pantalla(self):
         """hace que el jugador no puda salir por la izquierda y si llega al centro mueve el nivel"""
@@ -165,7 +168,10 @@ class App():
 
     def reset_level(self):
         """reinicia el nivel manteniendo las vidas del jugador"""
-        player.mario.coord= [20,c.altura_suelo]
+        self.jugador.coord= [20,c.altura_suelo]
+        self.jugador.dinero=0
+        self.jugador.score=0
+        
         self.tiempo = c.tiempo  # contador de la esquina superior derecha
         self.__generar_bloques()
         self.__generar_suelo()
@@ -173,4 +179,14 @@ class App():
         self.__generar_objetos()
         self.__generar_atrezzo()
 
-App()
+    def reset_game(self):
+        """reinicia el juego entero"""
+        self.en_menu = True
+        self.tiempo = c.tiempo  # contador de la esquina superior derecha
+        self.jugador = player.mario([30, c.altura_suelo-15])
+        self.__generar_bloques()
+        self.__generar_suelo()
+        self.__generar_npcs()
+        self.__generar_objetos()
+        self.__generar_atrezzo()
+game()

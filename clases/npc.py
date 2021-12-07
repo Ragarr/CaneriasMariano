@@ -118,9 +118,10 @@ class npc():
         else:
             return False
     
-    def colisionar_con_objeto(self,objetos:list):
+    def colisionar_con_objeto(self,objetos:list,jugador):
         for objeto in objetos:
             if self.colisionando(objeto) and isinstance(objeto,fireball):
+                jugador.score+=c.punt_goompa # ambas son iguales
                 self.morir()
 
 
@@ -132,8 +133,9 @@ class goompa(npc):
         self.alto = c.alto_goompa
         self.es_caparazon=False
     
-    def colisionar_jugador(self):
+    def colisionar_jugador(self,jugador):
         self.sprite=c.sprite_goompa_aplastado
+        jugador.score+=c.punt_goompa
         self.morir()
 
 
@@ -145,7 +147,7 @@ class goompa(npc):
             self.colisionar_bloques(bloques)
             self.colisionar_npcs(npcs)
             self.actualizar_posicion()
-            self.colisionar_con_objeto(objetos)
+            self.colisionar_con_objeto(objetos,jugador)
 
 
 class koopa_troopa(npc):
@@ -156,7 +158,7 @@ class koopa_troopa(npc):
         self.es_caparazon = False
         self.frame_concha= 400*c.fps
 
-    def colisionar_jugador(self):
+    def colisionar_jugador(self,jugador):
         if self.es_caparazon and self.v_x == 0:
             '''Si el caparazón está parado y el jugador choca con él lo pondrá en movimiento'''
             self.v_x = c.v_caparazon
@@ -179,7 +181,7 @@ class koopa_troopa(npc):
             self.sufrir_gravedad()
             self.colisionar_bloques(bloques)
             self.colisionar_npcs(npcs)
-            self.colisionar_con_objeto(objetos)
+            self.colisionar_con_objeto(objetos,jugador)
             self.actualizar_posicion()
 
 

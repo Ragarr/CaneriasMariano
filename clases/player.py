@@ -136,8 +136,8 @@ class mario():
             self.__convertir_en_supermario()
         self.__sufrir_gravedad()
         self.__colisonar_bloques(bloques,objetos,jugador)
-        self.__colisionar_npcs(npcs)
-        self.__colisionar_objetos(objetos)
+        self.__colisionar_npcs(npcs,jugador)
+        self.__colisionar_objetos(objetos,jugador)
         self.__detectar_botones(objetos)
         self.__actualizar_animaciones()
         self.__actualizar_posicion()
@@ -264,40 +264,38 @@ class mario():
             if ( bloque.pared_izquierda and self.coord[0]+self.ancho < bloque.coord[0] 
                 and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
                      self.__v_x = -1
-    def __colisionar_npcs(self,npcs:list):
+    def __colisionar_npcs(self,npcs:list,jugador):
         for npc in npcs:
             if ((self.coord[1]+self.alto <= npc.coord[1] and not abs(self.coord[1]+self.alto-npc.coord[1]) > 10) and abs(self.coord[0]-npc.coord[0]) < self.ancho 
                 and self.__timer_invencibilidad==0):
-                    
-                    npc.colisionar_jugador()
+                    npc.colisionar_jugador(jugador)
                     self.__v_y=-c.v_salto
+
             elif self.__colisionando(npc) and self.__timer_invencibilidad == 0:
                 self.__timer_invencibilidad = c.fps  # un segundo de invulnerabilidad
                 self.recibir_daño()
                     
     
-    def __colisionar_objetos(self, objetos:list):
+    def __colisionar_objetos(self, objetos:list,jugador):
         for objeto in objetos:
             if self.__colisionando(objeto):  # comprueba si hay colision
                 if isinstance(objeto, champi):
                     objeto.colisionar_jugador()
                     self.__grande = True
-                    self.score += 1000
+                    self.score += c.punt_champi # todos los objetos dan la misma puntuacion pero asi podriamos cambiarlo facil
                 elif isinstance(objeto, flor) and (not self.__fuego and  objeto.coord[1]- 16 > self.coord[1] or not self.__grande):
                     objeto.colisionar_jugador()
                     self.__grande = True
                     self.__fuego = True
-                    self.score += 1000
+                    self.score += c.punt_flor
                 elif isinstance(objeto, estrella):
                     if not self.__grande:
                         objeto.colisionar_jugador()
-                        self.score += 1000
+                        self.score += c.punt_estrella
                     if self.__grande:
                         objeto.colisionar_jugador()
-                        self.score += 1000
-                elif not isinstance(objeto, moneda) and  objeto.coord[1]- 16 > self.coord[1]:
-                    objeto.colisionar_jugador()
-                    self.score += 1000
+                        self.score += c.punt_estrella
+                
 
     def __actualizar_animaciones(self):
         if not self.__grande and not self.__fuego:

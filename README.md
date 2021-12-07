@@ -10,3 +10,9 @@ a la hora de elegir como se iva a desplazar el nivel hacia la derecha tuvimos qu
 he creado la funcion redondear, que usa la funcion round de python pero asegurandose de que siempre redondea igual ya que round de python no siempre redondea igual
 
 para desplazar las cosas usamos sus coordenadas directamente en vez de sus velocidades por simplicidad
+
+## fixear
+
+### tengo dudas de porque hay un objeto llamado suelo
+### el koopa hace daño al caerle encima
+### creo que los npcs atraviesan las tuberias

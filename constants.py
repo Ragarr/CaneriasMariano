@@ -149,6 +149,9 @@ sprite_smario_fuego_quieto_i = [0, 168, 81, -15, 31, azul]
 sprite_smario_fuego_girando_i = [0, 36, 131, -15, 31, azul]
 sprite_smario_fuego_saltando_i = [0, 59, 128, -15, 31, azul]
 sprite_smario_fuego_agachado_i = [0, 83, 130, -16, 31, azul]
+sprite_animacion_estrella_verde = [1,16,225,16,31,azul]
+sprite_animacion_estrella_amarillo = [1,32,225,16,31,azul]
+
 
 #sprites bandera y mario 
 sprite_mario_grande_bandera=[0,216,0,16,31,azul]

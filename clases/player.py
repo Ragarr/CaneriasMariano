@@ -114,7 +114,7 @@ class mario():
         self.__mirando_derecha = True
         self.__en_aire = False 
         self.__muerto = False
-        self.__invencible = False  # modo estrella
+        self.__estrella = False  # modo estrella
         self.__grande = False  # su estado de ser mario, super mario o con fuego
         self.__fuego = False # su estado de ser mario, super mario o con fuego
         self.__permitir_fireball = True
@@ -264,16 +264,21 @@ class mario():
                 and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
                      self.__v_x = -1
     def __colisionar_npcs(self,npcs:list,jugador):
-        for npc in npcs:
-            if ((self.coord[1]+self.alto <= npc.coord[1] and not abs(self.coord[1]+self.alto-npc.coord[1]) > 10) and abs(self.coord[0]-npc.coord[0]) < self.ancho 
-                and self.__timer_invencibilidad==0):
-                    self.__timer_invencibilidad = c.fps/4 #un cuarto de segundo de invulnerabilidad para evitar cosas raras
-                    npc.colisionar_jugador(jugador)
-                    self.__v_y=-c.v_salto
+        if self.__estrella:
+            for npc in npcs:
+                if self.__colisionando(npc):
+                    npc.morir(jugador)
+        else:
+            for npc in npcs:
+                if ((self.coord[1]+self.alto <= npc.coord[1] and not abs(self.coord[1]+self.alto-npc.coord[1]) > 10) and abs(self.coord[0]-npc.coord[0]) < self.ancho 
+                    and self.__timer_invencibilidad==0):
+                        self.__timer_invencibilidad = c.fps/4 #un cuarto de segundo de invulnerabilidad para evitar cosas raras
+                        npc.colisionar_jugador(jugador)
+                        self.__v_y=-c.v_salto
 
-            elif self.__colisionando(npc) and self.__timer_invencibilidad == 0:
-                self.__timer_invencibilidad = c.fps  # un segundo de invulnerabilidad
-                self.recibir_daño()
+                elif self.__colisionando(npc) and self.__timer_invencibilidad == 0:
+                    self.__timer_invencibilidad = c.fps  # un segundo de invulnerabilidad
+                    self.recibir_daño()
                     
     
     def __colisionar_objetos(self, objetos:list,jugador):

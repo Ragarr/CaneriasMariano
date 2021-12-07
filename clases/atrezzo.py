@@ -1,7 +1,7 @@
 if __name__ == "__main__":
     print("este archivo no es el principal y no esta pensado para ser ejecutado")
     quit()
-
+import constants as c
 class atrezzo():
     def __init__(self,coord, sprite:list) -> None:
         """dibujo es una lista de 8 elementos
@@ -16,9 +16,12 @@ class atrezzo():
             -color de chroma
         """
 
-        self.__tiene_hitbox = False
+
         self.__coord=coord
         self.__sprite=sprite
+    @property 
+    def sprite(self):
+        return self.__sprite
     @property # el getter
     def coord(self):
             return self.__coord
@@ -36,15 +39,15 @@ class atrezzo():
 
 class montaña(atrezzo):
     def __init__(self, coord:list) -> None:
-        super().__init__(coord, [0,72,16,16,0])
+        super().__init__(coord, c.sprite_montaña)
 
 class nube(atrezzo):
     def __init__(self, coord:list) -> None:
-        super().__init__(coord, [0,16,72,16,16,0])
+        super().__init__(coord, c.sprite_nube)
 
 
 class arbusto(atrezzo):
     def __init__(self, coord:list) -> None:
-        super().__init__(coord, [0,32,72,16,16,0])
+        super().__init__(coord, c.sprite_arbusto)
 
 

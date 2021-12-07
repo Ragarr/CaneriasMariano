@@ -63,14 +63,15 @@ class game():
         else: # dibujado normal del nivel
             pyxel.cls(c.azul)
             #bloques, objetos, npcs y atrezzo
+            for i in range(len(self.atrezzo)):
+                pyxel.blt(*self.atrezzo[i].coord, *self.atrezzo[i].sprite)
             for i in range(len(self.objetos)):
                 pyxel.blt(*self.objetos[i].coord, *self.objetos[i].sprite)
             for i in range(len(self.__bloques)):
                 pyxel.blt(self.__redondear(self.__bloques[i].coord[0]),self.__redondear(self.__bloques[i].coord[1]),*self.__bloques[i].sprite)
             for i in range(len(self.npcs)):
                 pyxel.blt(*self.npcs[i].coord, *self.npcs[i].sprite)
-            for i in range(len(self.atrezzo)):
-                pyxel.blt(*self.atrezzo[i].coord, *self.atrezzo[i].sprite)
+            
             #el jugador
             pyxel.blt(*self.jugador.coord,*self.jugador.sprite)
             #timer
@@ -84,9 +85,9 @@ class game():
             pyxel.text(30, 20, "{:06d}".format(self.jugador.score), c.blanco)
       
     def __generar_atrezzo(self):
-        self.atrezzo=[]
+        self.atrezzo = [atrezzo.arbusto([600, c.altura_suelo-12])]
     
-    def __borrar_entidades(self, bloques: list, npcs: list, objetos: list, decorados:list):
+    def __borrar_entidades(self, bloques: list, npcs: list, objetos: list, decoracion:list):
         """un bucle que va recorriendo todas las entidades del juego viendo si deben ser eliminadas:
                 las elimina si no existen(bloques y objetos),estan muertas(npcs) o salen por la izquierda de la pantalla"""
         i=0
@@ -113,10 +114,10 @@ class game():
             else:
                 i += 1
         i = 0
-        while i < len(decorados):  # revisa los objetos
-            decorado = atrezzo[i]
-            if  decorado.coord[0] < - decorado.ancho:
-                del(decorados[i])
+        while i < len(decoracion):  # revisa los objetos
+            decorado = self.atrezzo[i]
+            if  decorado.coord[0] < -100:
+                del(decoracion[i])
             else:
                 i += 1
     
@@ -171,7 +172,6 @@ class game():
         self.jugador.coord= [20,c.altura_suelo]
         self.jugador.dinero=0
         self.jugador.score=0
-        
         self.tiempo = c.tiempo  # contador de la esquina superior derecha
         self.__generar_bloques()
         self.__generar_suelo()

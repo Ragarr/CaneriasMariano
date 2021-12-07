@@ -17,6 +17,21 @@ class mario():
         self.__dinero = 0
         self.__vidas=3
         self.__coord = coord  # ubicacion de el sprite
+    
+    @property
+    def timer_estrella(self):
+        return self.__timer_estrella
+    @timer_estrella.setter
+    def timer_estrella(self,new):
+        self.__timer_estrella=new
+
+    
+    @property
+    def estrella(self):
+        return self.__estrella
+    @estrella.setter
+    def estrella(self,new):
+        self.__estrella=new
     @property
     def muerto(self):
         return self.__muerto
@@ -100,6 +115,7 @@ class mario():
         self.__timer_andar = 0
         self.__timer_invencible_animation = 0
         self.__timer_invencibilidad = 0
+        self.__timer_estrella=0
         self.__timer_transicion_fuego = 0
         self.__timer_muerte = 0
         self.__timer_transicion = 0 # animacion de transicion y frames de invulnerabilidad
@@ -134,7 +150,7 @@ class mario():
         """actualiza las velocidades, el tamaño y en general todos los atributos del jugador"""
         if self.__grande:
             self.__convertir_en_supermario()
-        if self.__timer_estrella==0:
+        if self.timer_estrella==0 and self.__estrella:
             self.__desconvertir_en_estrella()
         self.__sufrir_gravedad()
         self.__colisonar_bloques(bloques,objetos,jugador)
@@ -146,11 +162,10 @@ class mario():
         self.__actualizar_timers()
         
     def __actualizar_timers(self):
-        # el  -1 significa que el timer esta apagado
-        self.__timer_fireball = self.__timer_fireball-1 if self.__timer_fireball >0 else -1 
-        self.__timer_transicion = self.__timer_transicion-1 if self.__timer_transicion >0 else -1
-        self.__timer_invencibilidad = self.__timer_invencibilidad-1 if self.__timer_invencibilidad >0 else -1
-        self.__timer_estrella = self.__timer_estrella-1 if self.__timer_estrella>0 else -1
+        self.__timer_fireball = self.__timer_fireball-1 if self.__timer_fireball >0 else 0
+        self.__timer_transicion = self.__timer_transicion-1 if self.__timer_transicion >0 else 0
+        self.__timer_invencibilidad = self.__timer_invencibilidad-1 if self.__timer_invencibilidad >0 else 0
+        self.timer_estrella = self.timer_estrella-1 if self.timer_estrella>0 else 0
 
 
     def __convertir_en_supermario(self):
@@ -160,13 +175,15 @@ class mario():
     
     def __convertir_en_estrella(self):
         self.__estrella=True
-        self.__timer_estrella=c.fps*30 #30 secs
-        c.v_player_max_x+=2
-        c.v_avance+=1
+        self.timer_estrella=c.fps*30 #30 secs
+        print("estrella")
+        """c.v_player_max_x+=2
+        c.v_avance+=1"""
     def __desconvertir_en_estrella(self):
         self.__estrella = False
-        c.v_player_max_x -= 2
-        c.v_avance -= 1
+        print("no estrtella")
+        """c.v_player_max_x -= 2
+        c.v_avance -= 1"""
     
     def recibir_daño(self):
         if self.__fuego:

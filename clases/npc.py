@@ -94,6 +94,13 @@ class npc():
                 if ((bloque.coord[0]+bloque.ancho)-self.coord[0] >= self.ancho
                       and not en_suelo):
                     self.__v_x = -c.v_npc if not self.es_caparazon else -c.v_caparazon
+            if ( bloque.pared_derecha and bloque.coord[0]+bloque.ancho < self.coord[0] 
+                and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]):
+                    self.v_x = -self.v_x
+            if ( bloque.pared_izquierda and self.coord[0]+self.ancho < bloque.coord[0] 
+                and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
+                     self.v_x = -self.v_x
+
     
     def colisionar_npcs(self, npcs):
         for npc in npcs:

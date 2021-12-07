@@ -3,7 +3,7 @@ if __name__ == "__main__":
     print("este archivo no es el principal y no esta pensado para ser ejecutado")
     quit()
 import pyxel
-from clases.objeto import champi, estrella, fireball, flor, moneda
+from clases.objeto import bandera, champi, estrella, fireball, flor, mastil, moneda
 import constants as c
 class mario():
     def __init__(self, coord: list) -> None:
@@ -135,7 +135,7 @@ class mario():
         self.__fuego = False # su estado de ser mario, super mario o con fuego
         self.__permitir_fireball = True
         self.__en_transicion = False # para cuando cambia de estado
-        self.__perdiendo_invencibilidad = False # para la estrella
+        self.__en_bandera = False # para la estrella
     
        
     def __iniciar_fuerzas(self):
@@ -152,14 +152,17 @@ class mario():
             self.__convertir_en_supermario()
         if self.timer_estrella==0 and self.__estrella:
             self.__desconvertir_en_estrella()
-        self.__sufrir_gravedad()
-        self.__colisonar_bloques(bloques,objetos,jugador)
-        self.__colisionar_npcs(npcs,jugador)
-        self.__colisionar_objetos(objetos,jugador)
-        self.__detectar_botones(objetos)
-        self.__actualizar_animaciones()
-        self.__actualizar_posicion()
-        self.__actualizar_timers()
+        if self.__en_bandera:
+            self.coord[1]+=1
+        else:
+            self.__sufrir_gravedad()
+            self.__colisonar_bloques(bloques,objetos,jugador)
+            self.__colisionar_npcs(npcs,jugador)
+            self.__colisionar_objetos(objetos,jugador)
+            self.__detectar_botones(objetos)
+            self.__actualizar_animaciones()
+            self.__actualizar_posicion()
+            self.__actualizar_timers()
         
     def __actualizar_timers(self):
         self.__timer_fireball = self.__timer_fireball-1 if self.__timer_fireball >0 else 0
@@ -324,6 +327,20 @@ class mario():
                 elif isinstance(objeto, estrella):
                     objeto.colisionar_jugador()
                     self.__convertir_en_estrella()
+                elif isinstance(objeto,bandera):
+                    objeto.colisionar_jugador()
+                    if self.__fuego:
+                        self.sprite = c.sprite_mario_fuego_bandera
+                    elif self.grande:
+                        self.sprite = c.sprite_mario_grande_bandera
+                    else:
+                        self.sprite = c.sprite_mario_bandera_pequeño
+                    self.__v_y = 0
+                    self.__v_x = 0
+                    self.__en_bandera=True
+                    
+
+
 
     def __actualizar_animaciones(self):
         if not self.__grande and not self.__fuego:
@@ -468,3 +485,4 @@ class mario():
         self.__timer_transicion=20
         ball_coord = [self.coord[0]-9, self.coord[1]+5] if not  self.mirando_derecha else [self.coord[0]+self.ancho, self.coord[1]+5]
         objetos.append(fireball(ball_coord,self.mirando_derecha))
+

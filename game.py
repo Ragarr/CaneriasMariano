@@ -2,7 +2,7 @@ import pyxel
 from clases import bloque
 from clases import player
 from clases import npc
-from clases.objeto import moneda, fireball, champi, flor, estrella, objeto
+from clases.objeto import bandera, moneda, fireball, champi, flor, estrella, objeto
 from clases import atrezzo
 import constants as c
 class game():
@@ -129,7 +129,7 @@ class game():
                 i += 1
     
     def __generar_objetos(self):
-        self.objetos = [estrella([250, c.altura_suelo-50])]
+        self.objetos = [estrella([250, c.altura_suelo-50]),bandera([500,100])]
     
     def __generar_suelo(self):
         """el suelo son bloques, pero es comodo y visual generarlos a parte"""
@@ -196,4 +196,7 @@ class game():
         self.__generar_npcs()
         self.__generar_objetos()
         self.__generar_atrezzo()
+    
+    def animacion_fin_nivel(self):
+        pass
 game()

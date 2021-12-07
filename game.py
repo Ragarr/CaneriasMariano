@@ -132,17 +132,17 @@ class game():
             x += c.ancho_suelo
     
     def __generar_bloques(self):
-        self.__bloques = [bloque.escalera([400, c.altura_suelo-15*3], 3, True), 
-        bloque.escalera([400-17, c.altura_suelo-15*2], 2, False), bloque.escalera([400-17-17, c.altura_suelo-15], 1, False),
+        self.__bloques = [bloque.escalera([100, c.altura_suelo-15*3], 3, True), 
+        bloque.escalera([100-17, c.altura_suelo-15*2], 2, False), bloque.escalera([100-17-17, c.altura_suelo-15], 1, False),
         bloque.escalera([500, c.altura_suelo-15*3], 3, True), 
         bloque.escalera([500+17, c.altura_suelo-15*2], 2, True), bloque.escalera([500+34, c.altura_suelo-15], 1, True), 
         bloque.ladrillo_rompible([600, c.altura_suelo-50], False), bloque.tuberia([800, c.altura_suelo-60], 60),
-        bloque.interrogacion([200,c.altura_suelo-50], True), bloque.interrogacion([300,c.altura_suelo-50]),
+        bloque.interrogacion([200,c.altura_suelo-50], True), bloque.interrogacion([430,c.altura_suelo-50]),
         bloque.interrogacion([320, c.altura_suelo-50])
         ]
     
     def __generar_npcs(self):
-        self.npcs = [npc.goompa([600,40]), npc.koopa_troopa([700,40])]
+        self.npcs = [npc.goompa([600,40]), npc.koopa_troopa([700,40]), npc.goompa([99, c.altura_suelo-50])]
 
     def __mantener_jugador_en_pantalla(self):
         """hace que el jugador no puda salir por la izquierda y si llega al centro mueve el nivel"""

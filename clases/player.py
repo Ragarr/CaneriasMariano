@@ -121,6 +121,7 @@ class mario():
         self.__en_transicion = False # para cuando cambia de estado
         self.__perdiendo_invencibilidad = False # para la estrella
     
+       
     def __iniciar_fuerzas(self):
         self.__v_x = 0
         self.__v_y = 0
@@ -225,7 +226,6 @@ class mario():
             if ( bloque.pared_izquierda and self.coord[0]+self.ancho < bloque.coord[0] 
                 and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
                      self.__v_x = -1
-    
     def __colisonar_bloques_grande(self, bloques: list, objetos: list, jugador):
         self.__bloque_a_derecha = False
         self.__bloque_a_izquierda = False
@@ -263,7 +263,6 @@ class mario():
             if ( bloque.pared_izquierda and self.coord[0]+self.ancho < bloque.coord[0] 
                 and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
                      self.__v_x = -1
-    
     def __colisionar_npcs(self,npcs:list,jugador):
         for npc in npcs:
             if ((self.coord[1]+self.alto <= npc.coord[1] and not abs(self.coord[1]+self.alto-npc.coord[1]) > 10) and abs(self.coord[0]-npc.coord[0]) < self.ancho 
@@ -275,7 +274,8 @@ class mario():
             elif self.__colisionando(npc) and self.__timer_invencibilidad == 0:
                 self.__timer_invencibilidad = c.fps  # un segundo de invulnerabilidad
                 self.recibir_daño()
-                     
+                    
+    
     def __colisionar_objetos(self, objetos:list,jugador):
         for objeto in objetos:
             if self.__colisionando(objeto):  # comprueba si hay colision
@@ -296,8 +296,9 @@ class mario():
                         objeto.colisionar_jugador()
                         self.score += c.punt_estrella
                 
+
     def __actualizar_animaciones(self):
-        if not self.__grande and not self.__fuego: # animacion de andar y saltar de mario pequeño
+        if not self.__grande and not self.__fuego:
             if self.mirando_derecha:
                 if self.v_x<0:
                     self.sprite=c.sprite_mario_girando_i
@@ -322,7 +323,7 @@ class mario():
                     self.sprite = c.sprite_mario_saltando_i
                 if not self.__andando and not self.en_aire:
                     self.sprite = c.sprite_mario_quieto_i
-        elif not self.__fuego:  # animacion de andar agacharse y saltar de mario grande
+        elif not self.__fuego:
             
             if self.mirando_derecha:
                 if self.v_x < 0:
@@ -359,7 +360,7 @@ class mario():
                     self.sprite = c.sprite_smario_quieto_i
                 else:
                     self.sprite = c.sprite_smario_agachado_i
-        elif self.__fuego:  # animacion de andar agacharse y saltar de mario de fuego
+        elif self.__fuego:
             if self.__timer_transicion!=0:
                 pass
             elif self.mirando_derecha:
@@ -397,7 +398,7 @@ class mario():
                     self.sprite = c.sprite_smario_fuego_quieto_i
                 else:
                     self.sprite = c.sprite_smario_fuego_agachado_i  # cuando es de fuego
-      
+                    
     def __sufrir_gravedad(self):
         #mov jugador eje y
         #gravedad
@@ -439,6 +440,3 @@ class mario():
         self.__timer_transicion=20
         ball_coord = [self.coord[0]-9, self.coord[1]+5] if not  self.mirando_derecha else [self.coord[0]+self.ancho, self.coord[1]+5]
         objetos.append(fireball(ball_coord,self.mirando_derecha))
-
-    def __bajar_bandera(self):
-        pass

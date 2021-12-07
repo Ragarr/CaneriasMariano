@@ -130,6 +130,7 @@ class npc():
             if self.colisionando(objeto) and isinstance(objeto,fireball):
                 jugador.score+=c.punt_goompa # ambas son iguales
                 self.morir(jugador)
+                objeto.morir()
 
 
 class goompa(npc):
@@ -197,7 +198,7 @@ class koopa_troopa(npc):
 
     def morir(self,jugador):
         self.esta_vivo = False
-        jugador.score+=c.punt
+        jugador.score+=c.punt_koopa_troopa
         self.sprite = c.sprite_transparente
 
 

@@ -81,8 +81,9 @@ class npc():
 
             if self.colisionando(bloque):  # comprueba si hay colision
                 # comprueba si la colision es por encima
-                if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):
+                if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) < self.alto-c.tolerancia_colisiones):
                     self.__v_y = 0
+                    self.coord[1] = bloque.coord[1]- self.alto
                 
                     en_suelo= True if isinstance(bloque,suelo) else False
                 else:
@@ -96,10 +97,11 @@ class npc():
                     self.__v_x = -c.v_npc if not self.es_caparazon else -c.v_caparazon
             if ( bloque.pared_derecha and bloque.coord[0]+bloque.ancho < self.coord[0] 
                 and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]):
-                    self.v_x = -self.v_x
+                    self.v_x = -c.v_npc if not self.es_caparazon else c.v_caparazon
             if ( bloque.pared_izquierda and self.coord[0]+self.ancho < bloque.coord[0] 
                 and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
-                     self.v_x = -self.v_x
+                     self.v_x = -c.v_npc if not self.es_caparazon else -c.v_caparazon
+
 
     
     def colisionar_npcs(self, npcs,jugador):
@@ -117,7 +119,8 @@ class npc():
 
     def colisionando(self, entity):
         if (entity.tiene_hitbox and abs(entity.coord[0]-self.coord[0]) < self.ancho
-                and abs(entity.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
+                and abs(entity.coord[1]-self.coord[1]) < self.alto):
+            # comprueba si hay colision
             return True
         else:
             return False

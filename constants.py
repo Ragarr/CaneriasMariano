@@ -41,6 +41,7 @@ v_caparazon=3
 
 #----------------------animaciones-------------------------------
 frames_duracion_concha= 10*fps
+coordenada_puerta = 300
 
 
 #-----------------coeficientes para las hitboxes-------------------
@@ -93,7 +94,7 @@ sprite_interrogacion=[0,177,27,16,16,blanco]
 sprite_mario_verde=[0,206,82,15,31,azul]
 sprite_smario_lanzando_fuego=[0,0,132,15,31,azul]
 sprite_fireball=[0,19,143,15,15,azul]
-sprite_cartel=[1,0,0,208,80,azul]
+sprite_cartel=[1,0,0,256,200,azul]
 ## como el tamaño de la tuberia es variable en vez de una constante tenemos una funcion
 def tuberia(alto:int=48):
     """el alto se cuenta en pixeles"""
@@ -163,6 +164,6 @@ def sprite_animacion_estrella_amarillo(alto):
 #sprites bandera y mario 
 sprite_mario_grande_bandera=[0,216,0,16,31,azul]
 sprite_mario_fuego_bandera=[0,232,0,16,31,azul]
-sprite_mario_bandera_pequeño=[0,224,24,12,31,azul]
-sprite_bandera = [0, 160, 208, 15, 15, -1]
+sprite_mario_bandera_pequeño=[0,208,40,16,31,azul]
+sprite_bandera = [0, 226, 36, 15, 15, azul]
 sprite_mastil=[0,225,59,23,152,azul]

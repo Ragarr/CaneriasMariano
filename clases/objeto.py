@@ -28,17 +28,12 @@ class objeto():
     @v_x.setter
     def v_x(self, new_v_x):
         self.__v_x=new_v_x
-
-
-
-
     @property
     def coord_iniciales(self):
         return self.__coord_iniciales
     @property
     def existe(self):
         return self.__existe
-
     @property
     def coord(self):
         return self.__coord
@@ -110,15 +105,18 @@ class mastil(objeto):
     def colisionar_jugador(self,):
         pass
 
+    def actualizar(slef,player):
+        pass
+
 class bandera(objeto):
     def __init__(self, coord: list) -> None:
         super().__init__(coord)
         self.sprite = c.sprite_bandera
         self.coord = coord
-        self.ancho = 15
+        self.ancho = 3 # para que se agarre al mastil y no a la bandera como tal
         self.alto = 152
 
-    def colisionar_jugador(self,):
+    def colisionar_jugador(self):
         self.v_y=1
 
     def actualizar(self, player):

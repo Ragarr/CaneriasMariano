@@ -2,7 +2,7 @@ import pyxel
 from clases import bloque
 from clases import player
 from clases import npc
-from clases.objeto import bandera, moneda, fireball, champi, flor, estrella, objeto
+from clases.objeto import bandera, mastil, moneda, fireball, champi, flor, estrella, objeto
 from clases import atrezzo
 import constants as c
 class game():
@@ -30,7 +30,7 @@ class game():
             if pyxel.btnp(pyxel.KEY_ENTER):  # reinicia el nivel
                 self.reset_level()
                 self.jugador.muerto=False
-        elif self.tiempo<0: # mueres si te quedas sin tiempo
+        elif self.tiempo < 0:  # mueres si te quedas sin tiempo
             self.jugador.morir()
 
         else: # ejecucion normal del nivel tras comprobar que no estamos en un menu
@@ -45,12 +45,13 @@ class game():
                 objeto.actualizar(self.__bloques)
             self.tiempo -= 1 if pyxel.frame_count%c.fps==0 else 0 # actualiza el contador de la derecha
 
+            if self.jugador.juego_finalizado and pyxel.btnp(pyxel.KEY_ENTER): # reinicia al llegar al final del juego
+                self.reset_game()
     def draw(self):
         
         if self.en_menu: #si estas en el menu de inicio dibuja solo el menu de inicio
             pyxel.cls(c.azul)
-            pyxel.blt(20,30,*c.sprite_cartel)
-            pyxel.text(pyxel.width/3, pyxel.height-pyxel.height/3,"PULSA INTRO PARA EMPEZAR",c.blanco)
+            pyxel.blt(0,0,*c.sprite_cartel)
         elif self.jugador.muerto:  # si estas en el menu de muerte dibuja solo el menu de muerte
             pyxel.cls(c.negro)
             if self.jugador.vidas <= 0: # si te has quedado sin vidas muestra la pantalla para reiniciar el juego
@@ -90,7 +91,8 @@ class game():
             #puntuacion mario
             pyxel.text(30, 10, "MARIO", c.blanco)
             pyxel.text(30, 20, "{:06d}".format(self.jugador.score), c.blanco)
-      
+        if self.jugador.juego_finalizado: # mensaje de final del juego
+            pyxel.text(pyxel.width/4, pyxel.height/2,"GRACIAS POR JUGAR, PULSA INTRO PARA REINICIAR",c.blanco)
     def __generar_atrezzo(self):
         self.atrezzo = [atrezzo.arbusto([600, c.altura_suelo-12])]
     
@@ -129,7 +131,7 @@ class game():
                 i += 1
     
     def __generar_objetos(self):
-        self.objetos = [estrella([250, c.altura_suelo-50]),bandera([500,100])]
+        self.objetos = [bandera([500, 120]), mastil([500, 110])]
     
     def __generar_suelo(self):
         """el suelo son bloques, pero es comodo y visual generarlos a parte"""
@@ -139,13 +141,7 @@ class game():
             x += c.ancho_suelo
     
     def __generar_bloques(self):
-        self.__bloques = [bloque.escalera([100, c.altura_suelo-15*3], 3, True), 
-        bloque.escalera([100-17, c.altura_suelo-15*2], 2, False), bloque.escalera([100-17-17, c.altura_suelo-15], 1, False),
-        bloque.escalera([500, c.altura_suelo-15*3], 3, True), 
-        bloque.escalera([500+17, c.altura_suelo-15*2], 2, True), bloque.escalera([500+34, c.altura_suelo-15], 1, True), 
-        bloque.ladrillo_rompible([600, c.altura_suelo-50], False), bloque.tuberia([800, c.altura_suelo-60], 60),
-        bloque.interrogacion([200,c.altura_suelo-50], True), bloque.interrogacion([430,c.altura_suelo-50]),
-        bloque.interrogacion([320, c.altura_suelo-50])
+        self.__bloques = [bloque.ladrillo_rompible([307,c.altura_suelo-15])
         ]
     
     def __generar_npcs(self):
@@ -196,7 +192,5 @@ class game():
         self.__generar_npcs()
         self.__generar_objetos()
         self.__generar_atrezzo()
-    
-    def animacion_fin_nivel(self):
-        pass
+
 game()

@@ -183,8 +183,8 @@ class mario():
         self.__estrella=True
         self.timer_estrella=c.fps*30 #30 secs
 
-        c.v_player_max_x=3
-        c.v_avance=0.5
+        c.v_player_max_x=4
+        c.v_avance=0.6
     
     def __desconvertir_en_estrella(self):
         self.__estrella = False

@@ -226,6 +226,7 @@ class interrogacion(bloque):
             self.sprite = c.sprite_interrogacion_golpeado  # reemplazar el sprite de interrogacion por el liso
 
 class tuberia(bloque):
+    
     def __init__(self, coord: list, alto:int, colision = True) -> None:
         super().__init__(coord, c.tuberia(alto), c.ancho_tuberia, alto, colision, colision )
         

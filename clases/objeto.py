@@ -99,6 +99,32 @@ class objeto():
             self.morir()
     
 
+class mastil(objeto):
+    def __init__(self, coord: list) -> None:
+        super().__init__(coord)
+        self.sprite=c.sprite_mastil
+        self.coord=coord
+        self.ancho = 2
+        self.alto = 152
+
+    def colisionar_jugador(self,):
+        pass
+
+class bandera(objeto):
+    def __init__(self, coord: list) -> None:
+        super().__init__(coord)
+        self.sprite = c.sprite_bandera
+        self.coord = coord
+        self.ancho = 15
+        self.alto = 152
+
+    def colisionar_jugador(self,):
+        self.v_y=1
+
+    def actualizar(self, player):
+        self.actualizar_posicion()
+
+ 
 class flor(objeto):
     def __init__(self, coord: list) -> None:
         super().__init__(coord)

@@ -164,4 +164,5 @@ def sprite_animacion_estrella_amarillo(alto):
 sprite_mario_grande_bandera=[0,216,0,16,31,azul]
 sprite_mario_fuego_bandera=[0,232,0,16,31,azul]
 sprite_mario_bandera_pequeño=[0,224,24,12,31,azul]
-sprite_bandera=[225,68,14,14,azul]
+sprite_bandera = [0, 160, 208, 15, 15, -1]
+sprite_mastil=[0,225,59,23,152,azul]

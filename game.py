@@ -112,6 +112,10 @@ class game():
             self.__bloques.append(bloque.suelo([x, c.altura_suelo]))
             x += c.ancho_suelo
         x += 60
+        while x < 2002:
+            self.__bloques.append(bloque.suelo([x, c.altura_suelo]))
+            x += c.ancho_suelo
+        x=2035
         while x < 3000:
             self.__bloques.append(bloque.suelo([x, c.altura_suelo]))
             x += c.ancho_suelo
@@ -152,11 +156,46 @@ class game():
             bloque.ladrillo_rompible([1660, c.altura_suelo-55]),bloque.ladrillo_rompible([1675, c.altura_suelo-55]),
             bloque.interrogacion([1660, c.altura_suelo-110],False),bloque.interrogacion([1675, c.altura_suelo-110], True),
             bloque.ladrillo_rompible([1645, c.altura_suelo-110]),bloque.ladrillo_rompible([1690, c.altura_suelo-110]),
+            #octava escaleras
+            #subida
+            bloque.escalera([1720,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
+            bloque.escalera([1735,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
+            bloque.escalera([1750,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
+            bloque.escalera([1765,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+            #bajada
+            bloque.escalera([1810,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+            bloque.escalera([1825,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
+            bloque.escalera([1840,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
+            bloque.escalera([1855,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
+            #novena escaleras
+            #subida
+            bloque.escalera([1932,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
+            bloque.escalera([1947,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
+            bloque.escalera([1962,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
+            bloque.escalera([1977,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+            bloque.escalera([1992,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+            #bajada
+            bloque.escalera([2035,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+            bloque.escalera([2050,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
+            bloque.escalera([2065,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
+            bloque.escalera([2080,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
+            #decimo
+            bloque.tuberia([2155,c.altura_suelo-c.alto_smario-3],c.alto_smario+3),
+            bloque.ladrillo_con_monedas([2230,c.altura_suelo-55]),
+            bloque.ladrillo_con_monedas([2245,c.altura_suelo-55]),
+            bloque.interrogacion([2260,c.altura_suelo-55],True),bloque.ladrillo_rompible([2275,c.altura_suelo-55]),
+            #undecimo
+            bloque.tuberia([2395,c.altura_suelo-c.alto_smario-3],c.alto_smario+3),
+            # parte diseñada por nosotros
+            bloque.interrogacion([2450,c.altura_suelo-55],True),bloque.interrogacion([2495,c.altura_suelo-55],True),
+            bloque.interrogacion([2450,c.altura_suelo-55],True),bloque.interrogacion([2495,c.altura_suelo-55],True),
             ]
     
     def __generar_npcs(self):
-        self.npcs = [npc.goompa([760,c.altura_suelo-c.alto_goompa]),npc.goompa([800,c.altura_suelo-c.alto_goompa])
-
+        self.npcs = [npc.goompa([760,c.altura_suelo-c.alto_goompa]),npc.goompa([800,c.altura_suelo-c.alto_goompa]),
+            npc.goompa([2280,c.altura_suelo-c.alto_goompa]),npc.goompa([2300,c.altura_suelo-c.alto_goompa]),
+            npc.goompa([1330, c.altura_suelo-110-c.alto_goompa]),npc.goompa([1350, c.altura_suelo-110-c.alto_goompa]),
+            npc.goompa([1470, c.altura_suelo-c.alto_goompa]),npc.goompa([1490, c.altura_suelo-c.alto_goompa]),
         ]
 
     def __mantener_jugador_en_pantalla(self):

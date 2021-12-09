@@ -47,6 +47,7 @@ class game():
 
             if self.jugador.juego_finalizado and pyxel.btnp(pyxel.KEY_ENTER): # reinicia al llegar al final del juego
                 self.reset_game()
+    
     def draw(self):
         
         if self.en_menu: #si estas en el menu de inicio dibuja solo el menu de inicio
@@ -93,9 +94,9 @@ class game():
             pyxel.text(30, 20, "{:06d}".format(self.jugador.score), c.blanco)
         if self.jugador.juego_finalizado: # mensaje de final del juego
             pyxel.text(pyxel.width/4, pyxel.height/2,"GRACIAS POR JUGAR, PULSA INTRO PARA REINICIAR",c.blanco)
+    
     def __generar_atrezzo(self):
         self.atrezzo = [atrezzo.arbusto([600, c.altura_suelo-12])]
-    
        
     def __generar_objetos(self):
         self.objetos = [bandera([3000, 120]), mastil([3000, 110])]
@@ -247,7 +248,8 @@ class game():
 
     def __borrar_entidades(self, bloques: list, npcs: list, objetos: list, decoracion: list):
         """un bucle que va recorriendo todas las entidades del juego viendo si deben ser eliminadas:
-                    las elimina si no existen(bloques y objetos),estan muertas(npcs) o salen por la izquierda de la pantalla"""
+            las elimina si no existen(bloques y objetos),estan muertas(npcs) o salen por la izquierda de la pantalla,
+            no elimina si sale spor la izquierda ya que influye negativamente en el rendimiento"""
         i = 0
         while i < len(bloques):  # revisa los bloques
                 bloque = bloques[i]
@@ -258,24 +260,17 @@ class game():
         i = 0
         while i < len(npcs):  # revisa los npcs
             npc = npcs[i]
-            if not npc.esta_vivo or npc.coord[0] < -npc.ancho:
+            if not npc.esta_vivo:
                 del(npcs[i])
             else:
                 i += 1
         i = 0
         while i < len(objetos):  # revisa los objetos
             objeto = objetos[i]
-            if not objeto.existe or objeto.coord[0] < - objeto.ancho:
+            if not objeto.existe:
                 if isinstance(objeto, moneda):
                     self.jugador.score += c.punt_moneda
                 del(objetos[i])
-            else:
-                i += 1
-        i = 0
-        while i < len(decoracion):  # revisa los objetos
-            decorado = self.atrezzo[i]
-            if decorado.coord[0] < -100:
-                del(decoracion[i])
             else:
                 i += 1
 

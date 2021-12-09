@@ -257,10 +257,10 @@ class mario():
                     self.__v_x = -1.2*self.__v_x
             #colisones con escaleras 
             if ( bloque.pared_derecha and bloque.coord[0]+bloque.ancho < self.coord[0] 
-                and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]):
+                and bloque.coord[0]+bloque.ancho +3 > self.coord[0] and self.coord[1] > bloque.coord[1]):
                     self.__v_x = +1
             if ( bloque.pared_izquierda and self.coord[0]+self.ancho < bloque.coord[0] 
-                and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
+                and self.coord[0]+self.ancho + 3> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
                      self.__v_x = -1
     def __colisonar_bloques_grande(self, bloques: list, objetos: list, jugador):
         self.__bloque_a_derecha = False
@@ -294,10 +294,10 @@ class mario():
                       and not colision_superior) and not (self.__grande or self.__fuego):  # jugador a la izquierda del bloque
                     self.__v_x = -self.__v_x
             if (  bloque.pared_derecha and bloque.coord[0]+bloque.ancho < self.coord[0] 
-                and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]):
+                and bloque.coord[0]+bloque.ancho +3 > self.coord[0] and self.coord[1] > bloque.coord[1]):
                     self.__v_x = +1
             if ( bloque.pared_izquierda and self.coord[0]+self.ancho < bloque.coord[0] 
-                and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
+                and self.coord[0]+self.ancho + 3> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
                      self.__v_x = -1
     def __colisionar_npcs(self,npcs:list,jugador):
         if self.__estrella:

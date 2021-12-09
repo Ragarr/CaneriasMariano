@@ -85,16 +85,16 @@ class npc():
                     self.__v_y = 0
                     self.coord[1] = bloque.coord[1]- self.alto
                 
-                    en_suelo= True if isinstance(bloque,suelo) else False
+                    en_suelo= True #if isinstance(bloque,suelo) else False
                 else:
                     self.__v_y = c.v_gravedad
 
                 if ((bloque.coord[0]+bloque.ancho)-self.coord[0] <= self.ancho
                         and not en_suelo):
-                    self.__v_x = c.v_npc if not self.es_caparazon else c.v_caparazon
+                    self.__v_x = -self.__v_x if not self.es_caparazon else c.v_caparazon
                 if ((bloque.coord[0]+bloque.ancho)-self.coord[0] >= self.ancho
                       and not en_suelo):
-                    self.__v_x = -c.v_npc if not self.es_caparazon else -c.v_caparazon
+                    self.__v_x = -self.__v_x if not self.es_caparazon else -c.v_caparazon
             if ( bloque.pared_derecha and bloque.coord[0]+ bloque.ancho < self.coord[0] 
                 and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]):
                     self.v_x = c.v_npc if not self.es_caparazon else c.v_caparazon
@@ -152,7 +152,7 @@ class goompa(npc):
 
 
     def actualizar_estado(self, bloques: list, npcs: list,objetos:list,jugador):
-        if jugador.coord[0] + pyxel.width <self.coord[0]:
+        if pyxel.width<self.coord[0]:
             pass
         else:
             self.sufrir_gravedad(jugador)
@@ -187,7 +187,7 @@ class koopa_troopa(npc):
             self.coord[1]-=15
 
     def actualizar_estado(self, bloques: list, npcs: list, objetos:list,jugador):
-        if jugador.coord[0]+pyxel.width<self.coord[0]:
+        if pyxel.width<self.coord[0]:
             pass
         else:
             self.sufrir_gravedad(jugador)

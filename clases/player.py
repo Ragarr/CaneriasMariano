@@ -16,8 +16,8 @@ class mario():
         self.__iniciar_fuerzas()
         self.__score = 0
         self.__dinero = 0
-        self.__vidas=3
-        self.__coord = coord  # ubicacion de el sprite
+        self.__vidas=4
+        self.__coord = coord  # son coordenadas relativas a la pantalla no al nivel en general
     
     @property
     def timer_estrella(self):
@@ -189,7 +189,7 @@ class mario():
     def __desconvertir_en_estrella(self):
         self.__estrella = False
 
-        c.v_player_max_x = 1.5
+        c.v_player_max_x = 3
         c.v_avance = 0.2
     
     def recibir_daño(self):

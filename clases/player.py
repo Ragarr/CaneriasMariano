@@ -2,10 +2,15 @@
 if __name__ == "__main__":
     print("este archivo no es el principal y no esta pensado para ser ejecutado")
     quit()
-from ctypes import set_last_error
+    
 import pyxel
-from clases.objeto import bandera, champi, estrella, fireball, flor, mastil, moneda
+from clases.champi import champi
+from clases.estrella import estrella
 import constants as c
+from clases.flor import flor
+from clases.bandera import bandera
+from clases.fireball import fireball
+
 class mario():
     def __init__(self, coord: list) -> None:
         self.__sprite = c.sprite_mario_quieto

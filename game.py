@@ -1,8 +1,19 @@
 import pyxel
-from clases import bloque
+from clases.suelo import suelo
+from clases.escalera import escalera
+from clases.ladrillo_con_monedas import ladrillo_con_monedas
+from clases.ladrillo_rompible import ladrillo_rompible
+from clases.tuberia import tuberia
+from clases.interrogacion import interrogacion
+from clases.moneda import moneda
+from clases.champi import champi
+from clases.estrella import estrella
+from clases.flor import flor
+from clases.bandera import bandera
+from clases.mastil import mastil
 from clases import player
-from clases import npc
-from clases.objeto import bandera, mastil, moneda, fireball, champi, flor, estrella, objeto
+from clases.goompa import goompa
+from clases.koopa_troppa import koopa_troopa
 from clases import atrezzo
 import constants as c
 class game():
@@ -105,99 +116,99 @@ class game():
         """el suelo son bloques, pero es comodo y visual generarlos a parte"""
         x = 0
         while x < 1000:
-            self.__bloques.append(bloque.suelo([x, c.altura_suelo]))
+            self.__bloques.append(suelo([x, c.altura_suelo]))
             x += c.ancho_suelo
         
         x+=45
         while x < 1335:
-            self.__bloques.append(bloque.suelo([x, c.altura_suelo]))
+            self.__bloques.append(suelo([x, c.altura_suelo]))
             x += c.ancho_suelo
         x += 60
         while x < 2002:
-            self.__bloques.append(bloque.suelo([x, c.altura_suelo]))
+            self.__bloques.append(suelo([x, c.altura_suelo]))
             x += c.ancho_suelo
         x=2035
         while x < 3000:
-            self.__bloques.append(bloque.suelo([x, c.altura_suelo]))
+            self.__bloques.append(suelo([x, c.altura_suelo]))
             x += c.ancho_suelo
     
     def __generar_bloques(self):
         self.__bloques = [
             #primera tanda de bloques
-            bloque.interrogacion([256,c.altura_suelo-55],True),bloque.ladrillo_rompible([301,c.altura_suelo-55]),
-            bloque.interrogacion([316, c.altura_suelo-55], True),bloque.ladrillo_rompible([331,c.altura_suelo-55]),
-            bloque.interrogacion([346, c.altura_suelo-55], False),bloque.ladrillo_rompible([361,c.altura_suelo-55]),
-            bloque.interrogacion([331, c.altura_suelo-110],True),
+            interrogacion([256,c.altura_suelo-55],True),ladrillo_rompible([301,c.altura_suelo-55]),
+            interrogacion([316, c.altura_suelo-55], True),ladrillo_rompible([331,c.altura_suelo-55]),
+            interrogacion([346, c.altura_suelo-55], False),ladrillo_rompible([361,c.altura_suelo-55]),
+            interrogacion([331, c.altura_suelo-110],True),
             # escaleras de tuberias
-            bloque.tuberia([415, c.altura_suelo-c.alto_smario-3], c.alto_smario+3),
-            bloque.tuberia([565, c.altura_suelo-c.alto_smario-20], c.alto_smario+20),
-            bloque.tuberia([715, c.altura_suelo-c.alto_smario-30], c.alto_smario+30),
-            bloque.tuberia([865, c.altura_suelo-c.alto_smario-30], c.alto_smario+30),
+            tuberia([415, c.altura_suelo-c.alto_smario-3], c.alto_smario+3),
+            tuberia([565, c.altura_suelo-c.alto_smario-20], c.alto_smario+20),
+            tuberia([715, c.altura_suelo-c.alto_smario-30], c.alto_smario+30),
+            tuberia([865, c.altura_suelo-c.alto_smario-30], c.alto_smario+30),
             #segunda tanda de bloques despues de la caida
-            bloque.ladrillo_rompible([1200, c.altura_suelo-55]),bloque.interrogacion([1215, c.altura_suelo-55], False),
-            bloque.ladrillo_rompible([1230, c.altura_suelo-55]),
+            ladrillo_rompible([1200, c.altura_suelo-55]),interrogacion([1215, c.altura_suelo-55], False),
+            ladrillo_rompible([1230, c.altura_suelo-55]),
             #los bloques que van por encima de los anteriores
-            bloque.ladrillo_rompible([1245, c.altura_suelo-110]),bloque.ladrillo_rompible([1260, c.altura_suelo-110]),
-            bloque.ladrillo_rompible([1275, c.altura_suelo-110]),bloque.ladrillo_rompible([1290, c.altura_suelo-110]),
-            bloque.ladrillo_rompible([1305, c.altura_suelo-110]),bloque.ladrillo_rompible([1320, c.altura_suelo-110]),
-            bloque.ladrillo_rompible([1335, c.altura_suelo-110]),bloque.ladrillo_rompible([1350, c.altura_suelo-110]),
-            bloque.ladrillo_rompible([1365, c.altura_suelo-110]),
+            ladrillo_rompible([1245, c.altura_suelo-110]),ladrillo_rompible([1260, c.altura_suelo-110]),
+            ladrillo_rompible([1275, c.altura_suelo-110]),ladrillo_rompible([1290, c.altura_suelo-110]),
+            ladrillo_rompible([1305, c.altura_suelo-110]),ladrillo_rompible([1320, c.altura_suelo-110]),
+            ladrillo_rompible([1335, c.altura_suelo-110]),ladrillo_rompible([1350, c.altura_suelo-110]),
+            ladrillo_rompible([1365, c.altura_suelo-110]),
             #tercera tanda 
-            bloque.ladrillo_rompible([1415, c.altura_suelo-110]),bloque.ladrillo_rompible([1430, c.altura_suelo-110]),
-            bloque.ladrillo_rompible([1445, c.altura_suelo-110]),bloque.interrogacion([1460, c.altura_suelo-110],True),
-            bloque.ladrillo_rompible([1460, c.altura_suelo-55]),
+            ladrillo_rompible([1415, c.altura_suelo-110]),ladrillo_rompible([1430, c.altura_suelo-110]),
+            ladrillo_rompible([1445, c.altura_suelo-110]),interrogacion([1460, c.altura_suelo-110],True),
+            ladrillo_rompible([1460, c.altura_suelo-55]),
             # cuarta 
-            bloque.ladrillo_rompible([1550, c.altura_suelo-55]),bloque.ladrillo_rompible([1565, c.altura_suelo-55],True),
+            ladrillo_rompible([1550, c.altura_suelo-55]),ladrillo_rompible([1565, c.altura_suelo-55],True),
             #quinta
 
             #sexta
-            bloque.ladrillo_rompible([1550, c.altura_suelo-55]),bloque.ladrillo_rompible([1580, c.altura_suelo-110]),
-            bloque.ladrillo_rompible([1595, c.altura_suelo-110]),bloque.ladrillo_rompible([1610, c.altura_suelo-110]),
+            ladrillo_rompible([1550, c.altura_suelo-55]),ladrillo_rompible([1580, c.altura_suelo-110]),
+            ladrillo_rompible([1595, c.altura_suelo-110]),ladrillo_rompible([1610, c.altura_suelo-110]),
             #septima
-            bloque.ladrillo_rompible([1660, c.altura_suelo-55]),bloque.ladrillo_rompible([1675, c.altura_suelo-55]),
-            bloque.interrogacion([1660, c.altura_suelo-110],False),bloque.interrogacion([1675, c.altura_suelo-110], True),
-            bloque.ladrillo_rompible([1645, c.altura_suelo-110]),bloque.ladrillo_rompible([1690, c.altura_suelo-110]),
+            ladrillo_rompible([1660, c.altura_suelo-55]),ladrillo_rompible([1675, c.altura_suelo-55]),
+            interrogacion([1660, c.altura_suelo-110],False),interrogacion([1675, c.altura_suelo-110], True),
+            ladrillo_rompible([1645, c.altura_suelo-110]),ladrillo_rompible([1690, c.altura_suelo-110]),
             #octava escaleras
             #subida
-            bloque.escalera([1720,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
-            bloque.escalera([1735,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
-            bloque.escalera([1750,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
-            bloque.escalera([1765,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+            escalera([1720,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
+            escalera([1735,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
+            escalera([1750,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
+            escalera([1765,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
             #bajada
-            bloque.escalera([1810,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
-            bloque.escalera([1825,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
-            bloque.escalera([1840,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
-            bloque.escalera([1855,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
+            escalera([1810,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+            escalera([1825,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
+            escalera([1840,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
+            escalera([1855,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
             #novena escaleras
             #subida
-            bloque.escalera([1932,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
-            bloque.escalera([1947,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
-            bloque.escalera([1962,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
-            bloque.escalera([1977,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
-            bloque.escalera([1992,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+            escalera([1932,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
+            escalera([1947,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
+            escalera([1962,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
+            escalera([1977,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+            escalera([1992,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
             #bajada
-            bloque.escalera([2035,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
-            bloque.escalera([2050,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
-            bloque.escalera([2065,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
-            bloque.escalera([2080,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
+            escalera([2035,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+            escalera([2050,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
+            escalera([2065,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
+            escalera([2080,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
             #decimo
-            bloque.tuberia([2155,c.altura_suelo-c.alto_smario-3],c.alto_smario+3),
-            bloque.ladrillo_con_monedas([2230,c.altura_suelo-55]),
-            bloque.ladrillo_con_monedas([2245,c.altura_suelo-55]),
-            bloque.interrogacion([2260,c.altura_suelo-55],True),bloque.ladrillo_rompible([2275,c.altura_suelo-55]),
+            tuberia([2155,c.altura_suelo-c.alto_smario-3],c.alto_smario+3),
+            ladrillo_con_monedas([2230,c.altura_suelo-55]),
+            ladrillo_con_monedas([2245,c.altura_suelo-55]),
+            interrogacion([2260,c.altura_suelo-55],True),ladrillo_rompible([2275,c.altura_suelo-55]),
             #undecimo
-            bloque.tuberia([2390,c.altura_suelo-c.alto_smario-3],c.alto_smario+3),
+            tuberia([2390,c.altura_suelo-c.alto_smario-3],c.alto_smario+3),
             # parte diseñada por nosotros
-            bloque.interrogacion([2465,c.altura_suelo-55],True),bloque.interrogacion([2495,c.altura_suelo-55],True),
-            bloque.interrogacion([2525,c.altura_suelo-55],True),bloque.interrogacion([2495,c.altura_suelo-110],False),
+            interrogacion([2465,c.altura_suelo-55],True),interrogacion([2495,c.altura_suelo-55],True),
+            interrogacion([2525,c.altura_suelo-55],True),interrogacion([2495,c.altura_suelo-110],False),
             ]
     
     def __generar_npcs(self):
-        self.npcs = [npc.goompa([760,c.altura_suelo-c.alto_goompa]),npc.goompa([800,c.altura_suelo-c.alto_goompa]),
-            npc.goompa([2280,c.altura_suelo-c.alto_goompa]),npc.goompa([2300,c.altura_suelo-c.alto_goompa]),
-            npc.goompa([1330, c.altura_suelo-110-c.alto_goompa]),npc.goompa([1350, c.altura_suelo-110-c.alto_goompa]),
-            npc.goompa([1470, c.altura_suelo-c.alto_goompa]),npc.goompa([1490, c.altura_suelo-c.alto_goompa]),
-            npc.koopa_troopa([2495,c.altura_suelo-c.alto_koopa_troopa])
+        self.npcs = [goompa([760,c.altura_suelo-c.alto_goompa]),goompa([800,c.altura_suelo-c.alto_goompa]),
+            goompa([2280,c.altura_suelo-c.alto_goompa]),goompa([2300,c.altura_suelo-c.alto_goompa]),
+            goompa([1330, c.altura_suelo-110-c.alto_goompa]),goompa([1350, c.altura_suelo-110-c.alto_goompa]),
+            goompa([1470, c.altura_suelo-c.alto_goompa]),goompa([1490, c.altura_suelo-c.alto_goompa]),
+            koopa_troopa([2495,c.altura_suelo-c.alto_koopa_troopa])
                     ]
 
     def __mantener_jugador_en_pantalla(self):

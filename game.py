@@ -185,10 +185,10 @@ class game():
             bloque.ladrillo_con_monedas([2245,c.altura_suelo-55]),
             bloque.interrogacion([2260,c.altura_suelo-55],True),bloque.ladrillo_rompible([2275,c.altura_suelo-55]),
             #undecimo
-            bloque.tuberia([2395,c.altura_suelo-c.alto_smario-3],c.alto_smario+3),
+            bloque.tuberia([2390,c.altura_suelo-c.alto_smario-3],c.alto_smario+3),
             # parte diseñada por nosotros
-            bloque.interrogacion([2450,c.altura_suelo-55],True),bloque.interrogacion([2495,c.altura_suelo-55],True),
-            bloque.interrogacion([2450,c.altura_suelo-55],True),bloque.interrogacion([2495,c.altura_suelo-55],True),
+            bloque.interrogacion([2465,c.altura_suelo-55],True),bloque.interrogacion([2495,c.altura_suelo-55],True),
+            bloque.interrogacion([2525,c.altura_suelo-55],True),bloque.interrogacion([2495,c.altura_suelo-110],False),
             ]
     
     def __generar_npcs(self):
@@ -196,13 +196,14 @@ class game():
             npc.goompa([2280,c.altura_suelo-c.alto_goompa]),npc.goompa([2300,c.altura_suelo-c.alto_goompa]),
             npc.goompa([1330, c.altura_suelo-110-c.alto_goompa]),npc.goompa([1350, c.altura_suelo-110-c.alto_goompa]),
             npc.goompa([1470, c.altura_suelo-c.alto_goompa]),npc.goompa([1490, c.altura_suelo-c.alto_goompa]),
-        ]
+            npc.koopa_troopa([2495,c.altura_suelo-c.alto_koopa_troopa])
+                    ]
 
     def __mantener_jugador_en_pantalla(self):
         """hace que el jugador no puda salir por la izquierda y si llega al centro mueve el nivel"""
         if self.jugador.coord[0]<0:
             self.jugador.coord[0] =0
-        if self.jugador.coord[0] > pyxel.width/2 and self.jugador.mirando_derecha:
+        if self.jugador.coord[0] > pyxel.width/2:
             self.jugador.coord[0] = pyxel.width/2
             self.__desplazar_nivel()
      

@@ -11,7 +11,6 @@ class bloque():
         self.__coord = coord
         self.__coord_iniciales = self.__coord.copy()
         self.__sprite = sprite
-        self.__tiene_hitbox = True  # colisiones del bloque
         # aqui hay que añadir el ancho (x) del ladrillo en pixeles para cuando tengamos el archivo con los sprites
         self.__ancho = ancho
         # mas de lo mismo que arriba pero con el largo (y) en pixeles
@@ -19,9 +18,8 @@ class bloque():
         self.__v_y=0
         self.__v_x=0
         self.__existe=True
-        self.es_caparazon=False
-        self.__pared_izquierda = izquierda
-        self.__pared_derecha = derecha
+        self.__pared_izquierda = izquierda # Sirve para identificar las colisiones en las escaleras y en las tuberias, en este caso el lado izquierdo
+        self.__pared_derecha = derecha # En este caso sirve para identificar las colsiones en el lado derecho
     @property
     def existe(self):
         return self.__existe
@@ -53,7 +51,6 @@ class bloque():
         if not isinstance(v_y, (float,int)):
             raise ValueError("la velocidad debe ser un int o float")
         self.__v_y=v_y
-
     @property
     def v_x(self):
         return self.__v_x
@@ -64,9 +61,8 @@ class bloque():
             raise ValueError("la velocidad debe ser un int o float")
         self.__v_x = v_x
 
-    @property # permite consultar la hitbox
-    def tiene_hitbox(self):
-        return self.__tiene_hitbox
+    
+
 
     @property
     def ancho(self):
@@ -84,13 +80,7 @@ class bloque():
         if len(new_sprite) !=6:
             raise ValueError("la lista sprite debe tener exactamente 6 elementos")
         self.__sprite=new_sprite
-    @property
-    def tiene_hitbox(self):
-        return self.__tiene_hitbox
-    @tiene_hitbox.setter
-    def tiene_hitbox(self, hitbox:bool):
-        self.__tiene_hitbox=hitbox
-
+  
     @property
     def coord_iniciales(self):
         return self.__coord_iniciales
@@ -112,9 +102,6 @@ class bloque():
     def pared_derecha(self, New__pared_derecha:bool):
         self.__pared_derecha= New__pared_derecha
 
-
-   
-    
     def reposicionar(self):
         self.coord[1] = min(self.coord[1]+self.v_y,self.coord_iniciales[1]+2)
         if self.coord[1] < self.coord_iniciales[1]:

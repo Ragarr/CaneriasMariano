@@ -81,7 +81,7 @@ class objeto():
         self.coord[0] += self.v_x
         self.coord[1] += self.v_y
     def colisionando(self,bloque):
-        if (bloque.tiene_hitbox and abs(bloque.coord[0]-self.coord[0]) < self.ancho
+        if (abs(bloque.coord[0]-self.coord[0]) < self.ancho
                 and abs(bloque.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
             return True
         else:

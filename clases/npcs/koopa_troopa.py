@@ -5,10 +5,7 @@ import pyxel
 
 class koopa_troopa(npc):
     def __init__ (self, coord: list) -> None:
-        super().__init__ (coord=coord, sprite=c.sprite_koopa_troopa)#Esto hay que modificarlo cuando tengamos los sprites
-        self.ancho = c.ancho_koopa_troopa
-        self.alto = c.alto_koopa_troopa
-        self.es_caparazon = False
+        super().__init__ (coord=coord, sprite=c.sprite_koopa_troopa,ancho=c.ancho_koopa_troopa, alto=c.alto_koopa_troopa)#Esto hay que modificarlo cuando tengamos los sprites
         self.frame_concha= 400*c.fps
 
     def colisionar_jugador(self,jugador):

@@ -8,13 +8,7 @@ from clases.objetos.fireball import fireball
 from clases.bloques.tuberia import tuberia
 from clases.bloques.escalera import escalera
 class npc():
-    def __init__(self, coord: list, sprite: list  ) -> None:
-        self.__sprite = sprite
-        self.__coord = coord
-        self.__esta_vivo = True # El npc está vivo 
-        self.__v_x = -c.v_npc  # La v_x habrá que modificarla según probemos
-        self.__v_y = 0
-        self.tiene_hitbox=True
+    def __init__(self, coord: list, sprite: list,ancho,alto) -> None:
         """
         Cooord es una lista de 2 elementos que contiene la posicón de donde se pinta el sprite
         Sprite es una lista de 6 elementos 
@@ -26,7 +20,37 @@ class npc():
         -la pos y final del sprite
         -color de chroma
         """
-
+        self.__sprite = sprite
+        self.__coord = coord
+        self.__esta_vivo = True # El npc está vivo 
+        self.__v_x = -c.v_npc  # La v_x habrá que modificarla según probemos
+        self.__v_y = 0
+        self.tiene_hitbox=True
+        self.__ancho=ancho
+        self.__alto=alto
+        self.__es_caparazon=False
+        
+    @property
+    def ancho(self):
+        return self.__ancho
+    @property
+    def alto(self):
+        return self.__alto
+    @alto.setter
+    def alto(self,new):
+        if not isinstance(new, int):
+            raise ValueError('la altura  debe ser un entero')
+        if new<1:
+            raise ValueError('la altura  debe ser mayor que 1')
+        self.__alto=new
+    @property
+    def es_caparazon(self):
+        return self.__es_caparazon
+    @es_caparazon.setter
+    def es_caparazon(self,new):
+        if not isinstance(new, bool):
+            raise ValueError('El valor de caparazon debe ser un booleano')
+        self.__es_caparazon=new
     @property
     def sprite(self):
         return self.__sprite
@@ -83,10 +107,10 @@ class npc():
             if self.colisionando(bloque):  # comprueba si hay colision
                 self.v_y = 0
             if ( (isinstance(bloque,escalera) or isinstance(bloque,tuberia)) and bloque.coord[0]+bloque.ancho < self.coord[0] 
-                and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]):
+                and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]+5):
                     self.v_x = -self.v_x
             if ( (isinstance(bloque,escalera) or isinstance(bloque,tuberia)) and self.coord[0]+self.ancho < bloque.coord[0] 
-                and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
+                and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]+5):
                      self.v_x = -self.v_x
 
 

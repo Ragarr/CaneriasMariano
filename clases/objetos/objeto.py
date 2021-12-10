@@ -12,16 +12,38 @@ import clases.bloques.bloque
 
 
 class objeto():
-    def __init__(self, coord: list) -> None:
+    def __init__(self, coord: list, sprite, ancho,alto) -> None:
 
         self.__coord = coord
         self.__coord_iniciales = coord.copy()
         self.__v_x = 0
         self.__v_y = 0
-        self.__esta_activo = True
         self.__existe = True
-        self.tiene_hitbox = True
-        
+        self.__ancho=ancho
+        self.__alto=alto
+        self.__sprite=sprite
+    
+    @property
+    def sprite(self):
+        return self.__sprite
+    @sprite.setter
+    def sprite(self,new):
+        if not isinstance(new,(list,tuple)):
+            raise ValueError("los sprites deben ser listas o tuplas")
+        self.__sprite=new
+    @property
+    def ancho(self):
+        return self.__ancho
+    @ancho.setter
+    def ancho(self,new):
+        self.__ancho=new
+    @property
+    def alto(self):
+        return self.__alto
+    @alto.setter
+    def alto(self,new):
+        self.__alto=new   
+
     @property
     def v_x(self):
         return self.__v_x

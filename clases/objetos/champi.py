@@ -8,12 +8,10 @@ from clases.bloques.tuberia import tuberia
 class champi(objeto):
 
     def __init__(self, coord: list) -> None:
-        super().__init__(coord)
-        self.sprite = c.sprite_champi
-        self.v_y= 0
+        super().__init__(coord,c.sprite_champi, 15, 15)
+        self.v_y = 0
         self.v_x = 1.2
-        self.ancho = 15
-        self.alto = 15
+
 
     def actualizar(self, bloques):
         self.sufrir_gravedad()

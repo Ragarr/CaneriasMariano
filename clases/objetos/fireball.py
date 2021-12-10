@@ -5,13 +5,11 @@ from clases.bloques.escalera import escalera
 from clases.bloques.tuberia import tuberia
 class fireball(objeto):
     def __init__(self, coord: list, derecha: bool) -> None:
-        super().__init__(coord)
+        """derecha indica la direccion a la que mira el jugador al disparar"""
+        super().__init__(coord,c.sprite_fireball,7,7)
         self.sprite = c.sprite_fireball
         self.v_y = 1.5
         self.v_x = 3 if derecha else -3
-        self.derecha = derecha
-        self.ancho = 7
-        self.alto = 7
         self.__rebotes=0
 
     def sufrir_gravedad_estrella(self):

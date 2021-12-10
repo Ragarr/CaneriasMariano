@@ -5,10 +5,7 @@ import constants as c
 
 class flor(objeto):
     def __init__(self, coord: list) -> None:
-        super().__init__(coord)
-        self.sprite = c.sprite_flor
-        self.ancho = 15
-        self.alto = 15
+        super().__init__(coord,c.sprite_flor,15,15)
         self.v_y = -1   
 
     def actualizar(self, player):

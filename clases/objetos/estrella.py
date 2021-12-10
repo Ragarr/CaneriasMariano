@@ -5,12 +5,10 @@ from clases.bloques.escalera import escalera
 from clases.bloques.tuberia import tuberia
 class estrella(objeto):
     def __init__(self, coord: list) -> None:
-        super().__init__(coord)
-        self.sprite = c.sprite_estrella
+        super().__init__(coord,c.sprite_estrella,15,15)
         self.v_y= 1
         self.v_x = 1
-        self.ancho = 15
-        self.alto = 15
+
     def sufrir_gravedad_estrella(self):
         #Parametro diferenciador del resto de objetos para que la animación de la estrella sea más natural
         if (self.coord[1] < pyxel.height):

@@ -108,7 +108,7 @@ class game():
             pyxel.text(pyxel.width-20,10,str(self.tiempo),c.blanco)
             #monedas
             pyxel.blt(100,9,*c.sprite_moneda_chiquita)
-            pyxel.text(103, 11, str(self.jugador.dinero), c.negro)
+            pyxel.text(104, 13, "{:02d}".format(self.jugador.dinero), c.negro)
             #puntuacion mario
             pyxel.text(30, 10, "MARIO", c.blanco)
             pyxel.text(30, 20, "{:06d}".format(self.jugador.score), c.blanco)

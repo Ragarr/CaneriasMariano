@@ -137,13 +137,18 @@ class game():
     
     def __generar_atrezzo(self):
         self.atrezzo = [
-            arbusto([600, c.altura_suelo-15]),arbusto([200, c.altura_suelo-15]),
-            arbusto([1870, c.altura_suelo-15]),arbusto([2400, c.altura_suelo-15]),
-            arbusto([2600, c.altura_suelo-15]),arbusto([500, c.altura_suelo-15]),
+            montaña([20,c.altura_suelo-33]), montaña([500,c.altura_suelo-33]), 
+            montaña([1150,c.altura_suelo-33]), montaña([1600,c.altura_suelo-33]),
+            montaña([2300,c.altura_suelo-33]),
+            
+            arbusto([200, c.altura_suelo-15]),arbusto([500, c.altura_suelo-15]),
+            arbusto([600, c.altura_suelo-15]),arbusto([1870, c.altura_suelo-15]),
+            arbusto([2400, c.altura_suelo-15]),arbusto([2600, c.altura_suelo-15]),
+        
             
         ]
-        for _ in range(30):
-            self.atrezzo.append(nube([random.randint(0,3000),random.randint(0,70)])) 
+        for _ in range(20):
+            self.atrezzo.append(nube([random.randint(0,3000),random.randint(0,100)])) 
        
     def __generar_objetos(self):
         self.objetos = [bandera([2893, 80]), mastil([2893, 70])]

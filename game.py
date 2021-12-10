@@ -33,17 +33,28 @@ class game():
         self.__generar_npcs()
         self.__generar_objetos()
         self.__generar_atrezzo()
-        self.posicion_mario = 105
-        self.animacion = False
+        self.__posicion_mario = 105
+        self.__animacion = False
         pyxel.run(self.update,self.draw)
-       
+    @property
+    def posicion_mario(self):
+        return self.__posicion_mario 
+    @posicion_mario.setter
+    def posicion_mario(self,new_posicion_mario):
+        self.posicion_mario = new_posicion_mario 
+    @property
+    def animacion(self):
+        return self.__animacion 
+    @animacion.setter
+    def animacion(self,new_animacion):
+        self.__animacion = new_animacion  
          
     
     def update(self):
         if self.en_menu: # comprueba si estamos en el menu de inicio para que no se ejecute el nivel
             if pyxel.btnp(pyxel.KEY_ENTER):
-                self.animacion = True
-            if self.animacion:
+                self.__animacion = True
+            if self.__animacion:
                 self.animacion_de_inicio()
         elif self.jugador.muerto:  # comprueba si estamos en el menu de muerte para que no se ejecute el nivel
             if self.jugador.vidas <= 0:  # si no te quedan vidas reinicia el juego entero
@@ -315,10 +326,10 @@ class game():
             else:
                 i += 1
     def animacion_de_inicio(self):
-        self.posicion_mario += 1
-        if self.posicion_mario > 130:
+        self.__posicion_mario += 1
+        if self.__posicion_mario > 130:
             self.en_menu=False
-            self.posicion_mario = 105
-            self.animacion = False
+            self.__posicion_mario = 105
+            self.__animacion = False
        
 game()

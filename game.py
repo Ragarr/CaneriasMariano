@@ -69,6 +69,8 @@ class game():
         if self.en_menu: #si estas en el menu de inicio dibuja solo el menu de inicio
             pyxel.cls(c.azul)
             pyxel.blt(0,0,*c.sprite_cartel)
+            pyxel.blt(122,105,0, 3, 98, 15, 15, c.azul)
+            pyxel.blt(112,120, 0, 79, 178,32, 25, c.azul)
         elif self.jugador.muerto:  # si estas en el menu de muerte dibuja solo el menu de muerte
             pyxel.cls(c.negro)
             if self.jugador.vidas <= 0: # si te has quedado sin vidas muestra la pantalla para reiniciar el juego

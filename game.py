@@ -33,12 +33,18 @@ class game():
         self.__generar_npcs()
         self.__generar_objetos()
         self.__generar_atrezzo()
+        self.posicion_mario = 105
+        self.animacion = False
         pyxel.run(self.update,self.draw)
-
+       
+         
+    
     def update(self):
         if self.en_menu: # comprueba si estamos en el menu de inicio para que no se ejecute el nivel
             if pyxel.btnp(pyxel.KEY_ENTER):
-                self.en_menu=False
+                self.animacion = True
+            if self.animacion:
+                self.animacion_de_inicio()
         elif self.jugador.muerto:  # comprueba si estamos en el menu de muerte para que no se ejecute el nivel
             if self.jugador.vidas <= 0:  # si no te quedan vidas reinicia el juego entero
                 if pyxel.btnp(pyxel.KEY_ENTER):
@@ -69,7 +75,7 @@ class game():
         if self.en_menu: #si estas en el menu de inicio dibuja solo el menu de inicio
             pyxel.cls(c.azul)
             pyxel.blt(0,0,*c.sprite_cartel)
-            pyxel.blt(122,105,0, 3, 98, 15, 15, c.azul)
+            pyxel.blt(122,self.posicion_mario,0, 3, 98, 15, 15, c.azul)
             pyxel.blt(112,120, 0, 79, 178,32, 25, c.azul)
         elif self.jugador.muerto:  # si estas en el menu de muerte dibuja solo el menu de muerte
             pyxel.cls(c.negro)
@@ -308,5 +314,11 @@ class game():
                 del(objetos[i])
             else:
                 i += 1
-
+    def animacion_de_inicio(self):
+        self.posicion_mario += 1
+        if self.posicion_mario > 130:
+            self.en_menu=False
+            self.posicion_mario = 105
+            self.animacion = False
+       
 game()

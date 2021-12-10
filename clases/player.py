@@ -221,8 +221,8 @@ class mario():
             self.__colisonar_bloques_grande(bloques , objetos , jugador)
         else:
             self.__colisonar_bloques_pequeño(bloques, objetos, jugador)
+    
     def __colisionando(self, entity):
-        colisionando = False
         if (abs(entity.coord[0]-self.coord[0]) < entity.ancho and entity.coord[0]-self.ancho < self.coord[0]
                 and abs(entity.coord[1]-self.coord[1]) < self.alto):  # comprueba si hay colision
             if entity.ancho == 256 and entity.coord[0]+24 < self.coord[0]+ self.ancho:#comprueba si hay un precipicio
@@ -233,6 +233,7 @@ class mario():
             
         else:
             return False
+    
     def __colisonar_bloques_pequeño(self,bloques:list,objetos:list,jugador):
         self.__bloque_a_derecha=False
         self.__bloque_a_izquierda=False
@@ -257,21 +258,13 @@ class mario():
                         self.__v_y = -c.v_salto
                     else:  # te pega al bloque
                         self.__v_y = 0
-                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
-                        and not colision_superior and not (self.__grande or self.__fuego)): # jugador a la derecha del bloque
-                    self.__v_x=-1.2*self.__v_x
-
-                    
-                elif (abs((bloque.coord[0])-self.coord[0]+self.ancho) >= self.ancho
-                      and not colision_superior) and not (self.__grande or self.__fuego):  # jugador a la izquierda del bloque
-                    self.__v_x = -1.2*self.__v_x
-            #colisones con escaleras 
-            if ( bloque.pared_derecha and bloque.coord[0]+bloque.ancho < self.coord[0] 
-                and bloque.coord[0]+bloque.ancho +3 > self.coord[0] and self.coord[1] > bloque.coord[1]):
+            if (bloque.coord[0]+bloque.ancho < self.coord[0] 
+                and bloque.coord[0]+bloque.ancho +3 > self.coord[0] and self.coord[1] > bloque.coord[1] and not self.coord[1] > bloque.coord[1]+bloque.alto):
                     self.__v_x = +1
-            if ( bloque.pared_izquierda and self.coord[0]+self.ancho < bloque.coord[0] 
-                and self.coord[0]+self.ancho + 3> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
+            elif (self.coord[0]+self.ancho < bloque.coord[0] 
+                and self.coord[0]+self.ancho + 3> bloque.coord[0] and self.coord[1] > bloque.coord[1] and not self.coord[1] > bloque.coord[1]+bloque.alto):
                      self.__v_x = -1
+    
     def __colisonar_bloques_grande(self, bloques: list, objetos: list, jugador):
         self.__bloque_a_derecha = False
         self.__bloque_a_izquierda = False
@@ -303,12 +296,13 @@ class mario():
                 elif (abs((bloque.coord[0])-self.coord[0]+self.ancho) >= self.ancho
                       and not colision_superior) and not (self.__grande or self.__fuego):  # jugador a la izquierda del bloque
                     self.__v_x = -self.__v_x
-            if (  bloque.pared_derecha and bloque.coord[0]+bloque.ancho < self.coord[0] 
-                and bloque.coord[0]+bloque.ancho +3 > self.coord[0] and self.coord[1] > bloque.coord[1]):
+            if (bloque.coord[0]+bloque.ancho < self.coord[0] 
+                and bloque.coord[0]+bloque.ancho +3 > self.coord[0] and self.coord[1] > bloque.coord[1] and not self.coord[1] > bloque.coord[1]+bloque.alto):
                     self.__v_x = +1
-            if ( bloque.pared_izquierda and self.coord[0]+self.ancho < bloque.coord[0] 
-                and self.coord[0]+self.ancho + 3> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
+            if (self.coord[0]+self.ancho < bloque.coord[0] 
+                and self.coord[0]+self.ancho + 3> bloque.coord[0] and self.coord[1] > bloque.coord[1] and not self.coord[1] > bloque.coord[1]+bloque.alto):
                      self.__v_x = -1
+    
     def __colisionar_npcs(self,npcs:list,jugador):
         if self.__estrella:
             for npc in npcs:
@@ -325,6 +319,7 @@ class mario():
                 elif self.__colisionando(npc) and self.__timer_invencibilidad == 0:
                     self.__timer_invencibilidad = c.fps  # un segundo de invulnerabilidad
                     self.recibir_daño()   
+    
     def __colisionar_objetos(self, objetos:list,jugador):
         for objeto in objetos:
             if self.__colisionando(objeto):  # comprueba si hay colision

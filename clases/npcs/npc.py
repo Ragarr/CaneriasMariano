@@ -5,6 +5,8 @@ import pyxel
 from clases.bloques.suelo import suelo
 import constants as c
 from clases.objetos.fireball import fireball
+from clases.bloques.tuberia import tuberia
+from clases.bloques.escalera import escalera
 class npc():
     def __init__(self, coord: list, sprite: list  ) -> None:
         self.__sprite = sprite
@@ -77,30 +79,15 @@ class npc():
     
     def colisionar_bloques(self, bloques: list):
         for bloque in bloques:
-            en_suelo = False
-
+            # animación de la seta subiendo, estática en el sitio hasta que llegue a la parte de arriba quedándose quieto en las x
             if self.colisionando(bloque):  # comprueba si hay colision
-                # comprueba si la colision es por encima
-                if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) < self.alto-c.tolerancia_colisiones):
-                    self.__v_y = 0
-                    self.coord[1] = bloque.coord[1]- self.alto
-                
-                    en_suelo= True #if isinstance(bloque,suelo) else False
-                else:
-                    self.__v_y = c.v_gravedad
-
-                if ((bloque.coord[0]+bloque.ancho)-self.coord[0] <= self.ancho
-                        and not en_suelo):
-                    self.__v_x = -self.__v_x if not self.es_caparazon else c.v_caparazon
-                if ((bloque.coord[0]+bloque.ancho)-self.coord[0] >= self.ancho
-                      and not en_suelo):
-                    self.__v_x = -self.__v_x if not self.es_caparazon else -c.v_caparazon
-            if ( bloque.pared_derecha and bloque.coord[0]+ bloque.ancho < self.coord[0] 
+                self.v_y = 0
+            if ( (isinstance(bloque,escalera) or isinstance(bloque,tuberia)) and bloque.coord[0]+bloque.ancho < self.coord[0] 
                 and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]):
-                    self.v_x = c.v_npc if not self.es_caparazon else c.v_caparazon
-            if ( bloque.pared_izquierda and self.coord[0]+self.ancho < bloque.coord[0] 
+                    self.v_x = -self.v_x
+            if ( (isinstance(bloque,escalera) or isinstance(bloque,tuberia)) and self.coord[0]+self.ancho < bloque.coord[0] 
                 and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
-                    self.v_x = -c.v_npc if not self.es_caparazon else -c.v_caparazon
+                     self.v_x = -self.v_x
 
 
     

@@ -4,19 +4,14 @@ if __name__ == "__main__":
 import constants as c
 class atrezzo():
     def __init__(self,coord, sprite:list) -> None:
-        """dibujo es una lista de 8 elementos
-        que contiene en este orden los siguienes valores n este orden:
-            -x de inicio del dibujo
-            -y de inicio del dibujo
-            -el numero de banco del sprite
-            -la pos x donde se inicia el sprite
-            -la pos y donde se inicia el sprite
-            -la pos x final del sprite
-            -la pos y final del sprite
-            -color de chroma
+        """coord es una lista que contiene dos elementos, posicion x & posicion y, sprite es una lista que contiene los siguiente en este orden:
+        -banco
+        -x inicio
+        -y inicio
+        -ancho
+        -alto
+        -color de croma
         """
-
-
         self.__coord=coord
         self.__sprite=sprite
     @property 

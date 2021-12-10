@@ -1,6 +1,8 @@
 from clases.objetos.objeto import objeto
 import constants as c
 import pyxel
+from clases.bloques.escalera import escalera
+from clases.bloques.tuberia import tuberia
 class estrella(objeto):
     def __init__(self, coord: list) -> None:
         super().__init__(coord)
@@ -29,21 +31,14 @@ class estrella(objeto):
 
                     self.coord[1] = self.coord[1]
                     self.v_y = -self.v_y
-                    n_suelo = True  # Es importante para que no se enbucle el suelo
-                    # Salto de la estrella
+                  # Salto de la estrella
                     self.v_y = - 3
-                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
-                        and not n_suelo):
-                    self.v_x = -self.v_x
-                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) >= self.ancho
-                        and not n_suelo):
-                    self.v_x = -self.v_x
-            if ( bloque.pared_derecha and bloque.coord[0]+bloque.ancho < self.coord[0] 
+            if ( (isinstance(bloque,escalera) or isinstance(bloque,tuberia)) and bloque.coord[0]+bloque.ancho < self.coord[0] 
                 and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]):
                     self.v_x = -self.v_x
-            if ( bloque.pared_izquierda and self.coord[0]+self.ancho < bloque.coord[0] 
+            if ( (isinstance(bloque,escalera) or isinstance(bloque,tuberia)) and self.coord[0]+self.ancho < bloque.coord[0] 
                 and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
-                     self.v_x = -self.v_x
+                     self.v_x = -self.v_x        
 
 
     def colisionar_jugador(self):

@@ -6,8 +6,8 @@ class bandera(objeto):
         super().__init__(coord)
         self.sprite = c.sprite_bandera
         self.coord = coord
-        self.ancho = 3 # para que se agarre al mastil y no a la bandera como tal
-        self.alto = 152
+        self.ancho = 5 # para que se agarre al mastil y no a la bandera como tal
+        self.alto = 200
 
     def colisionar_jugador(self):
         self.v_y=1

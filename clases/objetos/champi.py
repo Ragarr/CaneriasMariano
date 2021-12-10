@@ -51,10 +51,10 @@ class champi(objeto):
                 if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) >= self.ancho
                         and not n_suelo):
                     self.v_x = -self.v_x
-            if ( bloque.pared_derecha and bloque.coord[0]+bloque.ancho < self.coord[0] 
+            if ( (isinstance(bloque,escalera) or isinstance(bloque,tuberia)) and bloque.coord[0]+bloque.ancho < self.coord[0] 
                 and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]):
                     self.v_x = -self.v_x
-            if ( bloque.pared_izquierda and self.coord[0]+self.ancho < bloque.coord[0] 
+            if ( (isinstance(bloque,escalera) or isinstance(bloque,tuberia)) and self.coord[0]+self.ancho < bloque.coord[0] 
                 and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]):
                      self.v_x = -self.v_x
 

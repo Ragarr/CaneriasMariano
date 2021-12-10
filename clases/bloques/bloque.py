@@ -4,9 +4,12 @@ if __name__ == "__main__":
 
 
 class bloque():
-    def __init__(self, coord: list, sprite: list, ancho, alto, izquierda = False, derecha = False ) -> None:
+    def __init__(self, coord: list, sprite: list, ancho, alto) -> None:
         """coord es una lista de 2 elementos 
-        que contiene en este orden los siguienes valores x e y  del origen
+        que contiene en este orden los siguienes valores x e y  del origen,
+        ancho y alto vienen definidos por el tipo de bloque y sus propiedades
+        izquierda y derecha sirve para las colisiones con las tuberias y escaleras, en todos los bloques son falsos, salvo
+        para tuberias y escaleras que tienen una diferencia de comportamiento y necesitan los parametros
         """
         self.__coord = coord
         self.__coord_iniciales = self.__coord.copy()
@@ -18,31 +21,22 @@ class bloque():
         self.__v_y=0
         self.__v_x=0
         self.__existe=True
-        self.__pared_izquierda = izquierda # Sirve para identificar las colisiones en las escaleras y en las tuberias, en este caso el lado izquierdo
-        self.__pared_derecha = derecha # En este caso sirve para identificar las colsiones en el lado derecho
+
     @property
     def existe(self):
         return self.__existe
-    @existe.setter
+    @existe.setter #~necesario para cuando el jugador colisiona con el bloque
     def existe(self,new_existe):
         if not isinstance(new_existe,bool):
             raise ValueError("el valor debe ser booleano")
         self.__existe=new_existe
 
-    @property # getter
+    @property
     def coord(self):
         return self.__coord
 
-    @coord.setter # el setter
-    def coord(self,coord:list):
-        # modificando las coordenadas
-        if not isinstance(coord,list):
-            raise ValueError("las coordenadas deben ser una lista")
-        if len(coord) !=2:
-            raise ValueError("la lista de coordenadas debe tener exactamente dos elementos")
-        if not isinstance(coord[0], (int,float)) or not isinstance(coord[0], (int,float)):
-            raise ValueError("las coordenadas deben ser enteros o floats")
-        self.__coord=coord
+
+    
     @property
     def v_y(self):
         return self.__v_y
@@ -61,9 +55,6 @@ class bloque():
             raise ValueError("la velocidad debe ser un int o float")
         self.__v_x = v_x
 
-    
-
-
     @property
     def ancho(self):
         return self.__ancho
@@ -73,7 +64,7 @@ class bloque():
     @property
     def sprite(self):
         return self.__sprite
-    @sprite.setter
+    @sprite.setter # permite que se cambie el sprite de los bloques de interrogacion
     def sprite(self,new_sprite:list):
         if not isinstance(new_sprite, list):
             raise ValueError("el sprite deben ser una lista")
@@ -85,22 +76,6 @@ class bloque():
     def coord_iniciales(self):
         return self.__coord_iniciales
 
-    @coord_iniciales.setter
-    def coord_iniciales(self):
-        self.__coord=self.__coord.copy()
-    @property
-    def pared_izquierda(self):
-        return self.__pared_izquierda
-    @pared_izquierda.setter
-    def pared_izquierda(self, New__pared_izquierda:bool):
-        self.__pared_izquierda= New__pared_izquierda
-    
-    @property
-    def pared_derecha(self):
-        return self.__pared_derecha
-    @pared_izquierda.setter
-    def pared_derecha(self, New__pared_derecha:bool):
-        self.__pared_derecha= New__pared_derecha
 
     def reposicionar(self):
         self.coord[1] = min(self.coord[1]+self.v_y,self.coord_iniciales[1]+2)

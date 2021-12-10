@@ -119,7 +119,7 @@ class game():
         self.atrezzo = [arbusto([600, c.altura_suelo-12])]
        
     def __generar_objetos(self):
-        self.objetos = [bandera([2907, 120]), mastil([2907, 110])]
+        self.objetos = [bandera([2893, 80]), mastil([2893, 70])]
     
     def __generar_suelo(self):
         """el suelo son bloques, pero es comodo y visual generarlos a parte"""
@@ -179,27 +179,27 @@ class game():
             ladrillo_rompible([1645, c.altura_suelo-110]),ladrillo_rompible([1690, c.altura_suelo-110]),
             #octava escaleras
             #subida
-            escalera([1720,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
-            escalera([1735,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
-            escalera([1750,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
-            escalera([1765,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+            escalera([1720,c.altura_suelo-c.alto_escalera],c.alto_escalera),
+            escalera([1735,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera),
+            escalera([1750,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera),
+            escalera([1765,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
             #bajada
-            escalera([1810,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
-            escalera([1825,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
-            escalera([1840,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
-            escalera([1855,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
+            escalera([1810,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
+            escalera([1825,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera),
+            escalera([1840,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera),
+            escalera([1855,c.altura_suelo-c.alto_escalera],c.alto_escalera),
             #novena escaleras
             #subida
-            escalera([1932,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
-            escalera([1947,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
-            escalera([1962,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
-            escalera([1977,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
-            escalera([1992,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+            escalera([1932,c.altura_suelo-c.alto_escalera],c.alto_escalera),
+            escalera([1947,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera),
+            escalera([1962,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera),
+            escalera([1977,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
+            escalera([1992,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
             #bajada
-            escalera([2035,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
-            escalera([2050,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
-            escalera([2065,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
-            escalera([2080,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
+            escalera([2035,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
+            escalera([2050,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera),
+            escalera([2065,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera),
+            escalera([2080,c.altura_suelo-c.alto_escalera],c.alto_escalera),
             #decimo
             tuberia([2155,c.altura_suelo-c.alto_smario-3],c.alto_smario+3),
             ladrillo_con_monedas([2230,c.altura_suelo-55]),
@@ -211,17 +211,17 @@ class game():
             interrogacion([2465,c.altura_suelo-55],True),interrogacion([2495,c.altura_suelo-55],True),
             interrogacion([2525,c.altura_suelo-55],True),interrogacion([2495,c.altura_suelo-110],False),
             #bloque de la bandera
-            escalera([2700,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
-            escalera([2715,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
-            escalera([2730,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
-            escalera([2745,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
-            escalera([2760,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
-            escalera([2775,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
-            escalera([2790,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+            escalera([2700,c.altura_suelo-c.alto_escalera],c.alto_escalera),
+            escalera([2715,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera),
+            escalera([2730,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera),
+            escalera([2745,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
+            escalera([2760,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
+            escalera([2775,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
+            escalera([2790,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
 
-            escalera([2760,c.altura_suelo-5*c.alto_escalera],1*c.alto_escalera,True),
-            escalera([2775,c.altura_suelo-6*c.alto_escalera],2*c.alto_escalera,True),
-            escalera([2790,c.altura_suelo-7*c.alto_escalera],3*c.alto_escalera,True),
+            escalera([2760,c.altura_suelo-5*c.alto_escalera],1*c.alto_escalera),
+            escalera([2775,c.altura_suelo-6*c.alto_escalera],2*c.alto_escalera),
+            escalera([2790,c.altura_suelo-7*c.alto_escalera],3*c.alto_escalera),
 
             ladrillo_rompible([2900, c.altura_suelo-15])
             ]
@@ -246,6 +246,7 @@ class game():
         """se asegura de que el jugador se mantiene en el centro de la pantalla trasmitiendo su movimiento a las demas entidades"""
         for bloque in self.__bloques:
             bloque.coord[0]-=self.jugador.v_x
+
         for objeto in self.objetos:
             objeto.coord[0] -= self.jugador.v_x
         for npc in self.npcs:

@@ -87,7 +87,7 @@ sprite_estrella=[0,17,42,15,15,azul]
 sprite_flor=[0,55,47,15,15,azul]
 sprite_nube=[0,109,138,45,21,azul]
 sprite_montaña=[0,0,193,74,33,azul]
-sprite_arbusto=[0,139,46,62,12,azul]
+sprite_arbusto=[0,139,46,62,15,azul]
 
 sprite_interrogacion_golpeado=[0,145,27,16,16,blanco]
 sprite_interrogacion=[0,177,27,16,16,blanco]

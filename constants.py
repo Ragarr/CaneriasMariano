@@ -85,7 +85,7 @@ sprite_moneda_girada=[0,40,41,9,13,azul]
 sprite_champi=[0,0,45,15,15,azul]
 sprite_estrella=[0,17,42,15,15,azul]
 sprite_flor=[0,55,47,15,15,azul]
-sprite_nube=[0,39,48,153,13,azul]
+sprite_nube=[0,109,138,45,21,azul]
 sprite_montaña=[0,0,193,74,33,azul]
 sprite_arbusto=[0,139,46,62,15,azul]
 

@@ -19,6 +19,7 @@ from clases.npcs.koopa_troopa import koopa_troopa
 from clases.atrezzo.montaña import montaña
 from clases.atrezzo.nube import nube
 from clases.atrezzo.arbusto import arbusto
+import random
 
 import constants as c
 class game():
@@ -138,9 +139,11 @@ class game():
         self.atrezzo = [
             arbusto([600, c.altura_suelo-15]),arbusto([200, c.altura_suelo-15]),
             arbusto([1870, c.altura_suelo-15]),arbusto([2400, c.altura_suelo-15]),
-            arbusto([2600, c.altura_suelo-15]),arbusto([500, c.altura_suelo-15])
-        
+            arbusto([2600, c.altura_suelo-15]),arbusto([500, c.altura_suelo-15]),
+            
         ]
+        for _ in range(30):
+            self.atrezzo.append(nube([random.randint(0,3000),random.randint(0,70)])) 
        
     def __generar_objetos(self):
         self.objetos = [bandera([2893, 80]), mastil([2893, 70])]
@@ -336,5 +339,6 @@ class game():
             self.en_menu=False
             self.__posicion_mario = 105
             self.__animacion = False
+   
        
 game()

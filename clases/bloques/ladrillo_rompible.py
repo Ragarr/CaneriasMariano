@@ -1,5 +1,5 @@
-from clases.bloque import bloque
-from clases.estrella import estrella
+from clases.bloques.bloque import bloque
+from clases.objetos.estrella import estrella
 import constants as c
 class ladrillo_rompible(bloque):
     def __init__(self, coord: list, estrella = False) -> None:

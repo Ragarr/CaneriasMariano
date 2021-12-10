@@ -1,9 +1,9 @@
-from clases.bloque import bloque
+from clases.bloques.bloque import bloque
 import random
 import constants as c
-from clases.champi import champi
-from clases.flor import flor
-from clases.moneda import moneda
+from clases.objetos.champi import champi
+from clases.objetos.flor import flor
+from clases.objetos.moneda import moneda
 
 
 class interrogacion(bloque):

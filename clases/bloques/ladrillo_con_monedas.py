@@ -1,7 +1,7 @@
-from clases.bloque import bloque
+from clases.bloques.bloque import bloque
 import constants as c
 import random
-from clases.moneda import moneda
+from clases.objetos.moneda import moneda
 
 
 class ladrillo_con_monedas(bloque):

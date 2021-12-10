@@ -1,4 +1,4 @@
-from clases.bloque import bloque
+from clases.bloques.bloque import bloque
 import pyxel
 import constants as c
 class suelo(bloque):

@@ -6,7 +6,7 @@ if __name__ == "__main__":
 
 import constants as c
 import pyxel
-import clases.bloque
+import clases.bloques.bloque
 
  
 

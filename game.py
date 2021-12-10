@@ -1,20 +1,23 @@
 import pyxel
-from clases.suelo import suelo
-from clases.escalera import escalera
-from clases.ladrillo_con_monedas import ladrillo_con_monedas
-from clases.ladrillo_rompible import ladrillo_rompible
-from clases.tuberia import tuberia
-from clases.interrogacion import interrogacion
-from clases.moneda import moneda
-from clases.champi import champi
-from clases.estrella import estrella
-from clases.flor import flor
-from clases.bandera import bandera
-from clases.mastil import mastil
+from clases.bloques.suelo import suelo
+from clases.bloques.escalera import escalera
+from clases.bloques.ladrillo_con_monedas import ladrillo_con_monedas
+from clases.bloques.ladrillo_rompible import ladrillo_rompible
+from clases.bloques.tuberia import tuberia
+from clases.bloques.interrogacion import interrogacion
+from clases.objetos.moneda import moneda
+from clases.objetos.champi import champi
+from clases.objetos.estrella import estrella
+from clases.objetos.flor import flor
+from clases.objetos.bandera import bandera
+from clases.objetos.mastil import mastil
 from clases import player
-from clases.goompa import goompa
-from clases.koopa_troppa import koopa_troopa
-from clases import atrezzo
+from clases.npcs.goompa import goompa
+from clases.npcs.koopa_troopa import koopa_troopa
+from clases.atrezzo.montaña import montaña
+from clases.atrezzo.nube import nube
+from clases.atrezzo.arbusto import arbusto
+
 import constants as c
 class game():
     def __init__(self) -> None:
@@ -107,7 +110,7 @@ class game():
             pyxel.text(pyxel.width/4, pyxel.height/2,"GRACIAS POR JUGAR, PULSA INTRO PARA REINICIAR",c.blanco)
     
     def __generar_atrezzo(self):
-        self.atrezzo = [atrezzo.arbusto([600, c.altura_suelo-12])]
+        self.atrezzo = [arbusto([600, c.altura_suelo-12])]
        
     def __generar_objetos(self):
         self.objetos = [bandera([3000, 120]), mastil([3000, 110])]

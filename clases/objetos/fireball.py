@@ -1,4 +1,4 @@
-from clases.objeto import objeto
+from clases.objetos.objeto import objeto
 import constants as c
 import pyxel
 class fireball(objeto):

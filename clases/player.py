@@ -4,12 +4,12 @@ if __name__ == "__main__":
     quit()
     
 import pyxel
-from clases.champi import champi
-from clases.estrella import estrella
+from clases.objetos.champi import champi
+from clases.objetos.estrella import estrella
 import constants as c
-from clases.flor import flor
-from clases.bandera import bandera
-from clases.fireball import fireball
+from clases.objetos.flor import flor
+from clases.objetos.bandera import bandera
+from clases.objetos.fireball import fireball
 
 class mario():
     def __init__(self, coord: list) -> None:

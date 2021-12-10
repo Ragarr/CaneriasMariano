@@ -1,4 +1,4 @@
-from clases.bloque import bloque 
+from clases.bloques.bloque import bloque 
 import constants as c
 class tuberia(bloque):
     

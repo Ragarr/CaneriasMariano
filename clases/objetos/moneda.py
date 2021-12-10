@@ -1,6 +1,6 @@
 import pyxel
 import constants as c
-from clases.objeto import objeto
+from clases.objetos.objeto import objeto
 
 class moneda(objeto):
     def __init__(self, coord: list) -> None:

@@ -1,5 +1,5 @@
 import constants as c
-from clases.npc import npc
+from clases.npcs.npc import npc
 import pyxel
 
 class goompa(npc):

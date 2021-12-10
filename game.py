@@ -242,13 +242,14 @@ class game():
             escalera([2715,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera),
             escalera([2730,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera),
             escalera([2745,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
+            escalera([2760,c.altura_suelo-5*c.alto_escalera],1*c.alto_escalera),
+            escalera([2775,c.altura_suelo-6*c.alto_escalera],2*c.alto_escalera),
+            escalera([2790,c.altura_suelo-7*c.alto_escalera],3*c.alto_escalera),
             escalera([2760,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
             escalera([2775,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
             escalera([2790,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
 
-            escalera([2760,c.altura_suelo-5*c.alto_escalera],1*c.alto_escalera),
-            escalera([2775,c.altura_suelo-6*c.alto_escalera],2*c.alto_escalera),
-            escalera([2790,c.altura_suelo-7*c.alto_escalera],3*c.alto_escalera),
+
 
             ladrillo_rompible([2900, c.altura_suelo-15])
             ]

@@ -1,4 +1,6 @@
 import pyxel
+from clases.atrezzo.atrezzo import atrezzo
+from clases.bloques.bloque import bloque
 from clases.bloques.suelo import suelo
 from clases.bloques.escalera import escalera
 from clases.bloques.ladrillo_con_monedas import ladrillo_con_monedas
@@ -80,13 +82,17 @@ class game():
             pyxel.cls(c.azul)
             #bloques, objetos, npcs y atrezzo
             for i in range(len(self.atrezzo)):
-                pyxel.blt(*self.atrezzo[i].coord, *self.atrezzo[i].sprite)
+                if not self.atrezzo[i].coord[0]>1.5*pyxel.width:
+                    pyxel.blt(*self.atrezzo[i].coord, *self.atrezzo[i].sprite)
             for i in range(len(self.objetos)):
-                pyxel.blt(*self.objetos[i].coord, *self.objetos[i].sprite)
+                if not self.objetos[i].coord[0]>1.5*pyxel.width:
+                    pyxel.blt(*self.objetos[i].coord, *self.objetos[i].sprite)
             for i in range(len(self.__bloques)):
-                pyxel.blt(self.__redondear(self.__bloques[i].coord[0]),self.__redondear(self.__bloques[i].coord[1]),*self.__bloques[i].sprite)
+                if not self.__bloques[i].coord[0]>1.5*pyxel.width and not self.__bloques[i].coord[0]<-self.__bloques[i].ancho:
+                    pyxel.blt(self.__redondear(self.__bloques[i].coord[0]),self.__redondear(self.__bloques[i].coord[1]),*self.__bloques[i].sprite)
             for i in range(len(self.npcs)):
-                pyxel.blt(*self.npcs[i].coord, *self.npcs[i].sprite)
+                if not self.npcs[i].coord[0]>1.5*pyxel.width:
+                    pyxel.blt(*self.npcs[i].coord, *self.npcs[i].sprite)
             
             #el jugador
             pyxel.blt(*self.jugador.coord,*self.jugador.sprite)
@@ -113,7 +119,7 @@ class game():
         self.atrezzo = [arbusto([600, c.altura_suelo-12])]
        
     def __generar_objetos(self):
-        self.objetos = [bandera([3000, 120]), mastil([3000, 110])]
+        self.objetos = [bandera([2907, 120]), mastil([2907, 110])]
     
     def __generar_suelo(self):
         """el suelo son bloques, pero es comodo y visual generarlos a parte"""
@@ -204,6 +210,20 @@ class game():
             # parte diseñada por nosotros
             interrogacion([2465,c.altura_suelo-55],True),interrogacion([2495,c.altura_suelo-55],True),
             interrogacion([2525,c.altura_suelo-55],True),interrogacion([2495,c.altura_suelo-110],False),
+            #bloque de la bandera
+            escalera([2700,c.altura_suelo-c.alto_escalera],c.alto_escalera,True),
+            escalera([2715,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera,True),
+            escalera([2730,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera,True),
+            escalera([2745,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+            escalera([2760,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+            escalera([2775,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+            escalera([2790,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera,True),
+
+            escalera([2760,c.altura_suelo-5*c.alto_escalera],1*c.alto_escalera,True),
+            escalera([2775,c.altura_suelo-6*c.alto_escalera],2*c.alto_escalera,True),
+            escalera([2790,c.altura_suelo-7*c.alto_escalera],3*c.alto_escalera,True),
+
+            ladrillo_rompible([2900, c.altura_suelo-15])
             ]
     
     def __generar_npcs(self):
@@ -265,14 +285,14 @@ class game():
         i = 0
         while i < len(bloques):  # revisa los bloques
                 bloque = bloques[i]
-                if not bloque.existe or bloque.coord[0] < -bloque.ancho:
+                if not bloque.existe:
                     del(bloques[i])
                 else:
                     i += 1
         i = 0
         while i < len(npcs):  # revisa los npcs
             npc = npcs[i]
-            if not npc.esta_vivo:
+            if not npc.esta_vivo or npc.coord[0]<-npc.ancho:
                 del(npcs[i])
             else:
                 i += 1

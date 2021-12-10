@@ -6,7 +6,7 @@ ancho_pantalla = 256
 alto_pantalla = 200
 fps = 60
 assets_path = "assets/editor/assets/mario_assets.pyxres"
-
+tiempo=400 #segundos
 
 # ----------------------------colores-----------------------------
 negro = 0
@@ -31,7 +31,7 @@ v_gravedad = 0.25
 v_salto =5
 v_rozamiento =0.1
 v_avance = 0.2
-v_player_max_x=1.5
+v_player_max_x=2
 v_player_max_y= 2
 v_objeto_x=2
 v_rebote= 4
@@ -41,6 +41,7 @@ v_caparazon=3
 
 #----------------------animaciones-------------------------------
 frames_duracion_concha= 10*fps
+coordenada_puerta = 300
 
 
 #-----------------coeficientes para las hitboxes-------------------
@@ -78,28 +79,33 @@ punt_estrella=1000
 
 
 #-----------------sprites en general-----------------------------
+sprite_moneda_chiquita = [1, 0, 240, 9, 9, azul] # editar esto
 sprite_moneda=[0,2,29,9,13,azul]
 sprite_moneda_girada=[0,40,41,9,13,azul]
 sprite_champi=[0,0,45,15,15,azul]
 sprite_estrella=[0,17,42,15,15,azul]
 sprite_flor=[0,55,47,15,15,azul]
 sprite_nube=[0,39,48,153,13,azul]
+sprite_montaña=[0,0,193,74,33,azul]
+sprite_arbusto=[0,139,46,62,12,azul]
+
 sprite_interrogacion_golpeado=[0,145,27,16,16,blanco]
 sprite_interrogacion=[0,177,27,16,16,blanco]
 sprite_mario_verde=[0,206,82,15,31,azul]
 sprite_smario_lanzando_fuego=[0,0,132,15,31,azul]
 sprite_fireball=[0,19,143,15,15,azul]
-sprite_cartel=[1,0,0,208,80,azul]
-
-
+sprite_cartel=[1,0,0,256,200,azul]
+## como el tamaño de la tuberia es variable en vez de una constante tenemos una funcion
 def tuberia(alto:int=48):
+    """el alto se cuenta en pixeles"""
     return [0,79,178,32,alto,azul]
-sprite_suelo=[0,0,227,ancho_suelo,22,azul] # el suelo puede medir hasta 250 de ancho
 
-def escalera(alto:int ):
-    '''El alto se cuenta en bloques y no en pyxeles'''
-   
-    return [0,113,1,17,alto*15, azul]
+## como el tamaño de la escalera es variable en vez de una constante tenemos una funcion
+def escalera(alto: int):
+    '''El alto se cuenta en bloques y no en pixeles'''
+    return [0, 113, 1, 17, alto*15, azul] 
+
+sprite_suelo=[0,0,227,ancho_suelo,22,azul] # el suelo puede medir hasta 250 de ancho
 sprite_ladrillo=[0,160,208,15,15,-1]
 sprite_transparente=[0,0,0,0,0,azul]
 sprite_goompa=[0,16,0,16,16,azul]
@@ -146,4 +152,18 @@ sprite_smario_fuego_saltando_i = [0, 59, 128, -15, 31, azul]
 sprite_smario_fuego_agachado_i = [0, 83, 130, -16, 31, azul]
 
 
+#estrella
+def sprite_animacion_estrella_verde(alto):
+    return [1,16,225,16,alto,azul]
 
+
+def sprite_animacion_estrella_amarillo(alto):
+    return [1, 32, 225, 16, alto, azul]
+
+
+#sprites bandera y mario 
+sprite_mario_grande_bandera=[0,216,0,16,31,azul]
+sprite_mario_fuego_bandera=[0,232,0,16,31,azul]
+sprite_mario_bandera_pequeño=[0,208,40,16,31,azul]
+sprite_bandera = [0, 226, 36, 15, 15, azul]
+sprite_mastil=[0,225,59,23,152,azul]

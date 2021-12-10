@@ -1,3 +1,4 @@
+import pyxel
 from clases.bloques.bloque import bloque
 import random
 import constants as c
@@ -15,7 +16,7 @@ class interrogacion(bloque):
         # 1champi 2flor u 1monedas
         self.monedas = random.randint(1,6)
         self.__contenido = True
-    
+        self.__frame_golpe=0
     @property 
     def contenido(self):
         return self.__contenido
@@ -35,14 +36,16 @@ class interrogacion(bloque):
 
     def golpear(self, objetos:list, player):
         """Dará un objeto seta si es pequeño o si es grande dará una flor y se convertirta en un bloque plano"""
-        self.v_y=-0.5
-        if self.__tiene_monedas:   
-            if self.monedas >= 1:
-                self.monedas =(self.monedas- 1) # resta una moneda al contenido del bloque
-                objetos.append(moneda([self.coord[0],self.coord[1]-15]))
-                player.dinero += 1
-            else:
-                self.sprite = c.sprite_interrogacion_golpeado
+        self.v_y=-0.3
+        if self.__tiene_monedas:
+            if  self.__frame_golpe+c.fps/3<=pyxel.frame_count:
+                self.__frame_golpe=pyxel.frame_count 
+                if self.monedas >= 1:
+                    self.monedas -= 1 # resta una moneda al contenido del bloque
+                    objetos.append(moneda([self.coord[0],self.coord[1]-15]))
+                    player.dinero += 1
+                else:
+                    self.sprite = c.sprite_interrogacion_golpeado
         else:    
             if self.contenido and player.grande:
                 objetos.append(flor([self.coord[0],self.coord_iniciales[1]-c.alto_flor-8]))#Crea una flor encima del bloque

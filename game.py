@@ -239,9 +239,7 @@ class game():
 
     def reset_level(self):
         """reinicia el nivel manteniendo las vidas del jugador"""
-        self.jugador.coord= [20,c.altura_suelo]
-        self.jugador.dinero=0
-        self.jugador.score=0
+        self.jugador.reset_state()
         self.tiempo = c.tiempo  # contador de la esquina superior derecha
         self.__generar_bloques()
         self.__generar_suelo()

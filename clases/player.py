@@ -53,6 +53,10 @@ class mario():
     @property
     def grande(self):
         return self.__grande
+    @grande.setter
+    def grande(self,new):
+        self.__grande=new
+
     @property
     def sprite(self):
         return self.__sprite
@@ -523,5 +527,12 @@ class mario():
         self.__actualizar_posicion()
         self.__actualizar_animaciones()
         
-
+    def reset_state(self):
+        self.coord= [20,c.altura_suelo]
+        self.dinero=0
+        self.score=0
+        self.alto=c.alto_mario
+        self.grande=False
+        self.__fuego=False
+        self.__estrella=False
 

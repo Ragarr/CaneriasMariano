@@ -9,7 +9,7 @@ class ladrillo_rompible(bloque):
         
     def golpear(self,bloques=None,player=None):
         """Solo en algunos casos el bloque contendrá una estrella por ello hemos introducido un bool q nos inidica si hay o no una estrella"""
-        self.v_y=-0.6
+        self.v_y=-0.3
         if self.Estrella:
             bloques.append(estrella([self.coord[0],self.coord_iniciales[1]-c.alto_estrella-8]))
             self.Estrella = False

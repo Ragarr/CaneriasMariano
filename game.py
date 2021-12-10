@@ -86,17 +86,17 @@ class game():
         if self.en_menu: #si estas en el menu de inicio dibuja solo el menu de inicio
             pyxel.cls(c.azul)
             pyxel.blt(0,0,*c.sprite_cartel)
-            pyxel.blt(122,self.posicion_mario,0, 3, 98, 15, 15, c.azul)
-            pyxel.blt(112,120, 0, 79, 178,32, 25, c.azul)
+            pyxel.blt(122,self.posicion_mario,*c.sprite_mario_quieto)
+            pyxel.blt(112,120,*c.tuberia(25))
         elif self.jugador.muerto:  # si estas en el menu de muerte dibuja solo el menu de muerte
             pyxel.cls(c.negro)
             if self.jugador.vidas <= 0: # si te has quedado sin vidas muestra la pantalla para reiniciar el juego
                 pyxel.text(pyxel.width/2+c.ancho_mario+3, pyxel.height/2,"HAS MUERTO",c.blanco)
                 pyxel.text(pyxel.width/2+c.ancho_mario+3, pyxel.height/2+10,"pulsa intro para reiniciar",c.blanco)
             else:  # si  no te has quedado sin vidas muestra la pantalla para reiniciar el nivel
-                pyxel.blt(pyxel.width/2,pyxel.height/2, *self.jugador.sprite)
+                pyxel.blt(pyxel.width/2,pyxel.height/2, *c.sprite_mario_quieto)
                 pyxel.text(pyxel.width/2+c.ancho_mario+3, pyxel.height/2,"x  {}".format(self.jugador.vidas),c.blanco)
-            
+                pyxel.text(pyxel.width/2+c.ancho_mario+3, pyxel.height/2+15,"pulsa intro",c.blanco)
         else: # dibujado normal del nivel
             pyxel.cls(c.azul)
             #bloques, objetos, npcs y atrezzo
@@ -135,7 +135,12 @@ class game():
             pyxel.text(pyxel.width/4, pyxel.height/2,"GRACIAS POR JUGAR, PULSA INTRO PARA REINICIAR",c.blanco)
     
     def __generar_atrezzo(self):
-        self.atrezzo = [arbusto([600, c.altura_suelo-12])]
+        self.atrezzo = [
+            arbusto([600, c.altura_suelo-15]),arbusto([200, c.altura_suelo-15]),
+            arbusto([1870, c.altura_suelo-15]),arbusto([2400, c.altura_suelo-15]),
+            arbusto([2600, c.altura_suelo-15]),arbusto([500, c.altura_suelo-15])
+        
+        ]
        
     def __generar_objetos(self):
         self.objetos = [bandera([2893, 80]), mastil([2893, 70])]

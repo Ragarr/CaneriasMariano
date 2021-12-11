@@ -25,7 +25,6 @@ class npc():
         self.__esta_vivo = True # El npc está vivo 
         self.__v_x = -c.v_npc  # La v_x habrá que modificarla según probemos
         self.__v_y = 0
-        self.tiene_hitbox=True
         self.__ancho=ancho
         self.__alto=alto
         self.__es_caparazon=False

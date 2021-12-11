@@ -264,7 +264,7 @@ class game():
             goompa([2280,c.altura_suelo-c.alto_goompa]),goompa([2300,c.altura_suelo-c.alto_goompa]),
             goompa([1330, c.altura_suelo-110-c.alto_goompa]),goompa([1350, c.altura_suelo-110-c.alto_goompa]),
             goompa([1470, c.altura_suelo-c.alto_goompa]),goompa([1490, c.altura_suelo-c.alto_goompa]),
-            koopa_troopa([2495,c.altura_suelo-c.alto_koopa_troopa])
+            koopa_troopa([2495,c.altura_suelo-c.alto_koopa_troopa]),koopa_troopa([200,c.altura_suelo-c.alto_koopa_troopa])
                     ]
 
     def __mantener_jugador_en_pantalla(self):

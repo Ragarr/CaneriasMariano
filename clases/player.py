@@ -125,12 +125,8 @@ class mario():
     def __iniciar_temporizadores(self):
 
         """timers en frames para las animaciones """
-        self.__timer_andar = 0
-        self.__timer_invencible_animation = 0
         self.__timer_invencibilidad = 0
-        self.__timer_estrella=0
-        self.__timer_transicion_fuego = 0
-        self.__timer_muerte = 0
+        self.__timer_estrella= 0
         self.__timer_transicion = 0 # animacion de transicion y frames de invulnerabilidad
         self.__timer_fireball = 0 # animacion de la fireball
         self.__timer_bandera = 0 # animacion de la mandera
@@ -146,11 +142,9 @@ class mario():
         self.__estrella = False  # modo estrella
         self.__grande = False  # su estado de ser mario, super mario o con fuego
         self.__fuego = False # su estado de ser mario, super mario o con fuego
-        self.__permitir_fireball = True
         self.__juego_finalizado = False # para cuando cambia de estado
         self.__en_bandera = False # para la estrella
     
-       
     def __iniciar_fuerzas(self):
         self.__v_x = 0
         self.__v_y = 0
@@ -215,12 +209,6 @@ class mario():
     def morir(self):
         self.vidas-=1
         self.muerto=True
-
-    def __colisonar_bloques(self, bloques: list, objetos: list, jugador):
-        if self.__grande or self.__fuego:
-            self.__colisonar_bloques_grande(bloques , objetos , jugador)
-        else:
-            self.__colisonar_bloques_pequeño(bloques, objetos, jugador)
     
     def __colisionando(self, entity):
         if (abs(entity.coord[0]-self.coord[0]) < entity.ancho and entity.coord[0]-self.ancho < self.coord[0]
@@ -234,44 +222,13 @@ class mario():
         else:
             return False
     
-    def __colisonar_bloques_pequeño(self,bloques:list,objetos:list,jugador):
-        self.__bloque_a_derecha=False
-        self.__bloque_a_izquierda=False
-        for bloque in bloques:
-            colision_superior = False
-            colision_inferior = False
-            
-            if self.__colisionando(bloque):  # comprueba si hay colision
-                if abs(bloque.coord[1]+bloque.alto-self.coord[1]) <= self.alto and not colision_superior:
-                    bloque.golpear(objetos, jugador)
-                    self.__v_y = 2*c.v_gravedad
-                    self.coord[1]= bloque.coord_iniciales[1]+bloque.alto
-                    colision_inferior = True
-                # comprueba si la colision es por encima
-                elif ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto and not colision_inferior):
-                    colision_superior = True
-                    self.en_aire =False
-                    self.coord[1] = bloque.coord[1]-self.alto 
-                    # permite que se pueda saltar encima de los bloques, si se pone la velocidad
-                    if (pyxel.btn(pyxel.KEY_SPACE)):
-                        self.en_aire=True
-                        self.__v_y = -c.v_salto
-                    else:  # te pega al bloque
-                        self.__v_y = 0
-            if (bloque.coord[0]+bloque.ancho < self.coord[0] 
-                and bloque.coord[0]+bloque.ancho +3 > self.coord[0] and self.coord[1] > bloque.coord[1] and not self.coord[1] > bloque.coord[1]+bloque.alto):
-                    self.__v_x = +1
-            elif (self.coord[0]+self.ancho < bloque.coord[0] 
-                and self.coord[0]+self.ancho + 3> bloque.coord[0] and self.coord[1] > bloque.coord[1] and not self.coord[1] > bloque.coord[1]+bloque.alto):
-                     self.__v_x = -1
-    
-    def __colisonar_bloques_grande(self, bloques: list, objetos: list, jugador):
+    def __colisonar_bloques(self, bloques: list, objetos: list, jugador):
         self.__bloque_a_derecha = False
         self.__bloque_a_izquierda = False
         for bloque in bloques:
             colision_superior = False
             colision_inferior = False
-            if self.__colisionando(bloque)   :  # comprueba si hay colision
+            if self.__colisionando(bloque):  # comprueba si hay colision
                 if abs(bloque.coord[1]+bloque.alto-self.coord[1]) <= c.tolerancia_colisiones and not colision_superior:
                     bloque.golpear(objetos, jugador)
                     self.__v_y = 2*c.v_gravedad
@@ -289,13 +246,6 @@ class mario():
                         self.__v_y = -c.v_salto
                     else:  # te pega al bloque
                         self.__v_y = 0
-                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
-                        and not colision_superior and not (self.__grande or self.__fuego)):  # jugador a la derecha del bloque
-                    self.__v_x = -self.__v_x
-
-                elif (abs((bloque.coord[0])-self.coord[0]+self.ancho) >= self.ancho
-                      and not colision_superior) and not (self.__grande or self.__fuego):  # jugador a la izquierda del bloque
-                    self.__v_x = -self.__v_x
             if (bloque.coord[0]+bloque.ancho < self.coord[0] 
                 and bloque.coord[0]+bloque.ancho +3 > self.coord[0] and self.coord[1] > bloque.coord[1] and not self.coord[1] > bloque.coord[1]+bloque.alto):
                     self.__v_x = +1
@@ -493,10 +443,6 @@ class mario():
         elif pyxel.frame_count > self.__timer_bandera + 1.5*c.fps:
             self.__fase2_bandera()
 
-            
-
-        
-            
     def __fase1_bandera(self):
         #descender la bandera
         self.__v_x = 0

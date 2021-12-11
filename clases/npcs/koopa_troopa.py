@@ -6,7 +6,7 @@ import pyxel
 class koopa_troopa(npc):
     def __init__ (self, coord: list) -> None:
         super().__init__ (coord=coord, sprite=c.sprite_koopa_troopa,ancho=c.ancho_koopa_troopa, alto=c.alto_koopa_troopa)#Esto hay que modificarlo cuando tengamos los sprites
-        self.frame_concha= 400*c.fps
+        self.frame_concha= 0
 
     def colisionar_jugador(self,jugador):
         if self.es_caparazon and self.v_x == 0:
@@ -16,13 +16,14 @@ class koopa_troopa(npc):
             '''Emplearemos este método exclusivamente cuando el jugador salte encima del caparazón en movimiento'''
             self.v_x = 0
         else:
-            '''Este último parámetro se refiere a cuando choca con el jugador de manera frontal, ya que este sigue su moviento'''
+            '''lo convierte en un caparazon'''
             self.es_caparazon = True
-            self.frame_concha=pyxel.frame_count
+            self.frame_concha=pyxel.frame_count+10*c.fps
             self.v_x = 0
             self.sprite = c.sprite_concha
             self.alto = c.alto_concha
             self.coord[1]-=15
+            
 
     def actualizar_estado(self, bloques: list, npcs: list, objetos:list,jugador):
         if pyxel.width<self.coord[0]:
@@ -33,12 +34,12 @@ class koopa_troopa(npc):
             self.colisionar_npcs(npcs,jugador)
             self.colisionar_con_objeto(objetos,jugador)
             self.actualizar_posicion()
+            if self.frame_concha <=pyxel.frame_count and self.frame_concha != 0:
+                self.resurgir()
 
     def morir(self,jugador):
         self.esta_vivo = False
         jugador.score+=c.punt_koopa_troopa
-        self.sprite = c.sprite_transparente
-
 
 
     def resurgir(self):
@@ -50,5 +51,6 @@ class koopa_troopa(npc):
         self.es_caparazon = False
         self.coord[1]-=5
         self.sprite = c.sprite_koopa_troopa
+        self.frame_concha=0
 
 

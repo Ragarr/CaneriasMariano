@@ -9,7 +9,7 @@
 ![](RackMultipart20211211-4-1bh9jw6_html_ccdfe119dcc5f925.png)Hemos dividido cada clase en una carpeta, y cada subclase en un archivo dentro de dicha carpeta.
 
 Las clases se dividen en 6 superclases:
-
+![arbol de clases](https://drive.google.com/file/d/12ckclB_7K04mtV7aFRkaW7PIZPd-ZdVy/view?usp=sharing)
 - game
 - atrezzo
 - bloque

@@ -30,7 +30,7 @@ class champi(objeto):
                 #salto de la seta justo cuando sale de un objeto de interrogación
                 if self.colisionando(bloque) and self.coord_iniciales[1]-c.alto_champi/2 < self.coord[1] and not self.coord[1] > self.coord_iniciales[1] :
                     self.v_x = 1.2
-                    self.coord[1] -= 30
+                    self.coord[1] -= 10
                     self.v_y = -3
 
                 # comprueba si la colision es por encima
@@ -39,16 +39,8 @@ class champi(objeto):
                     #choque lateral con los bloques y cambio de sentido solo con los bloques no movibles y tuberias yas que otros tipos podrían dar pie a errores y estos son los únicos a la altura del suelo
                     if not isinstance(bloque, escalera) and not isinstance(bloque, tuberia) and self.coord[1] > self.coord_iniciales[1] :
                         self.coord[1] = bloque.coord[1] - self.alto
-                    
-                    n_suelo = True  # Es importante para que no se enbucle el suelo
                     # Salto de la estrella
                     self.v_y = c.v_gravedad
-                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) <= self.ancho
-                        and not n_suelo):
-                    self.v_x = -self.v_x
-                if (abs((bloque.coord[0]+bloque.ancho)-self.coord[0]) >= self.ancho
-                        and not n_suelo):
-                    self.v_x = -self.v_x
             if ( (isinstance(bloque,escalera) or isinstance(bloque,tuberia)) and bloque.coord[0]+bloque.ancho < self.coord[0] 
                 and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]):
                     self.v_x = -self.v_x

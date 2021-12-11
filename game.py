@@ -334,6 +334,7 @@ class game():
                 del(objetos[i])
             else:
                 i += 1
+    
     def animacion_de_inicio(self):
         self.__posicion_mario += 1
         if self.__posicion_mario > 130:

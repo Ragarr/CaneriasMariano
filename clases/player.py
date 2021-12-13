@@ -450,6 +450,7 @@ class mario():
             self.__fase2_bandera()
         else:
             self.sprite = c.sprite_invisible
+            self.__desconvertir_en_estrella()
 
     def __fase1_bandera(self):
         #descender la bandera

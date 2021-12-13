@@ -90,7 +90,7 @@ class game():
                 self.reset_game()
     
     def draw(self):
-        
+        print(self.jugador.coord)
         if self.en_menu: #si estas en el menu de inicio dibuja solo el menu de inicio
             pyxel.cls(c.azul)
             pyxel.blt(0,0,*c.sprite_cartel)
@@ -163,7 +163,7 @@ class game():
             self.atrezzo.append(nube([random.randint(0,3000),random.randint(0,100)])) 
        
     def __generar_objetos(self):
-        self.objetos = [bandera([2893, 90]), mastil([2893, 80])]
+        self.objetos = [bandera([2896, 30]), mastil([2906, 20])]
     
     def __generar_suelo(self):
         """el suelo son bloques, pero es comodo y visual generarlos a parte"""
@@ -181,7 +181,7 @@ class game():
             self.__bloques.append(suelo([x, c.altura_suelo]))
             x += c.ancho_suelo
         x=2035
-        while x < 3000:
+        while x < 3700:
             self.__bloques.append(suelo([x, c.altura_suelo]))
             x += c.ancho_suelo
     

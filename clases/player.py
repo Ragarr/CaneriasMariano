@@ -188,13 +188,13 @@ class mario():
         self.__estrella=True
         self.timer_estrella=c.fps*30 #30 secs
 
-        c.v_player_max_x=4
+        c.v_player_max_x=3.5
         c.v_avance=0.6
     
     def __desconvertir_en_estrella(self):
         self.__estrella = False
 
-        c.v_player_max_x = 3
+        c.v_player_max_x =2.5
         c.v_avance = 0.2
     
     def recibir_daño(self):
@@ -287,13 +287,13 @@ class mario():
                 elif isinstance(objeto, estrella):
                     objeto.colisionar_jugador()
                     self.__convertir_en_estrella()
-                elif isinstance(objeto,bandera):
-                    self.__timer_bandera = pyxel.frame_count
-                    objeto.colisionar_jugador()
-                    self.__en_bandera = True
                 if isinstance(objeto, champi_verde):
                     objeto.colisionar_jugador()
                     self.__vidas += 1
+            if isinstance(objeto,bandera) and self.coord[0]-objeto.coord[0]>=-4:
+                self.__timer_bandera = pyxel.frame_count
+                objeto.colisionar_jugador()
+                self.__en_bandera = True
                 
 
     def __actualizar_animaciones(self):

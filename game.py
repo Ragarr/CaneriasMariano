@@ -233,10 +233,8 @@ class game():
             escalera([1810,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
             escalera([1825,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera),
             escalera([1840,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera),
-            escalera([1855,c.altura_suelo-c.alto_escalera],c.alto_escalera),
             #novena escaleras
             #subida
-            escalera([1932,c.altura_suelo-c.alto_escalera],c.alto_escalera),
             escalera([1947,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera),
             escalera([1962,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera),
             escalera([1977,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
@@ -279,7 +277,7 @@ class game():
             goomba([760,c.altura_suelo-c.alto_goomba]),goomba([800,c.altura_suelo-c.alto_goomba]),
             goomba([2280,c.altura_suelo-c.alto_goomba]),goomba([2300,c.altura_suelo-c.alto_goomba]),
             goomba([1330, c.altura_suelo-110-c.alto_goomba]),goomba([1350, c.altura_suelo-110-c.alto_goomba]),
-            goomba([1470, c.altura_suelo-c.alto_goomba]),goomba([1490, c.altura_suelo-c.alto_goomba]),koopa_troopa([1510,c.altura_suelo-c.alto_koopa_troopa]),
+            goomba([1470, c.altura_suelo-c.alto_goomba]),goomba([1520, c.altura_suelo-c.alto_goomba]),koopa_troopa([1540,c.altura_suelo-c.alto_koopa_troopa]),
             goomba([280,c.altura_suelo-c.alto_koopa_troopa]),koopa_troopa([1870,c.altura_suelo-c.alto_koopa_troopa])
                     ]
 
@@ -322,7 +320,7 @@ class game():
         self.en_menu = True
         self.jugador.reset_state()
         self.tiempo = c.tiempo  # contador de la esquina superior derecha
-        self.jugador = player.mario([30, c.altura_suelo-15])
+        self.jugador = player.mario([130, c.altura_suelo-35])
         self.__generar_bloques()
         self.__generar_suelo()
         self.__generar_npcs()

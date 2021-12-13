@@ -21,7 +21,7 @@ class mario():
         self.__iniciar_temporizadores()
         self.__iniciar_booleanos()
         self.__iniciar_fuerzas()
-        self.__score = -100
+        self.__score = 0
         self.__dinero = 0
         self.__vidas=3
         self.__coord = coord  # son coordenadas relativas a la pantalla no al nivel en general

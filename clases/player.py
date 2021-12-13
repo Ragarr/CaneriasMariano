@@ -446,8 +446,10 @@ class mario():
         self.__permitir_control = False
         if  pyxel.frame_count <= self.__timer_bandera+c.fps*1.5:
             self.__fase1_bandera()
-        elif pyxel.frame_count > self.__timer_bandera + 1.5*c.fps:
+        elif pyxel.frame_count > self.__timer_bandera + 1.5*c.fps and pyxel.frame_count < self.__timer_bandera + 3.9*c.fps  :
             self.__fase2_bandera()
+        else:
+            self.sprite = c.sprite_invisible
 
     def __fase1_bandera(self):
         #descender la bandera

@@ -62,6 +62,8 @@ alto_interrogacion = 15
 alto_ladrillo = 15
 alto_escalera= 15
 ancho_cañon = 16
+alto_castillo = 92
+ancho_castillo = 80
 
 altura_suelo = alto_pantalla-alto_pantalla/8  +3
 ancho_tuberia= 32
@@ -181,3 +183,4 @@ sprite_mario_fuego_bandera=[0,232,0,16,31,azul]
 sprite_mario_bandera_pequeño=[0,208,40,16,31,azul]
 sprite_bandera = [0, 226, 36, 15, 15, azul]
 sprite_mastil=[0,237,59,10,152,azul]
+sprite_castillo = [0,150,134,80,92,azul]

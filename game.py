@@ -9,6 +9,7 @@ from clases.bloques.tuberia import tuberia
 from clases.bloques.invisible import bloque_invisible
 from clases.bloques.interrogacion import interrogacion
 from clases.bloques.lanzabill import cañon_lanza_bills
+from clases.bloques.castillo import castillo
 from clases.objetos.moneda import moneda
 from clases.objetos.champi import champi
 from clases.objetos.champiverde import champi_verde
@@ -90,7 +91,6 @@ class game():
                 self.reset_game()
     
     def draw(self):
-        print(self.jugador.coord)
         if self.en_menu: #si estas en el menu de inicio dibuja solo el menu de inicio
             pyxel.cls(c.azul)
             pyxel.blt(0,0,*c.sprite_cartel)
@@ -144,18 +144,19 @@ class game():
             pyxel.blt(150,10, *c.sprite_mario_quieto)
             pyxel.text(170, 10,"x  {}".format(self.jugador.vidas),c.blanco)
         if self.jugador.juego_finalizado: # mensaje de final del juego
-            pyxel.text(pyxel.width/4, pyxel.height/2,"GRACIAS POR JUGAR, PULSA INTRO PARA REINICIAR",c.blanco)
+            pyxel.text(pyxel.width/4-20, pyxel.height/2-50,"GRACIAS POR JUGAR, PULSA INTRO PARA REINICIAR",c.blanco)
             
 
     def __generar_atrezzo(self):
         self.atrezzo = [
             montaña([20,c.altura_suelo-33]), montaña([500,c.altura_suelo-33]), 
             montaña([1150,c.altura_suelo-33]), montaña([1600,c.altura_suelo-33]),
-            montaña([2300,c.altura_suelo-33]),
+            montaña([2300,c.altura_suelo-33]), montaña([3100,c.altura_suelo-33]),
             
             arbusto([200, c.altura_suelo-15]),arbusto([500, c.altura_suelo-15]),
             arbusto([600, c.altura_suelo-15]),arbusto([1870, c.altura_suelo-15]),
             arbusto([2400, c.altura_suelo-15]),arbusto([2600, c.altura_suelo-15]),
+            arbusto([2920, c.altura_suelo-15])
         
             
         ]
@@ -266,10 +267,11 @@ class game():
             escalera([2760,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
             escalera([2775,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
             escalera([2790,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
+        
 
 
 
-            ladrillo_rompible([2900, c.altura_suelo-15])
+            ladrillo_rompible([2900, c.altura_suelo-15]),castillo([3000, c.altura_suelo-c.alto_castillo])
             ]
     
     def __generar_npcs(self):

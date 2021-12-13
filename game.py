@@ -9,14 +9,14 @@ from clases.bloques.tuberia import tuberia
 from clases.bloques.invisible import bloque_invisible
 from clases.bloques.interrogacion import interrogacion
 from clases.bloques.lanzabill import cañon_lanza_bills
-from clases.bloques.castillo import castillo
+from clases.atrezzo.castillo import castillo
 from clases.objetos.moneda import moneda
 from clases.objetos.champi import champi
 from clases.objetos.champiverde import champi_verde
 from clases.objetos.estrella import estrella
 from clases.objetos.flor import flor
 from clases.objetos.bandera import bandera
-from clases.objetos.mastil import mastil
+from clases.atrezzo.mastil import mastil
 from clases import player
 from clases.npcs.goompa import goomba
 from clases.npcs.koopa_troopa import koopa_troopa
@@ -85,7 +85,8 @@ class game():
 
             for objeto in self.objetos:  # actualiza los objetos uno por uno
                 objeto.actualizar(self.__bloques)
-            self.tiempo -= 1 if pyxel.frame_count%c.fps==0 else 0 # actualiza el contador de la derecha
+            if not self.jugador.en_bandera:
+                self.tiempo -= 1 if pyxel.frame_count%c.fps==0 else 0 # actualiza el contador de la derecha
 
             if self.jugador.juego_finalizado and pyxel.btnp(pyxel.KEY_ENTER): # reinicia al llegar al final del juego
                 self.reset_game()
@@ -110,7 +111,7 @@ class game():
             #bloques, objetos, npcs y atrezzo
             for i in range(len(self.atrezzo)):
                 if not self.atrezzo[i].coord[0]>1.5*pyxel.width:
-                    pyxel.blt(*self.atrezzo[i].coord, *self.atrezzo[i].sprite)
+                    pyxel.blt(self.__redondear(self.atrezzo[i].coord[0]),self.__redondear(self.atrezzo[i].coord[1]), *self.atrezzo[i].sprite)
             for i in range(len(self.objetos)):
                 if not self.objetos[i].coord[0]>1.5*pyxel.width:
                     pyxel.blt(*self.objetos[i].coord, *self.objetos[i].sprite)
@@ -149,6 +150,7 @@ class game():
 
     def __generar_atrezzo(self):
         self.atrezzo = [
+            castillo([3000, c.altura_suelo-c.alto_castillo]),
             montaña([20,c.altura_suelo-33]), montaña([500,c.altura_suelo-33]), 
             montaña([1150,c.altura_suelo-33]), montaña([1600,c.altura_suelo-33]),
             montaña([2300,c.altura_suelo-33]), montaña([3100,c.altura_suelo-33]),
@@ -156,7 +158,7 @@ class game():
             arbusto([200, c.altura_suelo-15]),arbusto([500, c.altura_suelo-15]),
             arbusto([600, c.altura_suelo-15]),arbusto([1870, c.altura_suelo-15]),
             arbusto([2400, c.altura_suelo-15]),arbusto([2600, c.altura_suelo-15]),
-            arbusto([2920, c.altura_suelo-15])
+            arbusto([2920, c.altura_suelo-15]), mastil([2906, 20])
         
             
         ]
@@ -164,7 +166,7 @@ class game():
             self.atrezzo.append(nube([random.randint(0,3000),random.randint(0,100)])) 
        
     def __generar_objetos(self):
-        self.objetos = [bandera([2896, 30]), mastil([2906, 20])]
+        self.objetos = [bandera([2896, 30])]
     
     def __generar_suelo(self):
         """el suelo son bloques, pero es comodo y visual generarlos a parte"""
@@ -269,9 +271,7 @@ class game():
             escalera([2790,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
         
 
-
-
-            ladrillo_rompible([2900, c.altura_suelo-15]),castillo([3000, c.altura_suelo-c.alto_castillo])
+            ladrillo_rompible([2900, c.altura_suelo-15])
             ]
     
     def __generar_npcs(self):
@@ -363,6 +363,8 @@ class game():
             self.en_menu=False
             self.__posicion_mario = 105
             self.__animacion = False
+
+
     def generar_balas(self, bloque):
        if isinstance(bloque, cañon_lanza_bills):
                 bloque.lanzar(self.npcs)

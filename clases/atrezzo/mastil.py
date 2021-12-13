@@ -1,10 +1,10 @@
-from clases.objetos.objeto import objeto
+from clases.atrezzo.atrezzo import atrezzo
 import constants as c 
 
 
-class mastil(objeto):
+class mastil(atrezzo):
     def __init__(self, coord: list) -> None:
-        super().__init__(coord,c.sprite_mastil,2, 152)
+        super().__init__(coord,c.sprite_mastil)
 
 
     def colisionar_jugador(self):

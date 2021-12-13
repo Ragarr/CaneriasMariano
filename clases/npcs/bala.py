@@ -22,8 +22,7 @@ class bill_bala(npc):
     def colisionar_jugador(self, jugador):
         self.morir(jugador)
         
-    def morir(self, jugador):
-        jugador.score += c.punt_bala
+    def morir(self,jugador):
         self.esta_vivo = False
     
     def colisionar_bloques(self, bloques: list):

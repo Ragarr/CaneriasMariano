@@ -7,7 +7,7 @@ import pyxel
 from clases.objetos.champi import champi
 from clases.objetos.champiverde import champi_verde
 from clases.objetos.estrella import estrella
-from clases.objetos.mastil import mastil
+from clases.atrezzo.mastil import mastil
 import constants as c
 from clases.objetos.flor import flor
 from clases.objetos.bandera import bandera
@@ -124,6 +124,9 @@ class mario():
     @property
     def juego_finalizado(self):
         return self.__juego_finalizado
+    @property
+    def en_bandera(self):
+        return self.__en_bandera
     def __iniciar_temporizadores(self):
 
         """timers en frames para las animaciones """

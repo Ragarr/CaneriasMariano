@@ -20,14 +20,14 @@ class npc():
         -la pos y final del sprite
         -color de chroma
         """
-        self.__sprite = sprite
         self.__coord = coord
+        self.__sprite = sprite
         self.__esta_vivo = True # El npc está vivo 
         self.__v_x = -c.v_npc  # La v_x habrá que modificarla según probemos
         self.__v_y = 0
         self.__ancho=ancho
         self.__alto=alto
-        self.__es_caparazon=False
+        self.__es_caparazon= False
         
     @property
     def ancho(self):
@@ -106,10 +106,10 @@ class npc():
             if self.colisionando(bloque):  # comprueba si hay colision
                 self.v_y = 0
             if ( (isinstance(bloque,escalera) or isinstance(bloque,tuberia)) and bloque.coord[0]+bloque.ancho < self.coord[0] 
-                and bloque.coord[0]+bloque.ancho +2 > self.coord[0] and self.coord[1] > bloque.coord[1]+5):
+                and bloque.coord[0]+bloque.ancho +3 > self.coord[0] and self.coord[1] > bloque.coord[1]+5):
                     self.v_x = -self.v_x
             if ( (isinstance(bloque,escalera) or isinstance(bloque,tuberia)) and self.coord[0]+self.ancho < bloque.coord[0] 
-                and self.coord[0]+self.ancho + 2> bloque.coord[0] and self.coord[1] > bloque.coord[1]+5):
+                and self.coord[0]+self.ancho + 3> bloque.coord[0] and self.coord[1] > bloque.coord[1]+5):
                      self.v_x = -self.v_x
 
 
@@ -117,10 +117,11 @@ class npc():
     def colisionar_npcs(self, npcs,jugador):
         for npc in npcs:
             if self.colisionando(npc):
-                if npc.es_caparazon:
+                if npc.__es_caparazon:
                     self.morir(jugador)
                 else:
                     self.__v_x = -self.__v_x
+
 
     def actualizar_posicion(self):
        self.coord[0] += self.v_x
@@ -138,6 +139,6 @@ class npc():
     def colisionar_con_objeto(self,objetos:list,jugador):
         for objeto in objetos:
             if self.colisionando(objeto) and isinstance(objeto,fireball):
-                jugador.score+=c.punt_goompa # ambas son iguales
+                jugador.score+=c.punt_goomba # ambas son iguales
                 self.morir(jugador)
                 objeto.morir()

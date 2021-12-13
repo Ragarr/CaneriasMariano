@@ -11,7 +11,7 @@ class ladrillo_rompible(bloque):
         """Solo en algunos casos el bloque contendrá una estrella por ello hemos introducido un bool q nos inidica si hay o no una estrella"""
         self.v_y=-0.3
         if self.Estrella:#Si contiene la estrella, después de ser golpado se convertirá en un bloque golpeado
-            bloques.append(estrella([self.coord[0],self.coord_iniciales[1]-c.alto_estrella-8]))
+            bloques.append(estrella([self.coord[0],self.coord_iniciales[1]-c.alto_estrella-16]))
             self.Estrella = False
             self.sprite = c.sprite_interrogacion_golpeado
             #el bloque con estrella ya no es rompible en cualquier otro caso se rompe al instante

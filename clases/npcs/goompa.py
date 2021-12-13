@@ -3,17 +3,15 @@ from clases.npcs.npc import npc
 import pyxel
 
 
-class goompa(npc):
+class goomba(npc):
     def __init__(self, coord: list) -> None:
-        # Esto hay que modificarlo cuando tengamos los sprites
-        super().__init__(coord=coord, sprite=c.sprite_goompa, ancho=c.ancho_goompa, alto=c.alto_goompa)
+        super().__init__(coord=coord, sprite=c.sprite_goomba, ancho=c.ancho_goomba, alto=c.alto_goomba)
 
     def colisionar_jugador(self, jugador):
         self.morir(jugador)
 
     def morir(self, jugador):
-        self.sprite = c.sprite_goompa_aplastado
-        jugador.score += c.punt_goompa
+        jugador.score += c.punt_goomba
         self.esta_vivo = False
 
     def actualizar_estado(self, bloques: list, npcs: list, objetos: list, jugador):

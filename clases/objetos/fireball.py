@@ -29,7 +29,6 @@ class fireball(objeto):
 
     def colisionar_bloques(self, bloques: list):
         for bloque in bloques:
-
             if self.colisionando(bloque):  # comprueba si hay colision
                 # comprueba si la colision es por encima
                 self.__rebotes+=1

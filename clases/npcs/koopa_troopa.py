@@ -49,7 +49,8 @@ class koopa_troopa(npc):
         else:
             self.v_x = c.v_koopa_troopa
         self.es_caparazon = False
-        self.coord[1]-=5
+        self.coord[1]-=10
+        self.v_y = 0
         self.sprite = c.sprite_koopa_troopa
         self.frame_concha=0
 

@@ -49,10 +49,10 @@ class interrogacion(bloque):
         else: #Si golpeas el bloque pequeño te dará un champi, en caso de que seas grande una flor   
             if self.contenido and player.grande:
                 objetos.append(flor([self.coord[0],self.coord_iniciales[1]-c.alto_flor-8]))#Crea una flor encima del bloque
-                self.contenido = 0
+                self.contenido = False
             elif self.contenido:
                 objetos.append(champi([self.coord[0],self.coord_iniciales[1]-c.alto_champi/2]))#Crea la seta al inicio de su animación
-                self.contenido = 0
+                self.contenido = False
             else:
                 pass
                 

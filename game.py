@@ -6,16 +6,20 @@ from clases.bloques.escalera import escalera
 from clases.bloques.ladrillo_con_monedas import ladrillo_con_monedas
 from clases.bloques.ladrillo_rompible import ladrillo_rompible
 from clases.bloques.tuberia import tuberia
+from clases.bloques.invisible import bloque_invisible
 from clases.bloques.interrogacion import interrogacion
+from clases.bloques.lanzabill import cañon_lanza_bills
 from clases.objetos.moneda import moneda
 from clases.objetos.champi import champi
+from clases.objetos.champiverde import champi_verde
 from clases.objetos.estrella import estrella
 from clases.objetos.flor import flor
 from clases.objetos.bandera import bandera
 from clases.objetos.mastil import mastil
 from clases import player
-from clases.npcs.goompa import goompa
+from clases.npcs.goompa import goomba
 from clases.npcs.koopa_troopa import koopa_troopa
+from clases.npcs.bala import bill_bala
 from clases.atrezzo.montaña import montaña
 from clases.atrezzo.nube import nube
 from clases.atrezzo.arbusto import arbusto
@@ -28,7 +32,7 @@ class game():
         pyxel.load(c.assets_path)
         self.en_menu = True
         self.tiempo = c.tiempo # contador de la esquina superior derecha
-        self.jugador = player.mario([1500, c.altura_suelo-15])
+        self.jugador = player.mario([1500, c.altura_suelo-35])
         self.__generar_bloques()
         self.__generar_suelo()
         self.__generar_npcs()
@@ -75,6 +79,9 @@ class game():
                 npc.actualizar_estado(self.__bloques , (other_npc for other_npc in self.npcs if other_npc != npc),self.objetos,self.jugador ) # hay que excluir al propio npc
             for bloque in self.__bloques: # actualiza los bloques uno por uno
                 bloque.reposicionar()
+                if (pyxel.frame_count) % (c.fps) == 0:
+                    self.generar_balas(bloque)
+
             for objeto in self.objetos:  # actualiza los objetos uno por uno
                 objeto.actualizar(self.__bloques)
             self.tiempo -= 1 if pyxel.frame_count%c.fps==0 else 0 # actualiza el contador de la derecha
@@ -88,12 +95,12 @@ class game():
             pyxel.cls(c.azul)
             pyxel.blt(0,0,*c.sprite_cartel)
             pyxel.blt(122,self.posicion_mario,*c.sprite_mario_quieto)
-            pyxel.blt(112,120,*c.tuberia(25))
+            pyxel.blt(112,120,*c.tuberia(25,True))
         elif self.jugador.muerto:  # si estas en el menu de muerte dibuja solo el menu de muerte
             pyxel.cls(c.negro)
             if self.jugador.vidas <= 0: # si te has quedado sin vidas muestra la pantalla para reiniciar el juego
-                pyxel.text(pyxel.width/2+c.ancho_mario+3, pyxel.height/2,"HAS MUERTO",c.blanco)
-                pyxel.text(pyxel.width/2+c.ancho_mario+3, pyxel.height/2+10,"pulsa intro para reiniciar",c.blanco)
+                pyxel.blt(108,80,*c.game_over)
+                pyxel.text(pyxel.width/2+c.ancho_mario+3, pyxel.height/2+70,"pulsa intro para reiniciar",c.blanco)
             else:  # si  no te has quedado sin vidas muestra la pantalla para reiniciar el nivel
                 pyxel.blt(pyxel.width/2,pyxel.height/2, *c.sprite_mario_quieto)
                 pyxel.text(pyxel.width/2+c.ancho_mario+3, pyxel.height/2,"x  {}".format(self.jugador.vidas),c.blanco)
@@ -123,6 +130,7 @@ class game():
                 if pyxel.frame_count % (c.fps/10) == 0:
                     pyxel.blt(self.jugador.coord[0], self.jugador.coord[1],
                               *c.sprite_estrella)
+            
             #timer
             pyxel.text(pyxel.width-40, 10, "TIME",c.blanco)
             pyxel.text(pyxel.width-20,10,str(self.tiempo),c.blanco)
@@ -132,9 +140,13 @@ class game():
             #puntuacion mario
             pyxel.text(30, 10, "MARIO", c.blanco)
             pyxel.text(30, 20, "{:06d}".format(self.jugador.score), c.blanco)
+            #vidas mario
+            pyxel.blt(150,10, *c.sprite_mario_quieto)
+            pyxel.text(170, 10,"x  {}".format(self.jugador.vidas),c.negro)
         if self.jugador.juego_finalizado: # mensaje de final del juego
             pyxel.text(pyxel.width/4, pyxel.height/2,"GRACIAS POR JUGAR, PULSA INTRO PARA REINICIAR",c.blanco)
-    
+            
+
     def __generar_atrezzo(self):
         self.atrezzo = [
             montaña([20,c.altura_suelo-33]), montaña([500,c.altura_suelo-33]), 
@@ -151,7 +163,7 @@ class game():
             self.atrezzo.append(nube([random.randint(0,3000),random.randint(0,100)])) 
        
     def __generar_objetos(self):
-        self.objetos = [bandera([2893, 80]), mastil([2893, 70])]
+        self.objetos = [bandera([2893, 90]), mastil([2893, 80])]
     
     def __generar_suelo(self):
         """el suelo son bloques, pero es comodo y visual generarlos a parte"""
@@ -176,6 +188,8 @@ class game():
     def __generar_bloques(self):
         self.__bloques = [
             #primera tanda de bloques
+            cañon_lanza_bills([16,c.altura_suelo-16],1),cañon_lanza_bills([0,c.altura_suelo-24],1),
+            bloque_invisible([0,c.altura_suelo-100]), tuberia([118,c.altura_suelo-c.alto_smario],c.alto_smario,True),
             interrogacion([256,c.altura_suelo-55],True),ladrillo_rompible([301,c.altura_suelo-55]),
             interrogacion([316, c.altura_suelo-55], True),ladrillo_rompible([331,c.altura_suelo-55]),
             interrogacion([346, c.altura_suelo-55], False),ladrillo_rompible([361,c.altura_suelo-55]),
@@ -183,8 +197,8 @@ class game():
             # escaleras de tuberias
             tuberia([415, c.altura_suelo-c.alto_smario-3], c.alto_smario+3),
             tuberia([565, c.altura_suelo-c.alto_smario-20], c.alto_smario+20),
-            tuberia([715, c.altura_suelo-c.alto_smario-30], c.alto_smario+30),
-            tuberia([865, c.altura_suelo-c.alto_smario-30], c.alto_smario+30),
+            tuberia([715, c.altura_suelo-c.alto_smario-25], c.alto_smario+25),
+            tuberia([865, c.altura_suelo-c.alto_smario-25], c.alto_smario+25),
             #segunda tanda de bloques despues de la caida
             ladrillo_rompible([1200, c.altura_suelo-55]),interrogacion([1215, c.altura_suelo-55], False),
             ladrillo_rompible([1230, c.altura_suelo-55]),
@@ -207,7 +221,7 @@ class game():
             ladrillo_rompible([1595, c.altura_suelo-110]),ladrillo_rompible([1610, c.altura_suelo-110]),
             #septima
             ladrillo_rompible([1660, c.altura_suelo-55]),ladrillo_rompible([1675, c.altura_suelo-55]),
-            interrogacion([1660, c.altura_suelo-110],False),interrogacion([1675, c.altura_suelo-110], True),
+            interrogacion([1660, c.altura_suelo-110],True),interrogacion([1675, c.altura_suelo-110], False),
             ladrillo_rompible([1645, c.altura_suelo-110]),ladrillo_rompible([1690, c.altura_suelo-110]),
             #octava escaleras
             #subida
@@ -238,13 +252,14 @@ class game():
             ladrillo_con_monedas([2245,c.altura_suelo-55]),
             interrogacion([2260,c.altura_suelo-55],True),ladrillo_rompible([2275,c.altura_suelo-55]),
             #undecimo
-            tuberia([2390,c.altura_suelo-c.alto_smario-3],c.alto_smario+3),
+            tuberia([2395,c.altura_suelo-c.alto_smario-3],c.alto_smario+3),
             # parte diseñada por nosotros
             interrogacion([2465,c.altura_suelo-55],True),interrogacion([2495,c.altura_suelo-55],True),
             interrogacion([2525,c.altura_suelo-55],True),interrogacion([2495,c.altura_suelo-110],False),
+            cañon_lanza_bills([2495,c.altura_suelo-16],2),
             #bloque de la bandera
-            escalera([2700,c.altura_suelo-c.alto_escalera],c.alto_escalera),
-            escalera([2715,c.altura_suelo-2*c.alto_escalera],2*c.alto_escalera),
+            cañon_lanza_bills([2700,c.altura_suelo-16],0),
+            cañon_lanza_bills([2715,c.altura_suelo-32],0,True),
             escalera([2730,c.altura_suelo-3*c.alto_escalera],3*c.alto_escalera),
             escalera([2745,c.altura_suelo-4*c.alto_escalera],4*c.alto_escalera),
             escalera([2760,c.altura_suelo-5*c.alto_escalera],1*c.alto_escalera),
@@ -260,11 +275,12 @@ class game():
             ]
     
     def __generar_npcs(self):
-        self.npcs = [goompa([760,c.altura_suelo-c.alto_goompa]),goompa([800,c.altura_suelo-c.alto_goompa]),
-            goompa([2280,c.altura_suelo-c.alto_goompa]),goompa([2300,c.altura_suelo-c.alto_goompa]),
-            goompa([1330, c.altura_suelo-110-c.alto_goompa]),goompa([1350, c.altura_suelo-110-c.alto_goompa]),
-            goompa([1470, c.altura_suelo-c.alto_goompa]),goompa([1490, c.altura_suelo-c.alto_goompa]),
-            koopa_troopa([2495,c.altura_suelo-c.alto_koopa_troopa]),goompa([200,c.altura_suelo-c.alto_koopa_troopa])
+        self.npcs = [
+            goomba([760,c.altura_suelo-c.alto_goomba]),goomba([800,c.altura_suelo-c.alto_goomba]),
+            goomba([2280,c.altura_suelo-c.alto_goomba]),goomba([2300,c.altura_suelo-c.alto_goomba]),
+            goomba([1330, c.altura_suelo-110-c.alto_goomba]),goomba([1350, c.altura_suelo-110-c.alto_goomba]),
+            goomba([1470, c.altura_suelo-c.alto_goomba]),goomba([1490, c.altura_suelo-c.alto_goomba]),koopa_troopa([1510,c.altura_suelo-c.alto_koopa_troopa]),
+            goomba([280,c.altura_suelo-c.alto_koopa_troopa]),koopa_troopa([1870,c.altura_suelo-c.alto_koopa_troopa])
                     ]
 
     def __mantener_jugador_en_pantalla(self):
@@ -304,6 +320,7 @@ class game():
     def reset_game(self):
         """reinicia el juego entero"""
         self.en_menu = True
+        self.jugador.reset_state()
         self.tiempo = c.tiempo  # contador de la esquina superior derecha
         self.jugador = player.mario([30, c.altura_suelo-15])
         self.__generar_bloques()
@@ -346,6 +363,10 @@ class game():
             self.en_menu=False
             self.__posicion_mario = 105
             self.__animacion = False
-   
+    def generar_balas(self, bloque):
+       if isinstance(bloque, cañon_lanza_bills):
+                bloque.lanzar(self.npcs)
+            
+                
        
 game()

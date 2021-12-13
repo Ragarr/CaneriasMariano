@@ -36,32 +36,35 @@ v_player_max_y= 2
 v_objeto_x=2
 v_rebote= 4
 v_npc= 1
-v_goompa, v_koopa_troopa = v_npc, v_npc
+v_goomba, v_koopa_troopa = v_npc, v_npc
 v_caparazon=3
 
 #----------------------animaciones-------------------------------
 frames_duracion_concha= 10*fps
 coordenada_puerta = 300
-
+game_over = [1,208,227,41,29]
 
 #-----------------coeficientes para las hitboxes-------------------
 ancho_mario = 15
 alto_mario=alto_smario_agachado=15
 ancho_smario = 15
 alto_smario = 31
-ancho_goompa=16
+ancho_goomba= 16
 ancho_koopa_troopa=16
-alto_goompa=16
+ancho_bala = 16
+alto_goomba=16
 alto_koopa_troopa=16
+alto_bala = 16
 ancho_interrogacion = 15
 ancho_escalera = 15
 ancho_ladrillo = 15
 alto_interrogacion = 15
 alto_ladrillo = 15
 alto_escalera= 15
+ancho_cañon = 16
 
 altura_suelo = alto_pantalla-alto_pantalla/8  +3
-ancho_tuberia= 31
+ancho_tuberia= 32
 ancho_suelo=15
 alto_concha=12
 tolerancia_colisiones=2
@@ -70,8 +73,9 @@ ancho_champi = ancho_estrella = ancho_flor = 15
 
 
 #----------------------puntuaciones------------------------------
-punt_goompa=100
+punt_goomba=100
 punt_koopa_troopa=200
+punt_bala = 500
 punt_moneda=200
 punt_champi=1000
 punt_flor=1000
@@ -83,6 +87,7 @@ sprite_moneda_chiquita = [1, 1, 239, 14, 14, azul] # editar esto
 sprite_moneda=[0,2,29,9,13,azul]
 sprite_moneda_girada=[0,40,41,9,13,azul]
 sprite_champi=[0,0,45,15,15,azul]
+sprite_champi_verde = [1,0,213,15,15,azul]
 sprite_estrella=[0,17,42,15,15,azul]
 sprite_flor=[0,55,47,15,15,azul]
 sprite_nube=[0,109,138,45,21,azul]
@@ -90,15 +95,21 @@ sprite_montaña=[0,0,193,74,33,azul]
 sprite_arbusto=[0,139,46,62,15,azul]
 
 sprite_interrogacion_golpeado=[0,145,27,16,16,blanco]
+sprite_invisible = [1,16,208,16,16,azul]
+sprite_cañon_alto = [1,80,224,16,32,azul]
+sprite_cañon_bajo = [1,80,224,16,32,azul]
 sprite_interrogacion=[0,177,27,16,16,blanco]
 sprite_mario_verde=[0,206,82,15,31,azul]
 sprite_smario_lanzando_fuego=[0,0,132,15,31,azul]
 sprite_fireball=[0,19,143,15,15,azul]
 sprite_cartel=[1,0,0,256,200,azul]
 ## como el tamaño de la tuberia es variable en vez de una constante tenemos una funcion
-def tuberia(alto:int=48):
+def tuberia(alto:int=48, inicio:bool=False):
     """el alto se cuenta en pixeles"""
-    return [0,79,178,32,alto,azul]
+    if inicio:
+        return [1,119,208,32,alto,azul]
+    else:
+        return [0,79,178,32,alto,azul]
 
 ## como el tamaño de la escalera es variable en vez de una constante tenemos una funcion
 def escalera(alto: int):
@@ -108,10 +119,13 @@ def escalera(alto: int):
 sprite_suelo=[0,0,227,ancho_suelo,22,azul] # el suelo puede medir hasta 250 de ancho
 sprite_ladrillo=[0,160,208,15,15,-1]
 sprite_transparente=[0,0,0,0,0,azul]
-sprite_goompa=[0,16,0,16,16,azul]
-sprite_goompa_aplastado=[0,32,0,16,16,azul]
+sprite_goomba=[0,16,0,16,16,azul]
+sprite_goomba_aplastado=[0,32,0,16,16,azul]
 sprite_koopa_troopa=[0,16,16,16,16,azul]
+sprite_bala = [1,56,224,16,16,azul]
+sprite_bala_i = [1,56,224,-16,16,azul]
 sprite_concha=[0,32,22,16,10,azul]
+
 
 
 #-----------sprites mario-------------

@@ -24,6 +24,7 @@ class bloque():
     @property
     def existe(self):
         return self.__existe
+   
     @existe.setter #~necesario para cuando el jugador colisiona con el bloque
     def existe(self,new_existe):
         if not isinstance(new_existe,bool):
@@ -34,8 +35,6 @@ class bloque():
     def coord(self):
         return self.__coord
 
-
-    
     @property
     def v_y(self):
         return self.__v_y
@@ -53,6 +52,7 @@ class bloque():
     @property
     def sprite(self):
         return self.__sprite
+    
     @sprite.setter # permite que se cambie el sprite de los bloques de interrogacion
     def sprite(self,new_sprite:list):
         if not isinstance(new_sprite, list):

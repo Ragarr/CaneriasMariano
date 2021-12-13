@@ -17,7 +17,6 @@ class flor(objeto):
     
     def colisionar_bloques(self, bloques: list):
         for bloque in bloques:
-            n_suelo = False  # Nos permite saber si está tocando una superficie para que no siga precipitándose a la nada
             # animación de la seta subiendo, estática en el sitio hasta que llegue a la parte de arriba quedándose quieto en las x
             if self.colisionando(bloque) and self.coord_iniciales[1]-c.alto_champi/2 + 1 < self.coord[1]:
                 self.v_y = -0.1

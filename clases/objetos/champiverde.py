@@ -5,10 +5,10 @@ from clases.bloques.tuberia import tuberia
 
 
 
-class champi(objeto):
+class champi_verde(objeto):
 
     def __init__(self, coord: list) -> None:
-        super().__init__(coord,c.sprite_champi, 15, 15)
+        super().__init__(coord,c.sprite_champi_verde, 15, 15)
         self.v_y = 0
         self.v_x = 1.2
 

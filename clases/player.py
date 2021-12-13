@@ -5,7 +5,9 @@ if __name__ == "__main__":
     
 import pyxel
 from clases.objetos.champi import champi
+from clases.objetos.champiverde import champi_verde
 from clases.objetos.estrella import estrella
+from clases.objetos.mastil import mastil
 import constants as c
 from clases.objetos.flor import flor
 from clases.objetos.bandera import bandera
@@ -19,9 +21,9 @@ class mario():
         self.__iniciar_temporizadores()
         self.__iniciar_booleanos()
         self.__iniciar_fuerzas()
-        self.__score = 0
+        self.__score = -100
         self.__dinero = 0
-        self.__vidas=4
+        self.__vidas=3
         self.__coord = coord  # son coordenadas relativas a la pantalla no al nivel en general
     
     @property
@@ -248,10 +250,10 @@ class mario():
                         self.__v_y = 0
             if (bloque.coord[0]+bloque.ancho < self.coord[0] 
                 and bloque.coord[0]+bloque.ancho +3 > self.coord[0] and self.coord[1] > bloque.coord[1] and not self.coord[1] > bloque.coord[1]+bloque.alto):
-                    self.__v_x = +1
+                    self.__v_x = +2
             if (self.coord[0]+self.ancho < bloque.coord[0] 
                 and self.coord[0]+self.ancho + 3> bloque.coord[0] and self.coord[1] > bloque.coord[1] and not self.coord[1] > bloque.coord[1]+bloque.alto):
-                     self.__v_x = -1
+                     self.__v_x = -2
     
     def __colisionar_npcs(self,npcs:list,jugador):
         if self.__estrella:
@@ -289,6 +291,10 @@ class mario():
                     self.__timer_bandera = pyxel.frame_count
                     objeto.colisionar_jugador()
                     self.__en_bandera = True
+                if isinstance(objeto, champi_verde):
+                    objeto.colisionar_jugador()
+                    self.__vidas += 1
+                
 
     def __actualizar_animaciones(self):
         if not self.__grande and not self.__fuego:
@@ -470,11 +476,13 @@ class mario():
         self.__actualizar_animaciones()
         
     def reset_state(self):
-        self.coord= [20,c.altura_suelo]
+        self.coord= [130,c.altura_suelo-35]
+        self.__v_x = 0
         self.dinero=0
         self.score=0
         self.alto=c.alto_mario
         self.grande=False
         self.__fuego=False
-        self.__estrella=False
+        self.__desconvertir_en_estrella()
+        
 

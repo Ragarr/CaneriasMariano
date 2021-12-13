@@ -18,8 +18,6 @@ class estrella(objeto):
 
     def colisionar_bloques(self, bloques: list):
         for bloque in bloques:
-            n_suelo = False  # Nos permite saber si está tocando una superficie para que no siga precipitándose a la nada
-
             if self.colisionando(bloque):  # comprueba si hay colision
                 # comprueba si la colision es por encima
                 if ((abs(bloque.coord[1]-(self.coord[1]+self.alto))) <= self.alto):

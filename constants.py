@@ -5,7 +5,7 @@
 ancho_pantalla = 256
 alto_pantalla = 200
 fps = 60
-assets_path = "assets/editor/assets/mario_assets.pyxres"
+assets_path = "assets/mario_assets.pyxres"
 tiempo=400 #segundos
 
 # ----------------------------colores-----------------------------

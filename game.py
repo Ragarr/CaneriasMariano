@@ -142,7 +142,7 @@ class game():
             pyxel.text(30, 20, "{:06d}".format(self.jugador.score), c.blanco)
             #vidas mario
             pyxel.blt(150,10, *c.sprite_mario_quieto)
-            pyxel.text(170, 10,"x  {}".format(self.jugador.vidas),c.negro)
+            pyxel.text(170, 10,"x  {}".format(self.jugador.vidas),c.blanco)
         if self.jugador.juego_finalizado: # mensaje de final del juego
             pyxel.text(pyxel.width/4, pyxel.height/2,"GRACIAS POR JUGAR, PULSA INTRO PARA REINICIAR",c.blanco)
             

@@ -15,7 +15,7 @@ class goomba(npc):
         self.esta_vivo = False
 
     def actualizar_estado(self, bloques: list, npcs: list, objetos: list, jugador):
-        if pyxel.width < self.coord[0]:
+        if pyxel.width+100 < self.coord[0]:
             pass
         else:
             self.sufrir_gravedad(jugador)

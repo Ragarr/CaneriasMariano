@@ -4,6 +4,9 @@ import constants as c
 import pyxel
 class cañon_lanza_bills(bloque):
     def __init__(self, coord: list, sentido = 0, es_alto = False) -> None:
+        """Sentido es una variable númerica que puede ser 0,1 u 2.
+        Si es 0 los bala__bill se lanzarán hacia la izquierda, en caso de ser 1 a la la derecha y por último 
+        en caso de ser 2 en los dos sentidos"""
         self.__sentido = sentido
         if es_alto:
             sprite = c.sprite_cañon_alto
@@ -11,9 +14,7 @@ class cañon_lanza_bills(bloque):
         else:
             sprite = c.sprite_cañon_bajo
             alto = 16 
-        """Sentido es una variable númerica que puede ser 0,1 u 2.
-        Si es 0 los bala__bill se lanzarán hacia la izquierda, en caso de ser 1 a la la derecha y por último 
-        en caso de ser 2 en los dos sentidos"""
+        
         #El cañón tiene dos alturas moldeables
         super().__init__(coord, sprite,c.ancho_cañon,alto)
         
